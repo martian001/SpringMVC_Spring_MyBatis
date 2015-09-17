@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context-3.2.xsd
+    http://www.springframework.org/schema/tx
+    http://www.springframework.org/schema/tx/spring-tx-3.2.xsd
+    http://www.springframework.org/schema/aop
+    http://www.springframework.org/schema/aop/spring-aop-3.2.xsd
+    http://www.springframework.org/schema/util 
+    http://www.springframework.org/schema/util/spring-util-3.2.xsd">
+
+	<!-- 引入jdbc配置文件 -->
+	<context:property-placeholder location="classpath:jdbc.properties" />
+
+	<!--本示例采用DBCP连接池。 连接池配置如下 -->
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName" value="${jdbc_driverClassName}"/>
+		<property name="url" value="${jdbc_url}"/>
+		<property name="username" value="${jdbc_username}"/>
+		<property name="password" value="${jdbc_password}"/>
+	</bean>
+
+	<!-- spring与mybatis整合配置，扫描所有dao ,生成与DAO类相同名字的bean（除了首字母小写） -->
+	<!-- <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer" p:basePackage="com.et.dao" 
+		p:sqlSessionFactoryBeanName="sqlSessionFactory" /> -->
+
+	<!-- 对数据源进行事务管理 -->
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager"
+		p:dataSource-ref="dataSource" />
+	<tx:annotation-driven mode="proxy"
+		transaction-manager="transactionManager" />
+
+	<!-- sqlSessionFactory配置 -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<!-- mybatis配置文件 -->
+		<property name="configLocation" value="classpath:mybatis-config.xml"></property>
+		<!-- 数据源 -->
+		<property name="dataSource" ref="dataSource" />
+		<!-- 扫描包下的所有bean，并取别名 -->
+		<property name="typeAliasesPackage" value="com.et.bean" />
+		<!-- mybatis文件配置，扫描所有mapper文件 -->
+		<property name="mapperLocations" value="classpath:*Mapper.xml" />
+	</bean>
+
+	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+	<!-- spring配置事务属性 -->
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+		<!-- 定义对每个方法的事务控制属性 -->
+		<tx:attributes>
+			<tx:method name="get*" read-only="true" />
+			<tx:method name="lastNameIsValid" read-only="true" />
+			<!-- propagation配置事务的传播属性,有7大传播属性,默认值是REQUIRED 1. REQUIRED 表示如果一个事务调用多个小事务,就把所有小事务自己接管,类似于合并小事务 
+				2. REQUIRES_NEW 表示一个碰到另外事务的时候,先执行另外的事务,类似于小事务各干各的 -->
+
+			<!-- isolation: 事务的隔离级别用来处理多个事务并发运行的情况 默认有四种设定,默认是READ_COMMITTED 注意:Oracle只支持两种情况,MySql四种都支持 -->
+
+			<!-- no-rollback-for 用来设定什么情况下异常抛出了,但不用回滚 后面跟的属性是全路径的异常名 -->
+
+			<!-- timeout 用来设定事务的超时,超过这个时间,事务就不能提交, -->
+			<!-- rollback-for 用来设定碰到那个异常,必须要回滚 -->
+			<tx:method name="*" />
+		</tx:attributes>
+	</tx:advice>
+
+	<!-- 定义一个日志切面，处理日志 -->
+	<bean id="loggerAspect" class="com.et.aop.LoggerAspect" />
+	<!-- ssss spring 6 3. 配置事务切入点, 再把事务属性和事务切入点关联起来 -->
+	<aop:config>
+		<!--常用过滤表达式：
+    	1.任意公共方法的执行：  execution(public * *(..))
+		2.任何一个以“set”开始的方法的执行：  execution(* set*(..))
+		3.执行在com.et.aop.service包下以“set”开始的方法：execution(* com.et.aop.service..set*(..))
+		3.AccountService接口的任意方法的执行：  execution(* com.et.service.AccountService.*(..))
+		4.定义在service包里的任意方法的执行：  execution(* com.et.service.*.*(..))
+		5.定义在service包或者子包里的任意方法的执行：  execution(* com.et.service..*.*(..))-->
+		<!-- 定义一个切入点 -->
+		<aop:pointcut expression="execution(* com.et.service.*.*(..)) or execution(* com.et.base.BaseService.*(..))"
+			id="pointcut" />
+		<aop:advisor advice-ref="txAdvice" pointcut-ref="pointcut" />
+		<aop:aspect ref="loggerAspect">
+			<!-- 定义环绕通知的处理方法,该方法用于日志处理 -->
+			<aop:around method="aroundMethod" pointcut-ref="pointcut" />
+			<!-- 处理异常日志 -->
+			<!-- <aop:after-throwing method="afterThrowing" pointcut-ref="pointcut"/> -->
+		</aop:aspect>
+	</aop:config>
+</beans>
