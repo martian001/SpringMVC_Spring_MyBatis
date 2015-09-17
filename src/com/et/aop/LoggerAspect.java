@@ -2,6 +2,7 @@ package com.et.aop;
 
 import java.lang.reflect.Method;
 import java.util.Arrays;
+import java.util.UUID;
 
 import javassist.bytecode.stackmap.TypeData.ClassName;
 
@@ -34,6 +35,7 @@ public class LoggerAspect {
       String classAndMethodName = pjd.toString();// execution(List com.et.base.BaseService.getAll())
       classAndMethodName = classAndMethodName.substring(classAndMethodName.indexOf(" "), classAndMethodName.length() - 1);// 获取类名和方法名称
       // String methodName = pjd.getSignature().getName();
+      String logId = UUID.randomUUID().toString().replace("-", "");
       try {
          //
          logger.info(" Start :The method " + classAndMethodName + " 参数：" + Arrays.asList(pjd.getArgs()));
@@ -56,5 +58,10 @@ public class LoggerAspect {
     */
    public void afterThrowing(Method m, Object[] os, Object target, Throwable throwable) {
       logger.error("The method " + m.getName() + ",params:" + Arrays.toString(os) + " occurs excetion:" + throwable);
+   }
+
+   public static void main(String[] args) {
+      String replace = UUID.randomUUID().toString().replace("-", "");
+      System.out.println(replace);
    }
 }
