@@ -61,7 +61,7 @@ public class StudentAction {
     }
 
     @RequestMapping("/studentAction_add.do")
-    public String add(String name, int age) {
+    public String add(String name, Integer age) {
         studentService.insert(new Student(null, name, age));
         return "forward:studentAction_list.do";
     }

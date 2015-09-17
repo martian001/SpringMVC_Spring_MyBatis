@@ -49,7 +49,6 @@ public abstract class BaseServiceImpl<T> implements BaseService<T> {
     @Override
     public void update(T parameter) {
         baseDao.update(parameter);
-        int i=1/0;
     }
 
     @Override
