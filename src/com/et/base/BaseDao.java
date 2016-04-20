@@ -1,7 +1,6 @@
 package com.et.base;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  ★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★
@@ -15,29 +14,33 @@ import java.util.Map;
 ★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★
  */
 public interface BaseDao<T> {
-    int insert(T parameter);
+   int insert(T parameter);
 
-    void deleteById(Long id);
+   void deleteById(Long id);
 
-    void deleteByIds(Long[] ids);
+   void deleteByIds(Long[] ids);
 
-    void update(T parameter);
+   void update(T parameter);
 
-    T getById(Long id);
+   T getById(Long id);
 
-    List<T> getByIds(Long[] ids);
+   List<T> getByIds(Long[] ids);
 
-    List<T> getByPage(int first, int MaxResults);
+   List<T> getByPage(int first, int MaxResults);
 
-    List<T> getByPageNum(int pageNumber, int pageResults);
+   List<T> getByPageNum(int pageNumber, int pageResults);
 
-    int selectCount(T parameter);
+   int selectCount(T parameter);
 
-    List<T> getAll();
+   List<T> getAll();
 
-    T selectOne(Object parameter);
+   T selectOne(Object parameter);
 
-    List<T> selectList(Object parameter, int pageSize, int pageIndex);
+   List<T> selectList(Object parameter, int pageSize, int pageIndex);
 
-    void executeSql(String sql);
+   void executeSql(String sql);
+
+   List<T> findPage(T parameter);
+
+   int getTotal(T parameter);
 }

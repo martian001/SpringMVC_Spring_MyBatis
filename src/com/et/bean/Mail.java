@@ -2,6 +2,8 @@ package com.et.bean;
 
 import java.sql.Date;
 
+import com.et.base.BaseBean;
+
 /**
  * ★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★<br>
  * ★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★<br>
@@ -24,7 +26,7 @@ import java.sql.Date;
  * ★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★<br>
  * ★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★<br>
  */
-public class Mail {
+public class Mail extends BaseBean {
    private Long id;
    private String title;
    private String content;

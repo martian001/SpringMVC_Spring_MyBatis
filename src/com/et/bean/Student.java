@@ -1,5 +1,7 @@
 package com.et.bean;
 
+import com.et.base.BaseBean;
+
 /**
  ★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★
 ★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★
@@ -11,7 +13,7 @@ package com.et.bean;
 ★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★
 ★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★
  */
-public class Student {
+public class Student extends BaseBean {
    private Long id;
    private String name;
    private Integer age;
@@ -53,5 +55,4 @@ public class Student {
    public String toString() {
       return "Student [id=" + id + ", name=" + name + ", age=" + age + "]";
    }
-
 }

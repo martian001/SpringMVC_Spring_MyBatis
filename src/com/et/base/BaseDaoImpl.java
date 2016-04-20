@@ -108,4 +108,22 @@ public abstract class BaseDaoImpl<T> extends SqlSessionDaoSupport implements Bas
 
     }
 
+    /**
+     *@author:liangyanjun
+     *@time:2016年4月20日下午4:36:35
+     */
+   @Override
+   public List<T> findPage(T parameter) {
+      return getSqlSession().selectList(className + ".findPage",parameter);
+   }
+
+   /**
+    *@author:liangyanjun
+    *@time:2016年4月20日下午4:36:35
+    */
+   @Override
+   public int getTotal(T parameter) {
+      return (int) getSqlSession().selectOne(className + ".getTotal",parameter);
+   }
+
 }
