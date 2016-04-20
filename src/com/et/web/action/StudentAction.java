@@ -1,7 +1,5 @@
 package com.et.web.action;
 
-import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,7 +12,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.alibaba.fastjson.JSON;
+import com.et.base.BaseAction;
 import com.et.bean.Student;
 import com.et.service.MailService;
 import com.et.service.StudentService;
@@ -31,24 +29,11 @@ import com.et.service.StudentService;
 ★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★
  */
 @Controller
-public class StudentAction {
+public class StudentAction extends BaseAction {
    @Resource
    private StudentService studentService;
    @Resource
    private MailService mailService;
-
-   public void outputJson(Map<String, Object> returnMap, HttpServletResponse response) {
-      try {
-         String retrunJson = JSON.toJSONString(returnMap);
-         response.setContentType("text/html;charset=UTF-8");
-         PrintWriter out = response.getWriter();
-         out.write(retrunJson);
-         out.flush();
-         out.close();
-      } catch (IOException e) {
-         e.printStackTrace();
-      }
-   }
 
    @RequestMapping("/to_studentAction_list.do")
    public String to_list() {
