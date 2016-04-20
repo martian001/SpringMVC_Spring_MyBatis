@@ -2,8 +2,6 @@ package com.et.base;
 
 import java.util.List;
 
-import javax.annotation.Resource;
-
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,7 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 */
 @Service
 public abstract class BaseServiceImpl<T> implements BaseService<T> {
-    @Resource
+    
     private BaseDao<T> baseDao;
 
     public BaseDao<T> getBaseDao() {

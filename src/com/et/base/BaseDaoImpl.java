@@ -3,7 +3,6 @@ package com.et.base;
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
-import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.support.SqlSessionDaoSupport;
 import org.springframework.beans.factory.annotation.Autowired;

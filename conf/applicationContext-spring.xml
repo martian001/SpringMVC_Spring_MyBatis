@@ -16,14 +16,14 @@
     http://www.springframework.org/schema/util/spring-util-3.2.xsd">
 
 	<!-- 引入jdbc配置文件 -->
-	<context:property-placeholder location="classpath:jdbc.properties" />
+	<context:property-placeholder location="classpath:*.properties"/>
 
 	<!--本示例采用DBCP连接池。 连接池配置如下 -->
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
-		<property name="driverClassName" value="${jdbc_driverClassName}"/>
-		<property name="url" value="${jdbc_url}"/>
-		<property name="username" value="${jdbc_username}"/>
-		<property name="password" value="${jdbc_password}"/>
+		<property name="driverClassName" value="${jdbc.driverClass}"/>
+		<property name="url" value="${jdbc.url}"/>
+		<property name="username" value="${jdbc.username}"/>
+		<property name="password" value="${jdbc.password}"/>
 	</bean>
 
 	<!-- spring与mybatis整合配置，扫描所有dao ,生成与DAO类相同名字的bean（除了首字母小写） -->
@@ -94,4 +94,18 @@
 			<!-- <aop:after-throwing method="afterThrowing" pointcut-ref="pointcut"/> -->
 		</aop:aspect>
 	</aop:config>
+	<!-- 邮件发送 -->
+	<bean id="JavaMailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<property name="host" value="${mail.host}"></property>
+		<property name="username" value="${mail.username}"></property>
+		<property name="password" value="${mail.password}"></property>
+		<!-- 相当于javax.mail.Session中的props属性 -->
+		<property name="javaMailProperties">
+			<props>
+				<prop key="mail.smtp.auth">true</prop>
+				<prop key="mail.smtp.from">${mail.smtp.from}</prop>
+				<prop key="mail.debug">true</prop>
+			</props>
+		</property>
+	</bean> 
 </beans>

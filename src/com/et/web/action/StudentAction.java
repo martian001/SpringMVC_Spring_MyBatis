@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.et.bean.Student;
+import com.et.service.MailService;
 import com.et.service.StudentService;
 
 /**
@@ -27,9 +28,12 @@ import com.et.service.StudentService;
 public class StudentAction {
     @Resource
     private StudentService studentService;
+    @Resource
+    private MailService mailService;
 
     @RequestMapping("/studentAction_list.do")
     public String list(ModelMap map) {
+        mailService.send();
         List<Student> studentList = studentService.getAll();
         map.put("studentList", studentList);
         return "studentAction/list";

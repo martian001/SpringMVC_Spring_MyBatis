@@ -1,5 +1,6 @@
 package com.et.service.impl;
 
+import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
@@ -23,24 +24,30 @@ import com.et.service.StudentService;
  */
 @Service
 public class StudentServiceImpl extends BaseServiceImpl<Student> implements StudentService {
-    @Resource
-    private StudentDao studentDao;
+   @Resource
+   private StudentDao studentDao;
 
-    public StudentServiceImpl() {
-        System.out.println("StudentServiceImpl.StudentServiceImpl()");
-    }
+   @PostConstruct
+   public void init() {
+      System.out.println("初始化");
+      setBaseDao(studentDao);
+   }
 
-    public StudentDao getStudentDao() {
-        return studentDao;
-    }
+   public StudentServiceImpl() {
+      System.out.println("StudentServiceImpl.StudentServiceImpl()");
+   }
 
-    public void setStudentDao(StudentDao studentDao) {
-        this.studentDao = studentDao;
-        System.out.println("StudentServiceImpl.setStudentDao()");
-    }
+   public StudentDao getStudentDao() {
+      return studentDao;
+   }
 
-    @Override
-    public boolean nameIsExist(String name) {
-        return studentDao.nameIsExist(name);
-    }
+   public void setStudentDao(StudentDao studentDao) {
+      this.studentDao = studentDao;
+      System.out.println("StudentServiceImpl.setStudentDao()");
+   }
+
+   @Override
+   public boolean nameIsExist(String name) {
+      return studentDao.nameIsExist(name);
+   }
 }
