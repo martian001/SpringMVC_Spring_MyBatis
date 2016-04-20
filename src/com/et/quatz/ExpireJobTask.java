@@ -1,5 +1,8 @@
 package com.et.quatz;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  ★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★
 ★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★
@@ -12,12 +15,14 @@ package com.et.quatz;
 ★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★
  */
 public class ExpireJobTask {
+   private Logger logger = LoggerFactory.getLogger(ExpireJobTask.class);
 
    public ExpireJobTask() {
       System.out.println("ExpireJobTask.ExpireJobTask()");
    }
 
    public void doBiz() {
-      System.out.println("我是定时任务，开始工作");
+      logger.info("我是定时任务，开始工作");
+      // System.out.println("我是定时任务，开始工作");
    }
 }

@@ -33,7 +33,6 @@ public class StudentAction {
 
     @RequestMapping("/studentAction_list.do")
     public String list(ModelMap map) {
-        mailService.send();
         List<Student> studentList = studentService.getAll();
         map.put("studentList", studentList);
         return "studentAction/list";

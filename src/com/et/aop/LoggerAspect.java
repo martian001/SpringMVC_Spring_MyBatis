@@ -4,10 +4,11 @@ import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.UUID;
 
-import javassist.bytecode.stackmap.TypeData.ClassName;
-
-import org.apache.log4j.Logger;
 import org.aspectj.lang.ProceedingJoinPoint;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+
 
 /**
  * ★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★<br>
@@ -21,8 +22,8 @@ import org.aspectj.lang.ProceedingJoinPoint;
  * ★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★<br>
  */
 public class LoggerAspect {
-   private static Logger logger = Logger.getLogger(ClassName.class);
-
+//   private static Logger logger = Logger.getLogger(ClassName.class);
+   private Logger logger = LoggerFactory.getLogger(LoggerAspect.class);
    /**
     * 定义环绕通知的处理方法
     * 
