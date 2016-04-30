@@ -15,17 +15,6 @@ import com.et.base.BaseBean;
  * ★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★<br>
  * ★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★<br>
  */
-/**
- * ★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★<br>
- * ★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★<br>
- * ★☆ @author： liangyanjun <br>
- * ★☆ @time：2016年4月19日下午4:43:38 <br>
- * ★☆ @version： <br>
- * ★☆ @lastMotifyTime： <br>
- * ★☆ @ClassAnnotation： <br>
- * ★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★<br>
- * ★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★<br>
- */
 public class Mail extends BaseBean {
    private Long id;
    private String title;

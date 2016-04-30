@@ -11,17 +11,6 @@ package com.et.base;
  * ★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★<br>
  * ★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★<br>
  */
-/**
- * ★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★<br>
- * ★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★<br>
- * ★☆ @author： liangyanjun <br>
- * ★☆ @time：2016年4月20日下午4:33:28 <br>
- * ★☆ @version： <br>
- * ★☆ @lastMotifyTime： <br>
- * ★☆ @ClassAnnotation： <br>
- * ★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★<br>
- * ★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★<br>
- */
 public class BaseBean {
    private int page = 1;
    private int rows = 10;
