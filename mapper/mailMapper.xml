@@ -18,28 +18,4 @@
 	<select id="updateById" parameterType="mail">
 		<![CDATA[update mail set content=#{content}]]>
 	</select>
-	<select id="selectCount" parameterType="mail" resultType="int">
-		<![CDATA[select count(1) from mail]]>
-		<where>
-			<!-- 用来处理如果where后面是以and开头的条件,那么可以自动去掉and -->
-			<trim>
-				<!-- 根据if用OGNL表达式来判断字段是否为空来显示Sql语句 -->
-				<if test="title !=null and title !=''">
-					and title =#{title},
-				</if>
-				<if test="content !=null and content !=''">
-					and content =#{content},
-				</if>
-				<if test="sendId !=null and sendId !=''">
-					and send_id =#{sendId},
-				</if>
-				<if test="content !=null and content !=''">
-					and content =#{content},
-				</if>
-				<if test="sendDate !=null and sendDate !=''">
-					and send_date =#{sendDate},
-				</if>
-			</trim>
-		</where>
-	</select>
 </mapper>

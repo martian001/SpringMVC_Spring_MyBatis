@@ -41,7 +41,9 @@ SELECT * FROM STUDENT A
 			(SELECT * FROM STUDENT A
 	]]>
 		<where>
+		<!-- 用来处理如果where后面是以and开头的条件,那么可以自动去掉and -->
 			<trim>
+			<!-- 根据if用OGNL表达式来判断字段是否为空来显示Sql语句 -->
 				<if test="name != null and name !=''">
 					AND A.name LIKE '%${name}%'
 				</if>
@@ -66,20 +68,5 @@ SELECT * FROM STUDENT A
 	</select>
 	<select id="updateById" parameterType="student">
 		<![CDATA[update student set name=#{name},age=#{age} where id=#{id}]]>
-	</select>
-	<select id="selectCount" parameterType="student" resultType="int">
-		<![CDATA[select count(1) from student]]>
-		<where>
-			<!-- 用来处理如果where后面是以and开头的条件,那么可以自动去掉and -->
-			<trim>
-				<!-- 根据if用OGNL表达式来判断字段是否为空来显示Sql语句 -->
-				<if test="name!=null">
-					and name =#{name}
-				</if>
-				<if test="age!=null">
-					and age =#{age}
-				</if>
-			</trim>
-		</where>
 	</select>
 </mapper>

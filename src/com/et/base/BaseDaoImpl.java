@@ -69,23 +69,6 @@ public abstract class BaseDaoImpl<T> extends SqlSessionDaoSupport implements Bas
     }
 
     @Override
-    public List<T> getByPage(int first, int MaxResults) {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
-    public List<T> getByPageNum(int pageNumber, int pageResults) {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
-    public int selectCount(T parameter) {
-        return (int) getSqlSession().selectOne(className + ".selectCount", parameter);
-    }
-
-    @Override
     public List<T> getAll() {
         return getSqlSession().selectList(className + ".getAll");
     }

@@ -26,12 +26,6 @@ public interface BaseService<T> {
 
    List<T> getByIds(Long[] ids);
 
-   List<T> getByPage(int first, int MaxResults);
-
-   List<T> getByPageNum(int pageNumber, int pageResults);
-
-   int selectCount(T parameter);
-
    List<T> getAll();
 
    T selectOne(Object parameter);

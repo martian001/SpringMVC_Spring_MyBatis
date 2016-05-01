@@ -73,7 +73,7 @@ public class StudentAction extends BaseAction {
    public @ResponseBody String nameIsExist(String name) {
       Student student = new Student();
       student.setName(name);
-      return studentService.selectCount(student) > 0 ? "1" : "0";
+      return studentService.getTotal(student) > 0 ? "1" : "0";
    }
 
    @RequestMapping("/studentAction_add.do")

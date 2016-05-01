@@ -61,21 +61,6 @@ public abstract class BaseServiceImpl<T> implements BaseService<T> {
    }
 
    @Override
-   public List<T> getByPage(int first, int MaxResults) {
-      return baseDao.getByPage(first, MaxResults);
-   }
-
-   @Override
-   public List<T> getByPageNum(int pageNumber, int pageResults) {
-      return baseDao.getByPageNum(pageNumber, pageResults);
-   }
-
-   @Override
-   public int selectCount(T parameter) {
-      return baseDao.selectCount(parameter);
-   }
-
-   @Override
    public List<T> getAll() {
       return baseDao.getAll();
    }
