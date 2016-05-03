@@ -80,12 +80,6 @@ public abstract class BaseDaoImpl<T> extends SqlSessionDaoSupport implements Bas
     }
 
     @Override
-    public List<T> selectList(Object parameter, int pageSize, int pageIndex) {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
     public void executeSql(String sql) {
         // TODO Auto-generated method stub
 

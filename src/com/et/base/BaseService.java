@@ -30,8 +30,6 @@ public interface BaseService<T> {
 
    T selectOne(Object parameter);
 
-   List<T> selectList(Object parameter, int pageSize, int pageIndex);
-
    void executeSql(String sql);
 
    List<T> findPage(T parameter);

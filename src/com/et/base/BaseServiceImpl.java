@@ -71,11 +71,6 @@ public abstract class BaseServiceImpl<T> implements BaseService<T> {
    }
 
    @Override
-   public List<T> selectList(Object parameter, int pageSize, int pageIndex) {
-      return baseDao.selectList(parameter, pageSize, pageIndex);
-   }
-
-   @Override
    public void executeSql(String sql) {
       baseDao.executeSql(sql);
    }
