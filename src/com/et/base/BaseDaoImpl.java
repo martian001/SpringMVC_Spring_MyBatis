@@ -36,7 +36,11 @@ public abstract class BaseDaoImpl<T> extends SqlSessionDaoSupport implements Bas
         clazz = (Class<T>) pt.getActualTypeArguments()[0];// 获取第一个类型参数的真实类型
         className = clazz.getName();
     }
-
+   @Autowired  
+   @Override
+    public void setSqlSessionFactory(SqlSessionFactory sqlSessionFactory){  
+        super.setSqlSessionFactory(sqlSessionFactory);  
+    }  
     @Override
     public int insert(T parameter) {
         return getSqlSession().insert(className + ".insert", parameter);
