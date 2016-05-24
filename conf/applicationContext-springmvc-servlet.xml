@@ -31,5 +31,13 @@
 		<!-- 如果用jstl,那么就要把下面的打开 -->
 		<!-- <property name="viewClass"  value="org.springframework.web.servlet.view.JstlView" /> -->
 	</bean>
-
+    <!-- 多文件上传配置 -->
+	<bean id="multipartResolver" class="com.et.web.listener.CommonsMultipartResolverExt" p:defaultEncoding="utf-8" >
+		<property name="maxUploadSize">
+			<value>104857600</value>
+		</property>
+		<property name="maxInMemorySize">
+			<value>4096</value>
+		</property>
+	</bean> 
 </beans>
