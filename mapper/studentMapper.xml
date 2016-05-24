@@ -60,13 +60,13 @@ SELECT * FROM STUDENT A
 	<select id="getById" resultType="student">
 		<![CDATA[select * from student where id=#{id}]]>
 	</select>
-	<select id="insert" parameterType="student">
+	<insert id="insert" parameterType="student">
 		<![CDATA[INSERT INTO student(NAME,age) VALUES(#{name}, #{age})]]>
-	</select>
-	<select id="deleteById" parameterType="student">
+	</insert>
+	<delete id="deleteById" parameterType="student">
 		<![CDATA[delete from student where id=#{id}]]>
-	</select>
-	<select id="updateById" parameterType="student">
+	</delete>
+	<update id="updateById" parameterType="student">
 		<![CDATA[update student set name=#{name},age=#{age} where id=#{id}]]>
-	</select>
+	</update>
 </mapper>

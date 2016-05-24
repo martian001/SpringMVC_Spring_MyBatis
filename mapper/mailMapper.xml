@@ -9,13 +9,13 @@
 	<select id="getById" resultType="mail">
 		<![CDATA[select * from mail where id=#{id}]]>
 	</select>
-	<select id="insert" parameterType="mail">
+	<insert id="insert" parameterType="mail">
 		<![CDATA[INSERT INTO mail(title,content,send_id,send_date) VALUES(#{title},#{content},#{send_id},sysdate)]]>
-	</select>
-	<select id="deleteById" parameterType="mail">
+	</insert>
+	<delete id="deleteById" parameterType="mail">
 		<![CDATA[delete from mail where id=#{id}]]>
-	</select>
-	<select id="updateById" parameterType="mail">
+	</delete>
+	<update id="updateById" parameterType="mail">
 		<![CDATA[update mail set content=#{content}]]>
-	</select>
+	</update>
 </mapper>
