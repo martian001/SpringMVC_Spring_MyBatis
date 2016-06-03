@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 如果在接口绑定里面,接口里面不写Sql语句,sql写在当前映射文件,那么namespace必须是接口的全路径名 -->
+<mapper namespace="com.et.bean.checkingIn.CheckingInRecord">
+    <resultMap id="checkingInRecordMap" type="checkingInRecord">
+		<id property="id" column="ID" />
+		<id property="userId" column="USER_ID" />
+		<id property="checkingInDate" column="CHECKING_IN_DATE" />
+		<id property="month" column="MONTH" />
+	</resultMap>
+	<!-- 查询所有 -->
+	<select id="getAll" resultMap="checkingInRecordMap">
+		<![CDATA[SELECT * FROM CHECKING_IN_RECORD ]]>
+	</select>
+	<!-- 根据条件分页查询 mysql -->
+	<select id="findPage" resultMap="checkingInRecordMap" parameterType="checkingInRecord">
+		<![CDATA[
+SELECT * FROM CHECKING_IN_RECORD A
+	]]>
+		<where>
+			<trim>
+				<if test="month !=null and month >0">
+					AND A.MONTH = #{month}
+				</if>
+				<if test="id !=null and id >0">
+					AND A.ID = #{id}
+				</if>
+			</trim>
+		</where>
+		LIMIT ${first},${rows}
+	</select>
+	<!-- 根据条件查询数量 -->
+	<select id="getTotal" resultType="Integer" parameterType="checkingInRecord">
+	<![CDATA[
+	SELECT COUNT(1) FROM
+			(SELECT * FROM CHECKING_IN_RECORD A
+	]]>
+		<where>
+			<!-- 用来处理如果where后面是以and开头的条件,那么可以自动去掉and -->
+			<trim>
+				<if test="month !=null and month >0">
+					AND A.MONTH = #{month}
+				</if>
+				<if test="id !=null and id >0">
+					AND A.ID = #{id}
+				</if>
+			</trim>
+		</where>
+		) T
+	</select>
+	<select id="getById" resultMap="checkingInRecordMap">
+		<![CDATA[SELECT * FROM CHECKING_IN_RECORD WHERE ID=#{id}]]>
+	</select>
+	<insert id="insert" parameterType="checkingInRecord">
+		INSERT INTO CHECKING_IN_RECORD
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			 <if test="userId != null and userId >0">
+			     USER_ID,
+			 </if>
+			 <if test="checkingInDate != null and checkingInDate !=''">
+			     CHECKING_IN_DATE, 
+			 </if>
+			 <if test="month != null and month >0">
+			     MONTH
+			 </if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			 <if test="userId != null and userId >0">
+				 #{userId},
+			 </if>
+			 <if test="checkingInDate != null and checkingInDate !=''">
+				 #{checkingInDate,jdbcType = TIMESTAMP,javaType = java.util.Date},
+			 </if>
+			 <if test="month != null and month >0">
+				 #{month}
+			 </if>
+	  </trim>
+	</insert>
+	<delete id="deleteById" parameterType="checkingInRecord">
+		<![CDATA[DELETE FROM CHECKING_IN_RECORD WHERE ID=#{id}]]>
+	</delete>
+	<update id="updateById" parameterType="checkingInRecord">
+		UPDATE CHECKING_IN_RECORD 
+		<set>
+	         <if test="userId != null and userId >0">
+				USER_ID =#{userId},
+			 </if>
+			 <if test="checkingInDate != null and checkingInDate !=''">
+				 CHECKING_IN_DATE=#{checkingInDate,jdbcType = DATE,javaType = java.util.Date},
+			 </if>
+			 <if test="month != null and month >0">
+				 MONTH=#{month}
+			 </if>
+		</set> 
+		WHERE ID = #{ID}
+	</update>
+</mapper>

@@ -22,7 +22,7 @@ public class ExpireJobTask {
    }
 
    public void doBiz() {
-      logger.info("我是定时任务，开始工作");
+     // logger.info("我是定时任务，开始工作");
       // System.out.println("我是定时任务，开始工作");
    }
 }

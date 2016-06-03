@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 如果在接口绑定里面,接口里面不写Sql语句,sql写在当前映射文件,那么namespace必须是接口的全路径名 -->
+<mapper namespace="com.et.bean.system.SysUser">
+    <resultMap id="sysUserMap" type="sysUser">
+		<id property="id" column="ID" />
+		<id property="userName" column="USER_NAME" />
+		<id property="realName" column="REAL_NAME" />
+		<id property="password" column="PASSWORD" />
+		<id property="deptName" column="DEPT_NAME" />
+		<id property="memberId" column="MEMBER_ID" />
+	</resultMap>
+	<!-- 查询所有 -->
+	<select id="getAll" resultMap="sysUserMap">
+		<![CDATA[SELECT * FROM SYS_USER ]]>
+	</select>
+	<!-- 根据条件分页查询 mysql -->
+	<select id="findPage" resultMap="sysUserMap" parameterType="sysUser">
+		<![CDATA[
+SELECT * FROM SYS_USER A
+	]]>
+		<where>
+			<trim>
+				<if test="userName != null and userName !=''">
+					AND A.USER_NAME LIKE '%${userName}%'
+				</if>
+				<if test="realName != null and realName !=''">
+					AND A.REAL_NAME LIKE '%${realName}%'
+				</if>
+				<if test="deptName != null and deptName !=''">
+					AND A.DEPT_NAME LIKE '%${deptName}%'
+				</if>
+				<if test="memberId != null and memberId !=''">
+					AND A.MEMBER_ID LIKE '%${memberId}%'
+				</if>
+				<if test="id!=null and id>0">
+					AND A.ID = #{id}
+				</if>
+			</trim>
+		</where>
+		<if test="page != -1">
+		LIMIT ${first},${rows}
+		</if>
+	</select>
+	<!-- 根据条件查询数量 -->
+	<select id="getTotal" resultType="Integer" parameterType="sysUser">
+	<![CDATA[
+	SELECT COUNT(1) FROM
+			(SELECT * FROM SYS_USER A
+	]]>
+		<where>
+			<!-- 用来处理如果where后面是以and开头的条件,那么可以自动去掉and -->
+			<trim>
+				<!-- 根据if用OGNL表达式来判断字段是否为空来显示Sql语句 -->
+				<if test="userName != null and userName !=''">
+					AND A.USER_NAME LIKE '%${userName}%'
+				</if>
+				<if test="realName != null and realName !=''">
+					AND A.REAL_NAME LIKE '%${realName}%'
+				</if>
+				<if test="deptName != null and deptName !=''">
+					AND A.DEPT_NAME LIKE '%${deptName}%'
+				</if>
+				<if test="memberId != null and memberId !=''">
+					AND A.MEMBER_ID LIKE '%${memberId}%'
+				</if>
+				<if test="id!=null and id>0">
+					AND A.ID = #{id}
+				</if>
+			</trim>
+		</where>
+		) T
+	</select>
+	<select id="getById" resultMap="sysUserMap">
+		<![CDATA[SELECT * FROM SYS_USER WHERE ID=#{id}]]>
+	</select>
+	<insert id="insert" parameterType="sysUser" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO SYS_USER
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+	          <if test="userName !=null and userName !=''">
+	                USER_NAME,
+	          </if>
+	          <if test="realName !=null and realName !=''">
+	                REAL_NAME,
+	          </if>
+	          <if test="password !=null and password !=''">
+	                PASSWORD,
+	          </if>
+	          <if test="deptName !=null and deptName !=''">
+	                DEPT_NAME,
+	          </if>
+	          <if test="memberId !=null and memberId !=''">
+	                MEMBER_ID 
+	          </if>
+         </trim>
+         <trim prefix="values (" suffix=")" suffixOverrides=",">
+	          <if test="userName !=null and userName !=''">
+	               #{userName},
+	          </if>
+	          <if test="realName !=null and realName !=''">
+	               #{realName},
+	          </if>
+	          <if test="password !=null and password !=''">
+	               #{password},
+	          </if>
+	          <if test="deptName !=null and deptName !=''">
+	               #{deptName},
+	          </if>
+	          <if test="memberId !=null and memberId !=''">
+	               #{memberId}
+	          </if>
+         </trim>
+	</insert>
+	<delete id="deleteById" parameterType="sysUser">
+		<![CDATA[DELETE FROM SYS_USER WHERE ID=#{id}]]>
+	</delete>
+	<update id="updateById" parameterType="sysUser">
+		 UPDATE SYS_USER 
+		 <set>
+	        <if test="userName !=null and userName !=''">
+	         USER_NAME=#{userName},
+	        </if>
+	        <if test="realName !=null and userName !=''">
+	         REAL_NAME=#{realName},
+	        </if>
+	        <if test="password !=null and password !=''">
+	         PASSWORD=#{password},
+	        </if>
+	        <if test="agdeptNamee !=null and agdeptNamee !=''">
+	         DEPT_NAME=#{agdeptNamee},
+	        </if>
+	        <if test="memberId !=null and memberId !=''">
+	         MEMBER_ID=#{memberId} 
+	        </if>
+         </set> 
+         where id=#{id}
+	</update>
+</mapper>

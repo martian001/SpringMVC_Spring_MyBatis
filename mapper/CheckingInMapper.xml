@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 如果在接口绑定里面,接口里面不写Sql语句,sql写在当前映射文件,那么namespace必须是接口的全路径名 -->
+<mapper namespace="com.et.bean.checkingIn.CheckingIn">
+    <resultMap id="checkingInMap" type="checkingIn">
+		<id property="id" column="ID" />
+		<id property="userId" column="USER_ID" />
+		<id property="hour" column="HOUR" />
+		<id property="startDate" column="START_DATE" />
+		<id property="endDate" column="END_DATE" />
+		<id property="month" column="MONTH" />
+		<id property="status" column="STATUS" />
+	</resultMap>
+    <resultMap id="checkingInIndexMap" type="checkingInIndex">
+		<id property="id" column="ID" />
+		<id property="userId" column="USER_ID" />
+		<id property="hour" column="HOUR" />
+		<id property="startDate" column="START_DATE" />
+		<id property="endDate" column="END_DATE" />
+		<id property="week" column="WEEK" />
+		<id property="month" column="MONTH" />
+		<id property="status" column="STATUS" />
+		<id property="realName" column="REAL_NAME" />
+		<id property="deptName" column="DEPT_NAME" />
+		<id property="overTime" column="OVER_TIME" />
+	</resultMap>
+	<!-- 查询所有 -->
+	<select id="getAll" resultMap="checkingInMap">
+		<![CDATA[SELECT * FROM CHECKING_IN ]]>
+	</select>
+	<!-- 根据条件分页查询 mysql -->
+	<select id="queryCheckingInIndex" resultMap="checkingInIndexMap" parameterType="checkingInIndex">
+		<![CDATA[
+SELECT 
+  A.ID,
+  A.USER_ID,
+  B.REAL_NAME,
+  B.DEPT_NAME,
+  a.`START_DATE`,
+  a.`END_DATE`,
+  a.`STATUS`,
+  A.`OVER_TIME`,
+  dayofweek(a.`START_DATE`) week
+FROM
+  CHECKING_IN A 
+  LEFT JOIN SYS_USER B 
+    ON A.`USER_ID` = B.`ID` 
+	]]>
+		<where>
+			<trim>
+				<if test="realName != null and realName !=''">
+					AND B.REAL_NAME LIKE '%${realName}%'
+				</if>
+				<if test="deptName != null and deptName !=''">
+					AND B.DEPT_NAME LIKE '%${deptName}%'
+				</if>
+				<if test="startDate != null and startDate !=''">
+					AND A.start_Date <![CDATA[>=]]> #{startDate}
+				</if>
+				<if test="endDate != null and endDate !=''">
+					AND A.END_DATE <![CDATA[<=]]> #{endDate}
+				</if>
+				<if test="status !=null and status >0">
+					AND A.STATUS = #{status}
+				</if>
+				<if test="id !=null and id >0">
+					AND A.ID = #{id}
+				</if>
+			</trim>
+		</where>
+		<if test="page != -1">
+		 LIMIT ${first},${rows}
+		</if>
+	</select>
+	<!-- 根据条件查询数量 -->
+	<select id="getCheckingInIndexTotal" resultType="Integer" parameterType="checkingIn">
+	<![CDATA[
+	SELECT COUNT(1) FROM
+			(		SELECT 
+				  A.USER_ID,
+				  B.REAL_NAME,
+				  B.DEPT_NAME,
+				  A.`START_DATE`,
+				  A.`END_DATE`,
+				  A.`STATUS`
+				FROM
+				  CHECKING_IN A 
+				  LEFT JOIN SYS_USER B 
+				    ON A.`USER_ID` = B.`ID` 
+	]]>
+		<where>
+			<trim>
+				<if test="realName != null and realName !=''">
+					AND B.REAL_NAME LIKE '%${realName}%'
+				</if>
+				<if test="deptName != null and deptName !=''">
+					AND B.DEPT_NAME LIKE '%${deptName}%'
+				</if>
+				<if test="startDate != null and startDate !=''">
+					AND A.START_DATE <![CDATA[>=]]> #{startDate}
+				</if>
+				<if test="endDate != null and endDate !=''">
+					AND A.END_DATE <![CDATA[<=]]> #{endDate}
+				</if>
+				<if test="status !=null and status >0">
+					AND A.STATUS = #{status}
+				</if>
+				<if test="id !=null and id >0">
+					AND A.ID = #{id}
+				</if>
+			</trim>
+		</where>
+		) T
+	</select>
+	<!-- 根据条件分页查询 mysql -->
+	<select id="findPage" resultMap="checkingInMap" parameterType="checkingIn">
+		<![CDATA[
+SELECT A.* FROM CHECKING_IN A
+	]]>
+		<where>
+			<trim>
+				<if test="month !=null and month >0">
+					AND A.MONTH = #{month}
+				</if>
+				<if test="id !=null and id >0">
+					AND A.ID = #{id}
+				</if>
+			</trim>
+		</where>
+		LIMIT ${first},${rows}
+	</select>
+	<!-- 根据条件查询数量 -->
+	<select id="getTotal" resultType="Integer" parameterType="checkingIn">
+	<![CDATA[
+	SELECT COUNT(1) FROM
+			(SELECT a.* FROM CHECKING_IN A
+	]]>
+		<where>
+			<!-- 用来处理如果where后面是以and开头的条件,那么可以自动去掉and -->
+			<trim>
+				<if test="month !=null and month >0">
+					AND A.MONTH = #{month}
+				</if>
+				<if test="id !=null and id >0">
+					AND A.ID = #{id}
+				</if>
+			</trim>
+		</where>
+		) T
+	</select>
+	<select id="getById" resultMap="checkingInMap">
+		<![CDATA[SELECT * FROM CHECKING_IN WHERE ID=#{id}]]>
+	</select>
+	<insert id="insert" parameterType="checkingIn">
+      INSERT INTO CHECKING_IN
+      <trim prefix="(" suffix=")" suffixOverrides=",">
+		 <if test="userId != null and userId >0">
+		  USER_ID, 
+		 </if>
+		 <if test="hour != null and hour >0">
+		  HOUR, 
+		 </if>
+		 <if test="startDate != null and startDate !=''">
+		  START_DATE, 
+		 </if>
+		 <if test="endDate != null and endDate !=''">
+		  END_DATE, 
+		 </if>
+		 <if test="month != null and month >0">
+		  MONTH, 
+		 </if>
+		 <if test="status != null and status >0">
+		  STATUS,
+		 </if>
+		 <if test="overtime != null and overtime >0">
+		  OVER_TIME,
+		</if>
+	  </trim>
+	  <trim prefix="values (" suffix=")" suffixOverrides=",">
+		<if test="userId != null and userId >0">
+		  #{userId},
+		</if>
+		<if test="hour != null and hour >0">
+		  #{hour},
+		</if>
+		<if test="startDate != null and startDate !=''">
+		  #{startDate,jdbcType= TIMESTAMP,javaType= java.util.Date},
+		</if>
+		<if test="endDate != null and endDate !=''">
+		  #{endDate,jdbcType= TIMESTAMP,javaType= java.util.Date},
+		</if>
+		<if test="month != null and month >0">
+		  #{month},
+		</if>
+		<if test="status != null and status >0">
+		  #{status},
+		</if>
+		<if test="overtime != null and overtime >0">
+		  #{overtime}
+		</if>
+	  </trim>
+	</insert>
+	<delete id="deleteById" parameterType="checkingIn">
+		<![CDATA[DELETE FROM CHECKING_IN WHERE ID=#{id}]]>
+	</delete>
+	<update id="updateById" parameterType="checkingIn">
+		UPDATE CHECKING_IN 
+		<set>
+			 <if test="userId != null and userId >0">
+			    USER_ID=#{userId,jdbcType= DATE,javaType= java.util.Date},
+			 </if>
+			 <if test="hour != null and hour >0">
+				HOUR=#{hour},
+			 </if>
+			 <if test="startDate != null and startDate !=''">
+				START_DATE=#{startDate,jdbcType= DATE,javaType= java.util.Date},
+			 </if>
+			 <if test="endDate != null and endDate !=''">
+				END_DATE=#{endDate},
+			 </if>
+			 <if test="month != null and month >0">
+				MONTH=#{month},
+			 </if>
+			 <if test="status != null and status >0">
+				STATUS=#{status},
+			 </if>
+			 <if test="overtime != null and overtime >0">
+			    OVER_TIME=#{overtime}
+			 </if>
+		</set>
+		   WHERE ID = #{ID}
+	</update>
+	<delete id="deleteByIds" parameterType="java.util.List">
+		DELETE FROM CHECKING_IN WHERE ID in
+		<foreach collection="list" item="item" index="index" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+	</delete>
+	<select id="queryHandleCheckingIn" resultMap="checkingInIndexMap" parameterType="checkingInIndex">
+		<![CDATA[
+			SELECT 
+			  A.USER_ID,
+			  B.REAL_NAME,
+			  B.DEPT_NAME,
+			  MIN(a.`CHECKING_IN_DATE`) AS START_DATE,
+			  MAX(a.`CHECKING_IN_DATE`) AS END_DATE
+			FROM
+			  CHECKING_IN_RECORD A 
+			  LEFT JOIN SYS_USER B 
+			    ON A.`USER_ID` = B.`ID` 
+	]]>
+		<where>
+			<trim>
+				<if test="realName != null and realName !=''">
+					AND B.REAL_NAME LIKE '%${realName}%'
+				</if>
+				<if test="deptName != null and deptName !=''">
+					AND B.DEPT_NAME LIKE '%${deptName}%'
+				</if>
+				<if test="id !=null and id >0">
+					AND A.ID = #{id}
+				</if>
+			</trim>
+		</where>
+		GROUP BY a.`USER_ID`, DATE_FORMAT(a.`CHECKING_IN_DATE`,'%Y-%m-%d')
+		<if test="page != -1">
+		 LIMIT ${first},${rows}
+		</if>
+	</select>
+</mapper>

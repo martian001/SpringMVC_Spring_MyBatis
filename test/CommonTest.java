@@ -39,7 +39,7 @@ public class CommonTest {
       try {
          // 构建Workbook对象, 只读Workbook对象
          // 直接从本地文件创建Workbook
-         InputStream instream = new FileInputStream("D:\\指纹打卡记录=住房金融事业部=2016年4月.xls");
+         InputStream instream = new FileInputStream("D:\\指纹打卡记录=2016年5月=住房金融事业部.xls");
          jxl.Workbook readwb = Workbook.getWorkbook(instream);
          // Sheet的下标是从0开始
          // 获取第一张Sheet表
@@ -58,8 +58,8 @@ public class CommonTest {
          Map<String, String> late = new TreeMap<>();
          // 获取指定单元格的对象引用
          for (int i = 1; i < rsRows; i++) {
-            String date = readsheet.getCell(3, i).getContents();
-            String name = readsheet.getCell(2, i).getContents();
+            String date = readsheet.getCell(4, i).getContents();
+            String name = readsheet.getCell(1, i).getContents();
             if ("梁衍君".equals(name)) {
                Integer hour = Integer.valueOf(date.substring(11, 13));
                String tempDate = date.substring(0, 11);// 2016-04-02
