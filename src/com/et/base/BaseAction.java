@@ -7,7 +7,11 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.codehaus.jackson.map.ObjectMapper;
+
 import com.alibaba.fastjson.JSON;
+import com.et.bean.Json;
+
 
 /**
  * ★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★<br>
@@ -53,6 +57,28 @@ public class BaseAction {
          out.close();
       } catch (IOException e) {
          e.printStackTrace();
+      }
+   }
+   protected void fillReturnJson(HttpServletResponse response,boolean isSucc,String msg) {
+      com.et.bean.Json j = new Json();
+      j.getHeader().put("success", isSucc);
+      j.getHeader().put("msg", msg);
+      outputJson(j, response);
+   }
+   protected void outputJson(Object jsonObj, HttpServletResponse response) {
+      // 兼容IE浏览器
+      response.setContentType("text/html;charset=utf-8");
+      response.setHeader("Cache-Control", "no-cache");
+      try {
+         PrintWriter pw = response.getWriter();
+         // 将Java对象转换为JSON字符串
+         String gsonStr = new ObjectMapper().writeValueAsString(jsonObj);
+         // 输出JSON字符串
+         pw.print(gsonStr);
+         pw.flush();
+         pw.close();
+      } catch (IOException e) {
+         System.out.println("输出GSON出错：" + e);
       }
    }
 }

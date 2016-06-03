@@ -40,7 +40,7 @@ public abstract class BaseServiceImpl<T> implements BaseService<T> {
    }
 
    @Override
-   public void deleteByIds(Long[] ids) {
+   public void deleteByIds(List ids) {
       baseDao.deleteByIds(ids);
    }
 
@@ -56,7 +56,7 @@ public abstract class BaseServiceImpl<T> implements BaseService<T> {
    }
 
    @Override
-   public List<T> getByIds(Long[] ids) {
+   public List<T> getByIds(List ids) {
       return baseDao.getByIds(ids);
    }
 

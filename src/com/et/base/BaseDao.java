@@ -18,13 +18,13 @@ public interface BaseDao<T> {
 
    void deleteById(Long id);
 
-   void deleteByIds(Long[] ids);
+   void deleteByIds(List ids);
 
    void update(T parameter);
 
    T getById(Long id);
 
-   List<T> getByIds(Long[] ids);
+   List<T> getByIds(List ids);
 
    List<T> getAll();
 

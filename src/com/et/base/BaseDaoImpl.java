@@ -52,8 +52,8 @@ public abstract class BaseDaoImpl<T> extends SqlSessionDaoSupport implements Bas
     }
 
     @Override
-    public void deleteByIds(Long[] ids) {
-        // TODO Auto-generated method stub
+    public void deleteByIds(List ids) {
+       getSqlSession().delete(className + ".deleteByIds", ids);
     }
 
     @Override
@@ -67,7 +67,7 @@ public abstract class BaseDaoImpl<T> extends SqlSessionDaoSupport implements Bas
     }
 
     @Override
-    public List<T> getByIds(Long[] ids) {
+    public List<T> getByIds(List ids) {
         //  return getSqlSession().selectList(className+".getByIds", ids);
         return null;
     }
