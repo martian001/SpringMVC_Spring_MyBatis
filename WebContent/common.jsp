@@ -17,7 +17,7 @@
 <!-- 页面打印 -->
 <script type="text/javascript" src="${ctx }js/plug-in/jquery.jqprint.js"></script>
 
-<!-- <script type="text/javascript" src="js/plug-in/jquery-1.7.2.js"></script> -->
-
 <script type="text/javascript" src="${ctx }js/common.js" ></script>
+<!--  <script src="js/jquery.min.js?v=2.1.4"></script> -->
+ <script src="js/bootstrap.min.js?v=3.3.6"></script>
 
