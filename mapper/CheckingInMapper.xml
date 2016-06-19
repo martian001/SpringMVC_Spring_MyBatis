@@ -235,18 +235,17 @@ SELECT A.* FROM CHECKING_IN A
 		</foreach>
 	</delete>
 	<select id="queryHandleCheckingIn" resultMap="checkingInIndexMap" parameterType="checkingInIndex">
-		<![CDATA[
-			SELECT 
-			  A.USER_ID,
-			  B.REAL_NAME,
-			  B.DEPT_NAME,
-			  MIN(a.`CHECKING_IN_DATE`) AS START_DATE,
-			  MAX(a.`CHECKING_IN_DATE`) AS END_DATE
-			FROM
-			  CHECKING_IN_RECORD A 
-			  LEFT JOIN SYS_USER B 
-			    ON A.`USER_ID` = B.`ID` 
-	]]>
+	    <if test="page != -1">
+		SELECT D.* FROM (SELECT T.*, ROWNUM RN FROM (
+		</if>
+			SELECT A.USER_ID,
+			       B.REAL_NAME,
+			       B.DEPT_NAME,
+			       MIN(A.CHECKING_IN_DATE) AS START_DATE,
+			       MAX(A.CHECKING_IN_DATE) AS END_DATE
+			  FROM CHECKING_IN_RECORD A
+			  LEFT JOIN SYS_USER B
+			    ON A.USER_ID = B.ID
 		<where>
 			<trim>
 				<if test="realName != null and realName !=''">
@@ -260,9 +259,9 @@ SELECT A.* FROM CHECKING_IN A
 				</if>
 			</trim>
 		</where>
-		GROUP BY a.`USER_ID`, DATE_FORMAT(a.`CHECKING_IN_DATE`,'%Y-%m-%d')
+		 GROUP BY A.USER_ID, B.REAL_NAME, B.DEPT_NAME,TO_CHAR(A.CHECKING_IN_DATE, 'yyyy-MM-dd')
 		<if test="page != -1">
-		 LIMIT ${first},${rows}
+		<![CDATA[ ) T WHERE ROWNUM <=#{page}*#{rows} ) D WHERE D.RN > ((#{page}-1)*#{rows}) ]]>
 		</if>
 	</select>
 </mapper>
