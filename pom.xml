@@ -282,5 +282,10 @@
 			<artifactId>oracle-connector-java</artifactId>
 			<version>10.0.1</version>
 		</dependency>
+		<dependency>
+			<groupId>com.achievo</groupId>
+			<artifactId>com.achievo.framework</artifactId>
+			<version>0.0.2</version>
+		</dependency>
 	</dependencies>
 </project>

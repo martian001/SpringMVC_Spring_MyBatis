@@ -1,7 +1,9 @@
-package com.et.dao;
+package com.et.mapper.system;
 
+import org.mybatis.spring.annotation.MapperScan;
+
+import com.achievo.framework.mybatis.mapper.BaseMapper;
 import com.et.base.BaseDao;
-import com.et.bean.Mail;
 
 /**
  ★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★
@@ -14,6 +16,7 @@ import com.et.bean.Mail;
 ★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★
 ★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★
  */
-public interface MailDao extends BaseDao<Mail> {
+@MapperScan("mailMapper")
+public interface MailMapper<T, PK> extends BaseMapper<T, PK>,BaseDao<T> {
 
 }

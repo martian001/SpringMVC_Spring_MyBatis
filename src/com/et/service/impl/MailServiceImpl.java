@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 
 import com.et.base.BaseServiceImpl;
 import com.et.bean.Mail;
-import com.et.dao.MailDao;
+import com.et.mapper.system.MailMapper;
 import com.et.service.MailService;
 
 /**
@@ -42,7 +42,7 @@ import com.et.service.MailService;
 @Service
 public class MailServiceImpl extends BaseServiceImpl<Mail> implements MailService {
    @Resource
-   private MailDao mailDao;
+   private MailMapper mailMapper;
 
    @Autowired
    private JavaMailSenderImpl javaMailSenderImpl;
@@ -50,7 +50,7 @@ public class MailServiceImpl extends BaseServiceImpl<Mail> implements MailServic
    @PostConstruct
    public void init() {
       System.out.println("初始化");
-      setBaseDao(mailDao);
+      setBaseDao(mailMapper);
    }
 
    @Override

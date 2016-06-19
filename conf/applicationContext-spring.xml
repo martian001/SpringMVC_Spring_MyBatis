@@ -29,7 +29,12 @@
 	<!-- spring与mybatis整合配置，扫描所有dao ,生成与DAO类相同名字的bean（除了首字母小写） -->
 	<!-- <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer" p:basePackage="com.et.dao" 
 		p:sqlSessionFactoryBeanName="sqlSessionFactory" /> -->
-
+	<!-- 采用MapperScannerConfigurer扫描 -->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
+		<property name="basePackage" value="com.et" />
+		<property name="markerInterface" value="com.achievo.framework.mybatis.mapper.BaseMapper"/>  
+	</bean>
 	<!-- 对数据源进行事务管理 -->
 	<bean id="transactionManager"
 		class="org.springframework.jdbc.datasource.DataSourceTransactionManager"

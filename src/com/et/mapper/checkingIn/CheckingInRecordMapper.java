@@ -1,23 +1,23 @@
-package com.et.dao.system.impl;
+package com.et.mapper.checkingIn;
 
-import org.springframework.stereotype.Repository;
+import org.mybatis.spring.annotation.MapperScan;
 
-import com.et.base.BaseDaoImpl;
-import com.et.bean.system.SysUser;
-import com.et.dao.system.SysUserDao;
+import com.achievo.framework.mybatis.mapper.BaseMapper;
+import com.et.base.BaseDao;
+
 
 /**
  * ★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★<br>
  * ★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★<br>
  * ★☆ @author： liangyanjun <br>
- * ★☆ @time：2016年5月24日上午10:02:48 <br>
+ * ★☆ @time：2016年5月24日上午10:38:33 <br>
  * ★☆ @version： <br>
  * ★☆ @lastMotifyTime： <br>
  * ★☆ @ClassAnnotation： <br>
  * ★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★<br>
  * ★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★<br>
  */
-@Repository
-public class SysUserDaoImpl extends BaseDaoImpl<SysUser> implements SysUserDao {
+@MapperScan("checkingInRecordMapper")
+public interface CheckingInRecordMapper<T, PK> extends BaseMapper<T, PK>,BaseDao<T>{
 
 }

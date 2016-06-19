@@ -1,9 +1,11 @@
-package com.et.dao.checkingIn;
+package com.et.mapper.checkingIn;
 
 import java.util.List;
 
+import org.mybatis.spring.annotation.MapperScan;
+
+import com.achievo.framework.mybatis.mapper.BaseMapper;
 import com.et.base.BaseDao;
-import com.et.bean.checkingIn.CheckingIn;
 import com.et.bean.checkingIn.CheckingInIndex;
 
 /**
@@ -17,8 +19,8 @@ import com.et.bean.checkingIn.CheckingInIndex;
  * ★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★<br>
  * ★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★<br>
  */
-
-public interface CheckingInDao extends BaseDao<CheckingIn> {
+@MapperScan("checkingInMapper")
+public interface CheckingInMapper<T, PK> extends BaseMapper<T, PK>,BaseDao<T> {
 
    /**
     *@author:liangyanjun

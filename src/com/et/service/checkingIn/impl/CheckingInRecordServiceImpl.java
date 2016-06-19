@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.et.base.BaseServiceImpl;
 import com.et.bean.checkingIn.CheckingInRecord;
-import com.et.dao.checkingIn.CheckingInRecordDao;
+import com.et.mapper.checkingIn.CheckingInRecordMapper;
 import com.et.service.checkingIn.CheckingInRecordService;
 
 /**
@@ -24,7 +24,7 @@ import com.et.service.checkingIn.CheckingInRecordService;
 @Service
 public class CheckingInRecordServiceImpl extends BaseServiceImpl<CheckingInRecord> implements CheckingInRecordService {
    @Resource
-   private CheckingInRecordDao checkingInRecordDao;
+   private CheckingInRecordMapper checkingInRecordDao;
 
    @PostConstruct
    public void init() {

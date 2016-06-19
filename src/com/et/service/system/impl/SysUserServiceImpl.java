@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.et.base.BaseServiceImpl;
 import com.et.bean.system.SysUser;
-import com.et.dao.system.SysUserDao;
+import com.et.mapper.system.SysUserMapper;
 import com.et.service.system.SysUserService;
 
 /**
@@ -24,12 +24,12 @@ import com.et.service.system.SysUserService;
 @Service("sysUserServiceImpl")
 public class SysUserServiceImpl extends BaseServiceImpl<SysUser> implements SysUserService {
    @Resource
-   private SysUserDao sysUserDao;
+   private SysUserMapper sysUserMapper;
 
 
    @PostConstruct
    public void init() {
       System.out.println("初始化");
-      setBaseDao(sysUserDao);
+      setBaseDao(sysUserMapper);
    }
 }

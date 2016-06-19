@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!-- 如果在接口绑定里面,接口里面不写Sql语句,sql写在当前映射文件,那么namespace必须是接口的全路径名 -->
-<mapper namespace="com.et.bean.system.SysUser">
+<mapper namespace="com.et.mapper.system.SysUserMapper">
     <resultMap id="sysUserMap" type="sysUser">
 		<id property="id" column="ID" />
 		<id property="userName" column="USER_NAME" />

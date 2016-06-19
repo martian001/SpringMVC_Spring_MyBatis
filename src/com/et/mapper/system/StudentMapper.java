@@ -1,29 +1,23 @@
-package com.et.dao.impl;
+package com.et.mapper.system;
 
-import org.springframework.stereotype.Repository;
+import org.mybatis.spring.annotation.MapperScan;
 
-import com.et.base.BaseDaoImpl;
-import com.et.bean.Mail;
-import com.et.dao.MailDao;
+import com.achievo.framework.mybatis.mapper.BaseMapper;
+import com.et.base.BaseDao;
 
 /**
  ★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★
 ★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★
 ★☆            @author： liangyanjun                                       ☆★
-★☆            @time：2015年9月16日下午4:34:05    ☆★
+★☆            @time：2015年9月16日下午4:34:13    ☆★
 ★☆            @version：                                                                          ☆★
 ★☆            @lastMotifyTime：                                                   ☆★
 ★☆            @ClassAnnotation：                                                ☆★
 ★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★
 ★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★
  */
-@Repository
-public class MailDaoImpl extends BaseDaoImpl<Mail> implements MailDao {
+@MapperScan("studentMapper")
+public interface StudentMapper<T, PK> extends BaseMapper<T, PK>,BaseDao<T> {
 
-   public MailDaoImpl() {
-      System.out.println("UserDaoImpl实例化");
-   }
-
-
-
+   boolean nameIsExist(String name);
 }
