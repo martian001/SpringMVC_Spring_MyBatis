@@ -1,24 +1,22 @@
-package com.et.dao.checkingIn;
+package com.et.mapper.${packageModule};
 
-import java.util.List;
+import org.mybatis.spring.annotation.MapperScan;
 
+import com.achievo.framework.mybatis.mapper.BaseMapper;
 import com.et.base.BaseDao;
-import com.et.bean.checkingIn.${beanName};
 
 /**
  * ★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★<br>
  * ★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★<br>
  * ★☆ @author： liangyanjun <br>
  * ★☆ @time：${dateTime} <br>
- * ★☆ @version：${version} <br>
+ * ★☆ @version：  ${version}<br>
  * ★☆ @lastMotifyTime： <br>
- * ★☆ @ClassAnnotation：${classAnnotation} <br>
+ * ★☆ @ClassAnnotation： ${classAnnotation}<br>
  * ★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★<br>
  * ★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★<br>
  */
-
-public interface ${beanName}Dao extends BaseDao<${beanName}> {
-
-
+@MapperScan
+public interface ${className}<T, PK> extends BaseMapper<T, PK>,BaseDao<T>{
 
 }
