@@ -35,7 +35,7 @@ public abstract class BaseServiceImpl<T> implements BaseService<T> {
    }
 
    @Override
-   public void deleteById(Long id) {
+   public void deleteById(String id) {
       baseDao.deleteById(id);
    }
 
@@ -51,7 +51,7 @@ public abstract class BaseServiceImpl<T> implements BaseService<T> {
    }
 
    @Override
-   public T getById(Long id) {
+   public T getById(String id) {
       return baseDao.getById(id);
    }
 

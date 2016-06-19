@@ -69,7 +69,7 @@
 	  <selectKey keyProperty="id" resultType="String" order="BEFORE">
         SELECT SYS_GUID() FROM DUAL
       </selectKey>
-		<![CDATA[INSERT INTO student(NAME,age) VALUES(#{name}, #{age})]]>
+		<![CDATA[INSERT INTO student(ID,NAME,age) VALUES(#{id}, #{name}, #{age})]]>
 	</insert>
 	<delete id="deleteById" parameterType="student">
 		<![CDATA[delete from student where id=#{id}]]>

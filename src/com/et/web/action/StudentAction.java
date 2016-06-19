@@ -52,7 +52,7 @@ public class StudentAction extends BaseAction {
    }
 
    @RequestMapping("/studentAction_delete.do")
-   public String delete(Long id) {
+   public String delete(String id) {
       studentService.deleteById(id);
       return "forward:to_studentAction_list.do";
    }
@@ -63,7 +63,7 @@ public class StudentAction extends BaseAction {
    }
 
    @RequestMapping("/studentAction_editUI.do")
-   public String editUI(ModelMap map, Long id) {
+   public String editUI(ModelMap map, String id) {
       Student student = studentService.getById(id);
       map.put("student", student);
       return "studentAction/editUI";

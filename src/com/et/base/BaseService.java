@@ -16,13 +16,13 @@ import java.util.List;
 public interface BaseService<T> {
    int insert(T parameter);
 
-   void deleteById(Long id);
+   void deleteById(String id);
 
    void deleteByIds(List ids);
 
    void update(T parameter);
 
-   T getById(Long id);
+   T getById(String id);
 
    List<T> getByIds(List ids);
 

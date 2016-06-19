@@ -47,7 +47,7 @@ public abstract class BaseDaoImpl<T> extends SqlSessionDaoSupport implements Bas
     }
 
     @Override
-    public void deleteById(Long id) {
+    public void deleteById(String id) {
         getSqlSession().delete(className + ".deleteById", id);
     }
 
@@ -62,7 +62,7 @@ public abstract class BaseDaoImpl<T> extends SqlSessionDaoSupport implements Bas
     }
 
     @Override
-    public T getById(Long id) {
+    public T getById(String id) {
         return (T) getSqlSession().selectOne(className + ".getById", id);
     }
 
