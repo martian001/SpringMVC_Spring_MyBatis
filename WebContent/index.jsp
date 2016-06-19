@@ -7,19 +7,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="renderer" content="webkit">
 <meta http-equiv="Cache-Control" content="no-siteapp" />
-<title>H+ 后台主题UI框架 - 主页</title>
-
-<meta name="keywords" content="H+后台主题,后台bootstrap框架,会员中心主题,后台HTML,响应式后台">
-<meta name="description" content="H+是一个完全响应式，基于Bootstrap3最新版本开发的扁平化主题，她采用了主流的左右两栏式布局，使用了Html5+CSS3等现代技术">
-
+<title>主页</title>
 <link rel="shortcut icon" href="favicon.ico">
 <link href="css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
 <link href="css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
 <link href="css/animate.min.css" rel="stylesheet">
 <link href="css/style.min862f.css?v=4.1.0" rel="stylesheet">
-<title>Insert title here</title>
 </head>
-<body>
 <body class="fixed-sidebar full-height-layout gray-bg" style="overflow: hidden">
  <div id="wrapper">
   <!--左侧导航开始-->
@@ -40,7 +34,7 @@
        <li><a class="J_menuItem" href="form_avatar.jsp">修改头像</a></li>
        <li><a class="J_menuItem" href="profile.jsp">个人资料</a></li>
        <li class="divider"></li>
-       <li><a href="login.html">安全退出</a></li>
+       <li><a href="login.jsp">安全退出</a></li>
       </ul>
      </div>
      <div class="logo-element">H+</div>
@@ -91,7 +85,7 @@
       <li class="J_tabCloseOther"><a>关闭其他选项卡</a></li>
      </ul>
     </div>
-    <a href="login.html" class="roll-nav roll-right J_tabExit"><i class="fa fa fa-sign-out"></i> 退出</a>
+    <a href="login.jsp" class="roll-nav roll-right J_tabExit"><i class="fa fa fa-sign-out"></i> 退出</a>
    </div>
    <div class="row J_mainContent" id="content-main">
     <iframe class="J_iframe" name="iframe0" width="100%" height="100%" src="index_content.jsp" frameborder="0" data-id="index_content.jsp" seamless></iframe>
@@ -425,6 +419,5 @@
  <script src="js/hplus.min.js?v=4.1.0"></script>
  <script type="text/javascript" src="js/contabs.min.js"></script>
  <script src="js/plugins/pace/pace.min.js"></script>
-</body>
 </body>
 </html>

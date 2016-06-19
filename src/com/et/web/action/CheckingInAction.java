@@ -90,7 +90,7 @@ public class CheckingInAction extends BaseAction {
             String realName = readsheet.getCell(1, i).getContents();
             String deptName = readsheet.getCell(3, i).getContents();
             System.out.println(realName + "," + checkingInDate + "," + deptName);
-            Integer userId;
+            String userId;
             SysUser sysUser = new SysUser();
             sysUser.setRealName(realName);
             sysUser.setDeptName(deptName);

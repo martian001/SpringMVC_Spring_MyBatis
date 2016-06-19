@@ -38,7 +38,7 @@ public class BaseBean {
 
    // (#{page}-1)*#{row},#{row}
    public void setPage(int page) {
-      first = (page - 1) * rows;
+      //first = (page - 1) * rows;
       this.page = page;
    }
 

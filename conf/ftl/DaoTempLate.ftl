@@ -1,25 +1,24 @@
-package com.et.base;
+package com.et.dao.checkingIn;
 
-import org.junit.BeforeClass;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import java.util.List;
+
+import com.et.base.BaseDao;
+import com.et.bean.checkingIn.${beanName};
 
 /**
  * ★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★<br>
  * ★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★<br>
  * ★☆ @author： liangyanjun <br>
- * ★☆ @time：2016年5月17日下午11:09:46 <br>
- * ★☆ @version： <br>
+ * ★☆ @time：${dateTime} <br>
+ * ★☆ @version：${version} <br>
  * ★☆ @lastMotifyTime： <br>
- * ★☆ @ClassAnnotation： <br>
+ * ★☆ @ClassAnnotation：${classAnnotation} <br>
  * ★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★<br>
  * ★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★<br>
  */
-public class TestBase {
-   protected static ClassPathXmlApplicationContext ctx;
 
-   @BeforeClass
-   public static void init() {
-      ctx = new ClassPathXmlApplicationContext("applicationContext*.xml");
-      System.out.println(ctx);
-   }
+public interface ${beanName}Dao extends BaseDao<${beanName}> {
+
+
+
 }

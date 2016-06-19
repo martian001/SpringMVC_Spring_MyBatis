@@ -7,18 +7,23 @@
 		<![CDATA[select * from student ]]>
 	</select>
 	<!-- 根据条件分页查询 oracle -->
-	<!-- <select id="findPage" resultType="student" parameterType="student"> 
+<!-- 	<select id="findPage" resultType="student" parameterType="student"> 
 		<![CDATA[ SELECT D.* FROM (SELECT T.*, ROWNUM RN FROM ( SELECT * FROM STUDENT 
-		A ]]> <where> <trim> <if test="name != null and name !=''"> AND A.name LIKE 
-		'%${name}%' </if> <if test="age !=null and age >0"> AND A.age = #{age} </if> 
-		<if test="id!=null and id>0"> AND A.ID = #{id} </if> </trim> </where> 
+		A ]]>
+		<where>
+			<trim>
+				<if test="name != null and name !=''"> AND A.name LIKE
+					'%${name}%' </if>
+				<if test="age !=null and age >0"> AND A.age = #{age} </if>
+				<if test="id!=null and id>0"> AND A.ID = #{id} </if>
+			</trim>
+		</where> 
 		<![CDATA[ ) T WHERE ROWNUM <=#{page}*#{rows} ) D WHERE D.RN > ((#{page}-1)*#{rows}) 
-		]]> </select> -->
+		]]>
+	</select> -->
 	<!-- 根据条件分页查询 mysql -->
 	<select id="findPage" resultType="student" parameterType="student">
-		<![CDATA[
-SELECT * FROM STUDENT A
-	]]>
+        <![CDATA[ SELECT D.* FROM (SELECT T.*, ROWNUM RN FROM ( SELECT * FROM STUDENT A ]]>
 		<where>
 			<trim>
 				<if test="name != null and name !=''">
@@ -32,7 +37,7 @@ SELECT * FROM STUDENT A
 				</if>
 			</trim>
 		</where>
-		LIMIT ${first},${rows}
+		<![CDATA[ ) T WHERE ROWNUM <=#{page}*#{rows} ) D WHERE D.RN > ((#{page}-1)*#{rows}) ]]>
 	</select>
 	<!-- 根据条件查询数量 -->
 	<select id="getTotal" resultType="Integer" parameterType="student">
@@ -61,6 +66,9 @@ SELECT * FROM STUDENT A
 		<![CDATA[select * from student where id=#{id}]]>
 	</select>
 	<insert id="insert" parameterType="student">
+	  <selectKey keyProperty="id" resultType="String" order="BEFORE">
+        SELECT SYS_GUID() FROM DUAL
+      </selectKey>
 		<![CDATA[INSERT INTO student(NAME,age) VALUES(#{name}, #{age})]]>
 	</insert>
 	<delete id="deleteById" parameterType="student">

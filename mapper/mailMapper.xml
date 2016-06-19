@@ -10,6 +10,9 @@
 		<![CDATA[select * from mail where id=#{id}]]>
 	</select>
 	<insert id="insert" parameterType="mail">
+	  <selectKey keyProperty="id" resultType="String" order="BEFORE">
+        SELECT SYS_GUID() FROM DUAL
+      </selectKey>
 		<![CDATA[INSERT INTO mail(title,content,send_id,send_date) VALUES(#{title},#{content},#{send_id},sysdate)]]>
 	</insert>
 	<delete id="deleteById" parameterType="mail">

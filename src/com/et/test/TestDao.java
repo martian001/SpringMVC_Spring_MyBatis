@@ -10,6 +10,7 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.junit.Test;
 
 import com.et.bean.Student;
+import com.et.util.CommomUtils;
 
 /**
  ★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★
@@ -40,7 +41,7 @@ public class TestDao {
     @Test
     public void test11() {
         SqlSession openSession = sessionFactory.openSession();
-        openSession.insert("com.et.bean.Student.insert", new Student(new Long(99), "a哈哈", 11));
+        openSession.insert("com.et.bean.Student.insert", new Student(CommomUtils.getUUID(), "a哈哈", 11));
         openSession.commit();
         openSession.close();
     }

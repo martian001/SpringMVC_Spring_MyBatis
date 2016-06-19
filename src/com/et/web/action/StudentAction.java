@@ -83,7 +83,7 @@ public class StudentAction extends BaseAction {
    }
 
    @RequestMapping("/studentAction_update.do")
-   public String update(Long id, String name, Integer age) {
+   public String update(String id, String name, Integer age) {
       studentService.update(new Student(id, name, age));
       return "forward:to_studentAction_list.do";
    }

@@ -60,4 +60,39 @@ public class StudentServiceImpl extends TestBase {
          e.printStackTrace();
       }
    }
+   @Test
+   public void test_getAll1() {
+      try {
+         SysUserService service = (SysUserService) ctx.getBean("sysUserServiceImpl");
+         // SysUser sysUser=new SysUser();
+         // sysUser.setUserName("lyj");
+         // sysUser.setRealName("梁衍君");
+         // sysUser.setPassword("123");
+         // sysUser.setMemberId("321");
+         // service.insert(sysUser);
+         List<SysUser> all = service.getAll();
+         for (SysUser sysUser : all) {
+            System.out.println(sysUser);
+         }
+         CheckingInService checkingInService = (CheckingInService) ctx.getBean("checkingInServiceImpl");
+         CheckingIn checkingIn=new CheckingIn();
+         checkingIn.setHour(1.3);
+         checkingIn.setStartDate(new Date());
+         checkingIn.setEndDate(new Date());
+         checkingIn.setMonth(10);
+         checkingIn.setStatus(2);
+         //checkingInService.insert(checkingIn);
+         List<CheckingIn> all2 = checkingInService.getAll();
+         for (CheckingIn c : all2) {
+            System.out.println(c);
+         }
+         // StudentService studentService = (StudentService) ctx.getBean("studentServiceImpl");
+         // List<Student> list = studentService.getAll();
+         // for (Student student : list) {
+         // System.out.println(student);
+         // }
+      } catch (BeansException e) {
+         e.printStackTrace();
+      }
+   }
 }

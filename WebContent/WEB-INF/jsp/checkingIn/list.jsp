@@ -170,7 +170,7 @@
     <th data-options="field:'id',checkbox:true"></th>
     <th data-options="field:'realName',sortable:true" align="center" halign="center">姓名</th>
     <th data-options="field:'deptName',sortable:true" align="center" halign="center">部门</th>
-    <th data-options="field:'week',sortable:true,formatter:formatterWeek" align="center" halign="center">星期</th>
+    <th data-options="field:'week',sortable:true" align="center" halign="center">星期</th>
     <th data-options="field:'startDate',sortable:true,formatter:convertDateTime" align="center" halign="center">开始打卡时间</th>
     <th data-options="field:'endDate',sortable:true,formatter:convertDateTime" align="center" halign="center">结束打卡时间</th>
     <th data-options="field:'status',formatter:formatterStatus,sortable:true" align="center" halign="center">是否迟到</th>

@@ -14,7 +14,7 @@
 	</select>
 	<!-- 根据条件分页查询 mysql -->
 	<select id="findPage" resultMap="checkingInRecordMap" parameterType="checkingInRecord">
-		<![CDATA[
+		 <![CDATA[ SELECT D.* FROM (SELECT T.*, ROWNUM RN FROM (
 SELECT * FROM CHECKING_IN_RECORD A
 	]]>
 		<where>
@@ -22,12 +22,12 @@ SELECT * FROM CHECKING_IN_RECORD A
 				<if test="month !=null and month >0">
 					AND A.MONTH = #{month}
 				</if>
-				<if test="id !=null and id >0">
+				<if test="id !=null and id !=''">
 					AND A.ID = #{id}
 				</if>
 			</trim>
 		</where>
-		LIMIT ${first},${rows}
+		<![CDATA[ ) T WHERE ROWNUM <=#{page}*#{rows} ) D WHERE D.RN > ((#{page}-1)*#{rows}) ]]>
 	</select>
 	<!-- 根据条件查询数量 -->
 	<select id="getTotal" resultType="Integer" parameterType="checkingInRecord">
@@ -41,7 +41,7 @@ SELECT * FROM CHECKING_IN_RECORD A
 				<if test="month !=null and month >0">
 					AND A.MONTH = #{month}
 				</if>
-				<if test="id !=null and id >0">
+				<if test="id !=null and id !=''">
 					AND A.ID = #{id}
 				</if>
 			</trim>
@@ -52,9 +52,13 @@ SELECT * FROM CHECKING_IN_RECORD A
 		<![CDATA[SELECT * FROM CHECKING_IN_RECORD WHERE ID=#{id}]]>
 	</select>
 	<insert id="insert" parameterType="checkingInRecord">
+	  <selectKey keyProperty="id" resultType="String" order="BEFORE">
+        SELECT SYS_GUID() FROM DUAL
+      </selectKey>
 		INSERT INTO CHECKING_IN_RECORD
 		<trim prefix="(" suffix=")" suffixOverrides=",">
-			 <if test="userId != null and userId >0">
+			     ID,
+			 <if test="userId != null and userId !=''">
 			     USER_ID,
 			 </if>
 			 <if test="checkingInDate != null and checkingInDate !=''">
@@ -65,7 +69,8 @@ SELECT * FROM CHECKING_IN_RECORD A
 			 </if>
 		</trim>
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
-			 <if test="userId != null and userId >0">
+			     #{id},
+			 <if test="userId != null and userId !=''">
 				 #{userId},
 			 </if>
 			 <if test="checkingInDate != null and checkingInDate !=''">
@@ -82,7 +87,7 @@ SELECT * FROM CHECKING_IN_RECORD A
 	<update id="updateById" parameterType="checkingInRecord">
 		UPDATE CHECKING_IN_RECORD 
 		<set>
-	         <if test="userId != null and userId >0">
+	         <if test="userId != null and userId !=''">
 				USER_ID =#{userId},
 			 </if>
 			 <if test="checkingInDate != null and checkingInDate !=''">

@@ -14,8 +14,8 @@ import java.util.Date;
  * ★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★<br>
  */
 public class CheckingIn {
-   private Integer Id;
-   private Integer userId;
+   private String Id;
+   private String userId;
    private Double hour;
    private Date startDate;
    private Date endDate;
@@ -35,16 +35,16 @@ public class CheckingIn {
       this.overHour = overHour;
    }
    private double overHour;
-   public Integer getId() {
+   public String getId() {
       return Id;
    }
-   public void setId(Integer id) {
+   public void setId(String id) {
       Id = id;
    }
-   public Integer getUserId() {
+   public String getUserId() {
       return userId;
    }
-   public void setUserId(Integer userId) {
+   public void setUserId(String userId) {
       this.userId = userId;
    }
    public Double getHour() {

@@ -14,13 +14,13 @@ import com.et.base.BaseBean;
  * ★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★<br>
  */
 public class CheckingInIndex extends BaseBean {
-   private Integer Id;
-   private Integer userId;
+   private String Id;
+   private String userId;
    private Double hour;
    private Double overTime;
    private String startDate;
    private String endDate;
-   private int week;
+   private String week;
    private int month;
    private int status;
    private String realName;
@@ -42,19 +42,19 @@ public class CheckingInIndex extends BaseBean {
       this.deptName = deptName;
    }
 
-   public Integer getId() {
+   public String getId() {
       return Id;
    }
 
-   public void setId(Integer id) {
+   public void setId(String id) {
       Id = id;
    }
 
-   public Integer getUserId() {
+   public String getUserId() {
       return userId;
    }
 
-   public void setUserId(Integer userId) {
+   public void setUserId(String userId) {
       this.userId = userId;
    }
 
@@ -112,11 +112,11 @@ public class CheckingInIndex extends BaseBean {
       this.overTime = overTime;
    }
 
-   public int getWeek() {
+   public String getWeek() {
       return week;
    }
 
-   public void setWeek(int week) {
+   public void setWeek(String week) {
       this.week = week;
    }
 

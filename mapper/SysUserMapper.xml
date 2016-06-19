@@ -75,8 +75,12 @@ SELECT * FROM SYS_USER A
 		<![CDATA[SELECT * FROM SYS_USER WHERE ID=#{id}]]>
 	</select>
 	<insert id="insert" parameterType="sysUser" useGeneratedKeys="true" keyProperty="id">
+	   <selectKey keyProperty="id" resultType="String" order="BEFORE">
+        SELECT SYS_GUID() FROM DUAL
+       </selectKey>
 		INSERT INTO SYS_USER
 		<trim prefix="(" suffix=")" suffixOverrides=",">
+			  ID,
 	          <if test="userName !=null and userName !=''">
 	                USER_NAME,
 	          </if>
@@ -94,6 +98,7 @@ SELECT * FROM SYS_USER A
 	          </if>
          </trim>
          <trim prefix="values (" suffix=")" suffixOverrides=",">
+			  #{id},
 	          <if test="userName !=null and userName !=''">
 	               #{userName},
 	          </if>

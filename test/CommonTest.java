@@ -22,17 +22,6 @@ import com.et.util.DateUtils;
  * ★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★<br>
  * ★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★<br>
  */
-/**
- * ★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★<br>
- * ★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★<br>
- * ★☆ @author： liangyanjun <br>
- * ★☆ @time：2016年5月4日下午2:52:48 <br>
- * ★☆ @version： <br>
- * ★☆ @lastMotifyTime： <br>
- * ★☆ @ClassAnnotation： <br>
- * ★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★<br>
- * ★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★<br>
- */
 public class CommonTest {
    @Test
    public void realExl() {
