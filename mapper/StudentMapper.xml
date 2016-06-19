@@ -74,7 +74,7 @@
 	<delete id="deleteById" parameterType="student">
 		<![CDATA[delete from student where id=#{id}]]>
 	</delete>
-	<update id="updateById" parameterType="student">
+	<update id="update" parameterType="student">
 		<![CDATA[update student set name=#{name},age=#{age} where id=#{id}]]>
 	</update>
 </mapper>

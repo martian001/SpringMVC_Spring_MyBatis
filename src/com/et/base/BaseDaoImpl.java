@@ -58,7 +58,7 @@ public abstract class BaseDaoImpl<T> extends SqlSessionDaoSupport implements Bas
 
     @Override
     public void update(T parameter) {
-        getSqlSession().update(className + ".updateById", parameter);
+        getSqlSession().update(className + ".update", parameter);
     }
 
     @Override

@@ -119,7 +119,7 @@ SELECT * FROM SYS_USER A
 	<delete id="deleteById" parameterType="sysUser">
 		<![CDATA[DELETE FROM SYS_USER WHERE ID=#{id}]]>
 	</delete>
-	<update id="updateById" parameterType="sysUser">
+	<update id="update" parameterType="sysUser">
 		 UPDATE SYS_USER 
 		 <set>
 	        <if test="userName !=null and userName !=''">

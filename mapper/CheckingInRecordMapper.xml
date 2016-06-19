@@ -84,7 +84,7 @@ SELECT * FROM CHECKING_IN_RECORD A
 	<delete id="deleteById" parameterType="checkingInRecord">
 		<![CDATA[DELETE FROM CHECKING_IN_RECORD WHERE ID=#{id}]]>
 	</delete>
-	<update id="updateById" parameterType="checkingInRecord">
+	<update id="update" parameterType="checkingInRecord">
 		UPDATE CHECKING_IN_RECORD 
 		<set>
 	         <if test="userId != null and userId !=''">

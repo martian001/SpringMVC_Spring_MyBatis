@@ -14,7 +14,10 @@ package com.et.base;
 public class BaseBean {
    private int page = 1;
    private int rows = 10;
-   private int first = 1;
+   private String creatorId;
+   private String creatorDate;
+   private String updateId;
+   private String updateDate;
 
    public int getRows() {
       return rows;
@@ -24,27 +27,50 @@ public class BaseBean {
       this.rows = rows;
    }
 
-   public int getFirst() {
-      return first;
-   }
-
-   public void setFirst(int first) {
-      this.first = first;
-   }
-
    public int getPage() {
       return page;
    }
 
-   // (#{page}-1)*#{row},#{row}
    public void setPage(int page) {
-      //first = (page - 1) * rows;
       this.page = page;
+   }
+
+   public String getCreatorId() {
+      return creatorId;
+   }
+
+   public void setCreatorId(String creatorId) {
+      this.creatorId = creatorId;
+   }
+
+   public String getCreatorDate() {
+      return creatorDate;
+   }
+
+   public void setCreatorDate(String creatorDate) {
+      this.creatorDate = creatorDate;
+   }
+
+   public String getUpdateId() {
+      return updateId;
+   }
+
+   public void setUpdateId(String updateId) {
+      this.updateId = updateId;
+   }
+
+   public String getUpdateDate() {
+      return updateDate;
+   }
+
+   public void setUpdateDate(String updateDate) {
+      this.updateDate = updateDate;
    }
 
    @Override
    public String toString() {
-      return "BaseBean [page=" + page + ", row=" + rows + ", first=" + first + "]";
+      return "BaseBean [page=" + page + ", rows=" + rows + ", creatorId=" + creatorId + ", creatorDate=" + creatorDate + ", updateId=" + updateId + ", updateDate="
+            + updateDate + "]";
    }
 
 }

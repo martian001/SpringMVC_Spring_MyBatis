@@ -18,7 +18,7 @@
 	<delete id="deleteById" parameterType="mail">
 		<![CDATA[delete from mail where id=#{id}]]>
 	</delete>
-	<update id="updateById" parameterType="mail">
+	<update id="update" parameterType="mail">
 		<![CDATA[update mail set content=#{content}]]>
 	</update>
 </mapper>

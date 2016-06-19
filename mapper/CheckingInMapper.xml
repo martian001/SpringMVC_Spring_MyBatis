@@ -201,7 +201,7 @@ SELECT A.* FROM CHECKING_IN A
 	<delete id="deleteById" parameterType="checkingIn">
 		<![CDATA[DELETE FROM CHECKING_IN WHERE ID=#{id}]]>
 	</delete>
-	<update id="updateById" parameterType="checkingIn">
+	<update id="update" parameterType="checkingIn">
 		UPDATE CHECKING_IN 
 		<set>
 			 <if test="userId != null and userId !=''">
