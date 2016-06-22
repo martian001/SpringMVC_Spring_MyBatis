@@ -1,24 +1,20 @@
-package com.et.bean.${packageModule};
+package com.et.service.system;
 
-import com.et.base.BaseBean;
+import com.et.base.BaseService;
+import com.et.bean.system.SysMenu;
 
 /**
  * ★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★<br>
  * ★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★<br>
  * ★☆ @author： liangyanjun <br>
- * ★☆ @time：${dateTime} <br>
- * ★☆ @version：  ${version}<br>
+ * ★☆ @time：2016-06-22 16:07:35 <br>
+ * ★☆ @version：  1.0<br>
  * ★☆ @lastMotifyTime： <br>
- * ★☆ @ClassAnnotation： ${classAnnotation}<br>
+ * ★☆ @ClassAnnotation： 系统菜单<br>
  * ★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★<br>
  * ★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★<br>
  */
-public class ${beanName} extends BaseBean{
-   private String pid;
-   private String parentId;
-   private String menuName;
-   private String iconCls;
-   private String menuUrl;
-   private int status;
-   private int menuIndex;
+
+public interface SysMenuService extends BaseService<SysMenu> {
+
 }

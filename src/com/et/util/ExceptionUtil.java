@@ -1,24 +1,26 @@
-package com.et.bean.${packageModule};
+package com.et.util;
 
-import com.et.base.BaseBean;
-
+import java.io.PrintWriter;
+import java.io.StringWriter;
 /**
  * ★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★<br>
  * ★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★<br>
  * ★☆ @author： liangyanjun <br>
- * ★☆ @time：${dateTime} <br>
- * ★☆ @version：  ${version}<br>
+ * ★☆ @time：2016年6月20日下午6:40:50 <br>
+ * ★☆ @version： <br>
  * ★☆ @lastMotifyTime： <br>
- * ★☆ @ClassAnnotation： ${classAnnotation}<br>
+ * ★☆ @ClassAnnotation： <br>
  * ★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★<br>
  * ★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★<br>
  */
-public class ${beanName} extends BaseBean{
-   private String pid;
-   private String parentId;
-   private String menuName;
-   private String iconCls;
-   private String menuUrl;
-   private int status;
-   private int menuIndex;
+public class ExceptionUtil
+{
+  public static String getExceptionMessage(Exception e)
+  {
+    StringWriter sw = new StringWriter();
+    e.printStackTrace(new PrintWriter(sw, true));
+    String str = sw.toString();
+    
+    return str;
+  }
 }

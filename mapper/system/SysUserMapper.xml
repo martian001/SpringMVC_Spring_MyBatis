@@ -16,9 +16,10 @@
 	</select>
 	<!-- 根据条件分页查询 mysql -->
 	<select id="findPage" resultMap="sysUserMap" parameterType="sysUser">
-		<![CDATA[
-SELECT * FROM SYS_USER A
-	]]>
+	<if test="page != -1">
+	SELECT D.* FROM (SELECT T.*, ROWNUM RN FROM (
+	</if>
+    SELECT * FROM SYS_USER A
 		<where>
 			<trim>
 				<if test="userName != null and userName !=''">
@@ -39,7 +40,7 @@ SELECT * FROM SYS_USER A
 			</trim>
 		</where>
 		<if test="page != -1">
-		LIMIT ${first},${rows}
+		<![CDATA[ ) T WHERE ROWNUM <=#{page}*#{rows} ) D WHERE D.RN > ((#{page}-1)*#{rows}) ]]>
 		</if>
 	</select>
 	<!-- 根据条件查询数量 -->

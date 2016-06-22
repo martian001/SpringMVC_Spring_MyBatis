@@ -35,12 +35,12 @@ public class CodeGenerateMachine {
          List<String> tempLates = Arrays.asList("MapperTempLate.ftl-Mapper", "ServiceTempLate.ftl-Service", "ServiceImplTempLate.ftl-Service", "BeanTempLate.ftl-Bean",
                "ActionTempLate.ftl-Action");
          List<Map<String, Object>> list = new ArrayList<>();
-         String name = "Pruduct";
-         String lowercaseBeanName = "pruduct";
+         String name = "SysMenu";
+         String lowercaseBeanName = "sysMenu";
          String dateTime = DateUtils.getCurrentDateTime();
          String version = "1.0";
-         String classAnnotation = "测试";
-         String packageModule = "pruduct";
+         String classAnnotation = "系统菜单";
+         String packageModule = "system";
          String packageRoot = "com/et/";
 
          for (String tempLate : tempLates) {

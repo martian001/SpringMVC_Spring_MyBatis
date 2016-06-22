@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ include file="common.jsp"%>
+<%@ include file="../common.jsp"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -31,20 +31,25 @@
       </span>
       </a>
       <ul class="dropdown-menu animated fadeInRight m-t-xs">
-       <li><a class="J_menuItem" href="form_avatar.jsp">修改头像</a></li>
-       <li><a class="J_menuItem" href="profile.jsp">个人资料</a></li>
+       <li><a class="J_menuItem" href="to_form_avatar.do">修改头像</a></li>
+       <li><a class="J_menuItem" href="to_profile.do">个人资料</a></li>
        <li class="divider"></li>
-       <li><a href="login.jsp">安全退出</a></li>
+       <li><a href="to_login.do">安全退出</a></li>
       </ul>
      </div>
      <div class="logo-element">H+</div>
     </li>
-    <li><a href="#"> <i class="fa fa-home"></i> <span class="nav-label">主页</span> <span class="fa arrow"></span>
-    </a>
-     <ul class="nav nav-second-level">
-      <li><a class="J_menuItem" href="to_studentAction_list.do" data-index="0">学生</a></li>
-      <li><a class="J_menuItem" href="${ctx}checkingInAction/to_checkingInAction_list.do">考勤</a></li>
-     </ul></li>
+    <!-- 菜单加载 -->
+    <c:forEach items="${sysMenus}" var="menu">
+     <li>
+       <a href="#"> <i class="${menu.iconCls}"></i> <span class="nav-label">${menu.menuName }</span> <span class="fa arrow"></span></a>
+       <ul class="nav nav-second-level">
+       <c:forEach items="${menu.childrenList}" var="childrenMenu">
+          <li><a class="J_menuItem" href="${ctx}${childrenMenu.menuUrl}">${childrenMenu.menuName}</a></li>
+       </c:forEach>
+       </ul>
+      </li>
+    </c:forEach>
   </div>
   </nav>
   <!--左侧导航结束-->
@@ -85,10 +90,10 @@
       <li class="J_tabCloseOther"><a>关闭其他选项卡</a></li>
      </ul>
     </div>
-    <a href="login.jsp" class="roll-nav roll-right J_tabExit"><i class="fa fa fa-sign-out"></i> 退出</a>
+    <a href="to_login.do" class="roll-nav roll-right J_tabExit"><i class="fa fa fa-sign-out"></i> 退出</a>
    </div>
    <div class="row J_mainContent" id="content-main">
-    <iframe class="J_iframe" name="iframe0" width="100%" height="100%" src="index_content.jsp" frameborder="0" data-id="index_content.jsp" seamless></iframe>
+    <iframe class="J_iframe" name="iframe0" width="100%" height="100%" src="to_index_content.do" frameborder="0" data-id="index_content.do" seamless></iframe>
    </div>
    <div class="footer">
     <div class="pull-right">&copy; 2014-2015</div>

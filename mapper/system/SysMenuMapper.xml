@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 如果在接口绑定里面,接口里面不写Sql语句,sql写在当前映射文件,那么namespace必须是接口的全路径名 -->
+<mapper namespace="com.et.mapper.system.SysMenuMapper">
+	<resultMap id="sysMenuMap" type="sysMenu">
+		<id column="ID" property="id" />
+		<result column="PARENT_ID" property="parentId" />
+		<result column="MENU_NAME" property="menuName" />
+		<result column="ICON_CLS" property="iconCls" />
+		<result column="MENU_URL" property="menuUrl" />
+		<result column="STATUS" property="status" />
+		<result column="MENU_INDEX" property="menuIndex" />
+		<collection property="childrenList" ofType="sysMenu">
+			<result column="C_ID" property="id" />
+			<result column="C_PARENT_ID" property="parentId" />
+			<result column="C_MENU_NAME" property="menuName" />
+			<result column="C_ICON_CLS" property="iconCls" />
+			<result column="C_MENU_URL" property="menuUrl" />
+			<result column="C_STATUS" property="status" />
+		</collection>
+	</resultMap>
+	<!-- 查询所有 -->
+	<select id="getAll" resultMap="sysMenuMap">
+		<![CDATA[SELECT A.ID,
+       A.PARENT_ID,
+       A.MENU_NAME,
+       A.ICON_CLS,
+       A.MENU_URL,
+       A.MENU_INDEX,
+       A.STATUS,
+       B.ID         AS C_ID,
+       B.PARENT_ID  AS C_PARENT_ID,
+       B.MENU_NAME AS C_MENU_NAME,
+       B.ICON_CLS AS C_ICON_CLS,
+       B.MENU_URL AS C_MENU_URL,
+       B.MENU_INDEX AS C_MENU_INDEX,
+       B.STATUS AS C_STATUS
+  FROM SYS_MENU A, SYS_MENU B
+ WHERE A.ID = B.PARENT_ID ]]>
+	</select>
+	<!-- 根据条件分页查询 mysql -->
+	<select id="findPage" resultMap="sysMenuMap" parameterType="sysMenu">
+		SELECT D.* FROM (SELECT T.*, ROWNUM RN FROM (
+		SELECT * FROM SYS_MENU A
+		<where>
+			<trim>
+				<if test="userName != null and userName !=''">
+					AND A.USER_NAME LIKE '%${userName}%'
+				</if>
+				<if test="id!=null and id>0">
+					AND A.ID = #{id}
+				</if>
+			</trim>
+		</where>
+		<![CDATA[ ) T WHERE ROWNUM <=#{page}*#{rows} ) D WHERE D.RN > ((#{page}-1)*#{rows}) ]]>
+	</select>
+	<!-- 根据条件查询数量 -->
+	<select id="getTotal" resultType="Integer" parameterType="sysMenu">
+	<![CDATA[
+	SELECT COUNT(1) FROM
+			(SELECT * FROM SYS_MENU A
+	]]>
+		<where>
+			<trim>
+				<if test="userName != null and userName !=''">
+					AND A.USER_NAME LIKE '%${userName}%'
+				</if>
+				<if test="id!=null and id>0">
+					AND A.ID = #{id}
+				</if>
+			</trim>
+		</where>
+		) T
+	</select>
+	<select id="getById" resultMap="sysMenuMap">
+		<![CDATA[SELECT A.ID,
+       A.PARENT_ID,
+       A.MENU_NAME,
+       A.ICON_CLS,
+       A.MENU_URL,
+       A.MENU_INDEX,
+       A.STATUS,
+       B.ID         AS C_ID,
+       B.PARENT_ID  AS C_PARENT_ID,
+       B.MENU_NAME AS C_MENU_NAME,
+       B.ICON_CLS AS C_ICON_CLS,
+       B.MENU_URL AS C_MENU_URL,
+       B.MENU_INDEX AS C_MENU_INDEX,
+       B.STATUS AS C_STATUS
+  FROM SYS_MENU A, SYS_MENU B
+ WHERE A.ID = B.PARENT_ID  AND A.ID=#{id}]]>
+	</select>
+	<insert id="insert" parameterType="sysMenu" useGeneratedKeys="true"
+		keyProperty="id">
+		<selectKey keyProperty="id" resultType="String" order="BEFORE">
+			SELECT SYS_GUID() FROM DUAL
+		</selectKey>
+		INSERT INTO SYS_MENU
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			ID,
+			<if test="parentId !=null and parentId !=''">
+				PARENT_ID,
+			</if>
+			<if test="menuName !=null and menuName !=''">
+				MENU_NAME,
+			</if>
+			<if test="iconCls !=null and iconCls !=''">
+				ICON_CLS,
+			</if>
+			<if test="menuUrl !=null and menuUrl !=''">
+				MENU_URL,
+			</if>
+			<if test="menuIndex !=null and menuIndex >0">
+				MENU_INDEX
+			</if>
+			<if test="status !=null and status >0">
+				STATUS
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			#{id},
+			<if test="parentId !=null and parentId !=''">
+				#{parentId},
+			</if>
+			<if test="menuName !=null and menuName !=''">
+				#{menuName},
+			</if>
+			<if test="iconCls !=null and iconCls !=''">
+				#{iconCls},
+			</if>
+			<if test="menuUrl !=null and menuUrl !=''">
+				#{menuUrl},
+			</if>
+			<if test="menuIndex !=null and menuIndex >0">
+				#{menuIndex},
+			</if>
+			<if test="status !=null and status >0">
+				#{status},
+			</if>
+		</trim>
+	</insert>
+	<delete id="deleteById" parameterType="sysMenu">
+		<![CDATA[DELETE FROM SYS_MENU WHERE ID=#{id}]]>
+	</delete>
+	<update id="update" parameterType="sysMenu">
+		UPDATE SYS_MENU
+		<set>
+			<if test="parentId !=null and parentId !=''">
+				PARENT_ID=#{parentId},
+			</if>
+			<if test="menuName !=null and menuName !=''">
+				MENU_NAME=#{menuName},
+			</if>
+			<if test="iconCls !=null and iconCls !=''">
+				ICON_CLS=#{iconCls},
+			</if>
+			<if test="menuUrl !=null and menuUrl !=''">
+				MENU_URL=#{menuUrl},
+			</if>
+			<if test="menuIndex !=null and menuIndex >0">
+				MENU_INDEX=#{menuIndex},
+			</if>
+			<if test="status !=null and status >0">
+				STATUS=#{status},
+			</if>
+		</set>
+		where ID=#{id}
+	</update>
+</mapper>

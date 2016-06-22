@@ -51,7 +51,7 @@
 		<!-- 扫描包下的所有bean，并取别名 -->
 		<property name="typeAliasesPackage" value="com.et.bean" />
 		<!-- mybatis文件配置，扫描所有mapper文件 -->
-		<property name="mapperLocations" value="classpath:*Mapper.xml" />
+		<property name="mapperLocations" value="classpath:**/*Mapper.xml" />
 	</bean>
 
 	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
