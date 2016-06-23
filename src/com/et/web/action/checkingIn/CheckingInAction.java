@@ -1,4 +1,4 @@
-package com.et.web.action;
+package com.et.web.action.checkingIn;
 
 import java.util.Arrays;
 import java.util.Date;

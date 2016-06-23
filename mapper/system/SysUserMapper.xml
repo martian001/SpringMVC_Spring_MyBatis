@@ -34,7 +34,7 @@
 				<if test="memberId != null and memberId !=''">
 					AND A.MEMBER_ID LIKE '%${memberId}%'
 				</if>
-				<if test="id!=null and id>0">
+				<if test="id!=null and id !=''">
 					AND A.ID = #{id}
 				</if>
 			</trim>
@@ -65,7 +65,7 @@
 				<if test="memberId != null and memberId !=''">
 					AND A.MEMBER_ID LIKE '%${memberId}%'
 				</if>
-				<if test="id!=null and id>0">
+				<if test="id!=null and id !=''">
 					AND A.ID = #{id}
 				</if>
 			</trim>

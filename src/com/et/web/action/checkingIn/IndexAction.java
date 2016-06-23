@@ -1,4 +1,4 @@
-package com.et.web.action.system;
+package com.et.web.action.checkingIn;
 
 import java.util.List;
 

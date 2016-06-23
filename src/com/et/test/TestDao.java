@@ -9,7 +9,7 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.junit.Test;
 
-import com.et.bean.Student;
+import com.et.bean.system.Student;
 import com.et.util.CommomUtils;
 
 /**

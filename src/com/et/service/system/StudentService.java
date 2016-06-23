@@ -1,7 +1,7 @@
-package com.et.service;
+package com.et.service.system;
 
 import com.et.base.BaseService;
-import com.et.bean.Student;
+import com.et.bean.system.Student;
 
 /**
  ★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★

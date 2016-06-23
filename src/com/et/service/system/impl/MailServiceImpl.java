@@ -1,4 +1,4 @@
-package com.et.service.impl;
+package com.et.service.system.impl;
 
 import java.io.File;
 
@@ -13,9 +13,9 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
 import com.et.base.BaseServiceImpl;
-import com.et.bean.Mail;
+import com.et.bean.system.Mail;
 import com.et.mapper.system.MailMapper;
-import com.et.service.MailService;
+import com.et.service.system.MailService;
 
 /**
  * ★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★<br>

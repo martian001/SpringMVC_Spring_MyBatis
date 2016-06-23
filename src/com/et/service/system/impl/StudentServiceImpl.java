@@ -1,4 +1,4 @@
-package com.et.service.impl;
+package com.et.service.system.impl;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
@@ -6,9 +6,9 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import com.et.base.BaseServiceImpl;
-import com.et.bean.Student;
+import com.et.bean.system.Student;
 import com.et.mapper.system.StudentMapper;
-import com.et.service.StudentService;
+import com.et.service.system.StudentService;
 
 /**
  * 

@@ -3,7 +3,6 @@ package code.genarate;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,8 +31,15 @@ public class CodeGenerateMachine {
    public void codeGenerate() {
       try {
          String srcPath = "C:/Users/Administrator/git/SpringMVC_Spring_MyBatis/src/";
-         List<String> tempLates = Arrays.asList("MapperTempLate.ftl-Mapper", "ServiceTempLate.ftl-Service", "ServiceImplTempLate.ftl-Service", "BeanTempLate.ftl-Bean",
-               "ActionTempLate.ftl-Action");
+         String mapperPath = "C:/Users/Administrator/git/SpringMVC_Spring_MyBatis/mapper/";
+         List<String> tempLates = new ArrayList<>();
+         tempLates.add("MapperTempLate.ftl-Mapper");
+         tempLates.add("ServiceTempLate.ftl-Service");
+         tempLates.add("ServiceImplTempLate.ftl-Service");
+         tempLates.add("BeanTempLate.ftl-Bean");
+         tempLates.add("ActionTempLate.ftl-Action");
+        // tempLates.add("MapperXmlTempLate.ftl-Mapper");
+
          List<Map<String, Object>> list = new ArrayList<>();
          String name = "SysMenu";
          String lowercaseBeanName = "sysMenu";
@@ -42,6 +48,7 @@ public class CodeGenerateMachine {
          String classAnnotation = "系统菜单";
          String packageModule = "system";
          String packageRoot = "com/et/";
+         String table = "SYS_USER";
 
          for (String tempLate : tempLates) {
             Map<String, Object> map = new HashMap<String, Object>();
@@ -63,6 +70,7 @@ public class CodeGenerateMachine {
             if ("ActionTempLate.ftl".equals(tempLate)) {
                map.put("packageLayer", "web." + packageLayer.toLowerCase());
             }
+            map.put("table", table);
             list.add(map);
          }
          for (Map<String, Object> m : list) {
@@ -75,6 +83,9 @@ public class CodeGenerateMachine {
             if ("ServiceImplTempLate.ftl".equals(tempLate)) {
                folderPath = srcPath + packageRoot + m.get("packageLayer").toString().replace(".", File.separator) + File.separator + m.get("packageModule").toString()
                      + "/impl/";
+            }
+            if ("MapperXmlTempLate.ftl".equals(tempLate)) {
+               folderPath = mapperPath + m.get("packageModule").toString();
             }
             String fileName = (m.get("className").toString()) + ".java";
             if ("BeanTempLate.ftl".equals(tempLate)) {

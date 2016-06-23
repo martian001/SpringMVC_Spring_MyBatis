@@ -1,4 +1,4 @@
-package com.et.web.action;
+package com.et.web.action.system;
 
 import java.util.HashMap;
 import java.util.List;
@@ -13,9 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.et.base.BaseAction;
-import com.et.bean.Student;
-import com.et.service.MailService;
-import com.et.service.StudentService;
+import com.et.bean.system.Student;
+import com.et.service.system.MailService;
+import com.et.service.system.StudentService;
 
 /**
  ★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★
