@@ -30,7 +30,7 @@ public class StudentServiceImpl extends TestBase {
    @Test
    public void test_getAll() {
       try {
-         test_getAll2();
+         test_getAll1();
          
       } catch (BeansException e) {
          e.printStackTrace();
@@ -52,6 +52,8 @@ public class StudentServiceImpl extends TestBase {
    public void test_getAll1() {
       try {
          SysUserService service = (SysUserService) ctx.getBean("sysUserServiceImpl");
+         SysUser sysUserByPhone = service.getSysUserByPhone("admin");
+         System.out.println(sysUserByPhone);
          // SysUser sysUser=new SysUser();
          // sysUser.setUserName("lyj");
          // sysUser.setRealName("梁衍君");

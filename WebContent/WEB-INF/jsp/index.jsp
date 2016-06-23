@@ -27,14 +27,14 @@
      <div class="dropdown profile-element">
       <span><img alt="image" class="img-circle" src="img/profile_small.jpg" /></span> <a data-toggle="dropdown" class="dropdown-toggle" href="#"> <span
        class="clear"
-      > <span class="block m-t-xs"><strong class="font-bold">Beaut-zihan</strong></span> <span class="text-muted text-xs block">超级管理员<b class="caret"></b></span>
+      > <span class="block m-t-xs"><strong class="font-bold">${login_user.realName }</strong></span> <span class="text-muted text-xs block">超级管理员<b class="caret"></b></span>
       </span>
       </a>
       <ul class="dropdown-menu animated fadeInRight m-t-xs">
        <li><a class="J_menuItem" href="to_form_avatar.do">修改头像</a></li>
        <li><a class="J_menuItem" href="to_profile.do">个人资料</a></li>
        <li class="divider"></li>
-       <li><a href="to_login.do">安全退出</a></li>
+       <li><a href="logout.do">安全退出</a></li>
       </ul>
      </div>
      <div class="logo-element">H+</div>
@@ -90,7 +90,7 @@
       <li class="J_tabCloseOther"><a>关闭其他选项卡</a></li>
      </ul>
     </div>
-    <a href="to_login.do" class="roll-nav roll-right J_tabExit"><i class="fa fa fa-sign-out"></i> 退出</a>
+    <a href="logout.do" class="roll-nav roll-right J_tabExit"><i class="fa fa fa-sign-out"></i> 退出</a>
    </div>
    <div class="row J_mainContent" id="content-main">
     <iframe class="J_iframe" name="iframe0" width="100%" height="100%" src="to_index_content.do" frameborder="0" data-id="index_content.do" seamless></iframe>

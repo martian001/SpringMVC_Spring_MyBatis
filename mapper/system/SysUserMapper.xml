@@ -6,9 +6,26 @@
 		<id property="id" column="ID" />
 		<id property="userName" column="USER_NAME" />
 		<id property="realName" column="REAL_NAME" />
-		<id property="password" column="PASSWORD" />
-		<id property="deptName" column="DEPT_NAME" />
 		<id property="memberId" column="MEMBER_ID" />
+		<id property="status" column="STATUS" />
+		<id property="jobTitle" column="JOB_TITLE" />
+		<id property="mail" column="MAIL" />
+		<id property="pwd" column="PWD" />
+		<id property="photoUrl" column="PHOTO_URL" />
+		<id property="token" column="TOKEN" />
+		<id property="personalQQ" column="PERSONAL_QQ" />
+		<id property="enterpriseQQ" column="ENTERPRISE_QQ" />
+		<id property="phone" column="PHONE" />
+		<id property="workPhone" column="WORK_PHONE" />
+		<id property="extension" column="EXTENSION" />
+		<id property="superiorId" column="SUPERIOR_USER_ID" />
+		<id property="superiorName" column="SUPERIOR_NAME" />
+		<id property="deptName" column="DEPT_NAME" />
+		<id property="deviceToken" column="DEVICE_TOKEN" />
+		<id property="creatorId" column="creator_id" />
+		<id property="creatorDate" column="creator_date" />
+		<id property="updateId" column="update_id" />
+		<id property="updateDate" column="update_date" />
 	</resultMap>
 	<!-- 查询所有 -->
 	<select id="getAll" resultMap="sysUserMap">
@@ -75,6 +92,14 @@
 	<select id="getById" resultMap="sysUserMap">
 		<![CDATA[SELECT * FROM SYS_USER WHERE ID=#{id}]]>
 	</select>
+	<!-- 根据手机号码查询用户 -->
+	<select id="getSysUserByPhone" resultMap="sysUserMap" parameterType="java.lang.String">
+		<![CDATA[SELECT * FROM SYS_USER WHERE PHONE=#{phone}]]>
+	</select>
+	<!-- 根据用户名查询用户 -->
+	<select id="getSysUserByUserName" resultMap="sysUserMap" parameterType="java.lang.String">
+		<![CDATA[SELECT * FROM SYS_USER WHERE USER_NAME=#{userName}]]>
+	</select>
 	<insert id="insert" parameterType="sysUser" useGeneratedKeys="true" keyProperty="id">
 	   <selectKey keyProperty="id" resultType="String" order="BEFORE">
         SELECT SYS_GUID() FROM DUAL
@@ -88,15 +113,59 @@
 	          <if test="realName !=null and realName !=''">
 	                REAL_NAME,
 	          </if>
-	          <if test="password !=null and password !=''">
-	                PASSWORD,
+	          <if test="memberId !=null and memberId !=''">
+	                MEMBER_ID,
+	          </if>
+	          <if test="status !=null and status >0">
+	                STATUS,
+	          </if>
+	          <if test="jobTitle !=null and jobTitle !=''">
+	                JOB_TITLE, 
+	          </if>
+	          <if test="mail !=null and mail !=''">
+	                MAIL, 
+	          </if>
+	          <if test="pwd !=null and pwd !=''">
+	                PWD, 
+	          </if>
+	          <if test="photoUrl !=null and photoUrl !=''">
+	                PHOTO_URL, 
+	          </if>
+	          <if test="token !=null and token !=''">
+	                TOKEN, 
+	          </if>
+	          <if test="personalQQ !=null and personalQQ !=''">
+	                PERSONAL_QQ, 
+	          </if>
+	          <if test="enterpriseQQ !=null and enterpriseQQ !=''">
+	                ENTERPRISE_QQ, 
+	          </if>
+	          <if test="phone !=null and phone !=''">
+	                PHONE, 
+	          </if>
+	          <if test="workPhone !=null and workPhone !=''">
+	                WORK_PHONE, 
+	          </if>
+	          <if test="extension !=null and extension !=''">
+	                EXTENSION, 
+	          </if>
+	          <if test="superiorId !=null and superiorId !=''">
+	                SUPERIOR_USER_ID, 
 	          </if>
 	          <if test="deptName !=null and deptName !=''">
-	                DEPT_NAME,
+	                DEPT_NAME, 
 	          </if>
-	          <if test="memberId !=null and memberId !=''">
-	                MEMBER_ID 
+	          <if test="deviceToken !=null and deviceToken !=''">
+	                DEVICE_TOKEN, 
 	          </if>
+	          <if test="creatorId !=null and creatorId !=''">
+	                CREATOR_ID, 
+	          </if>
+	                CREATOR_DATE, 
+	          <if test="updateId !=null and updateId !=''">
+	                UPDATE_ID, 
+	          </if>
+	                UPDATE_DATE, 
          </trim>
          <trim prefix="values (" suffix=")" suffixOverrides=",">
 			  #{id},
@@ -106,15 +175,59 @@
 	          <if test="realName !=null and realName !=''">
 	               #{realName},
 	          </if>
-	          <if test="password !=null and password !=''">
-	               #{password},
+	          <if test="memberId !=null and memberId !=''">
+	                #{memberId},
+	          </if>
+	          <if test="status !=null and status >0">
+	                #{status},
+	          </if>
+	          <if test="jobTitle !=null and jobTitle !=''">
+	                #{jobTitle},
+	          </if>
+	          <if test="mail !=null and mail !=''">
+	                #{mail},
+	          </if>
+	          <if test="pwd !=null and pwd !=''">
+	                #{pwd},
+	          </if>
+	          <if test="photoUrl !=null and photoUrl !=''">
+	                #{photoUrl},
+	          </if>
+	          <if test="token !=null and token !=''">
+	                #{token},
+	          </if>
+	          <if test="personalQQ !=null and personalQQ !=''">
+	                #{personalQQ},
+	          </if>
+	          <if test="enterpriseQQ !=null and enterpriseQQ !=''">
+	                #{enterpriseQQ},
+	          </if>
+	          <if test="phone !=null and phone !=''">
+	                #{phone},
+	          </if>
+	          <if test="workPhone !=null and workPhone !=''">
+	                #{workPhone},
+	          </if>
+	          <if test="extension !=null and extension !=''">
+	                #{extension},
+	          </if>
+	          <if test="superiorId !=null and superiorId !=''">
+	                #{superiorId},
 	          </if>
 	          <if test="deptName !=null and deptName !=''">
-	               #{deptName},
+	                #{deptName},
 	          </if>
-	          <if test="memberId !=null and memberId !=''">
-	               #{memberId}
+	          <if test="deviceToken !=null and deviceToken !=''">
+	                #{deviceToken},
 	          </if>
+	          <if test="creatorId !=null and creatorId !=''">
+	                #{creatorId},
+	          </if>
+	                SYSDATE,
+	          <if test="updateId !=null and updateId !=''">
+	                #{updateId},
+	          </if>
+	                SYSDATE, 
          </trim>
 	</insert>
 	<delete id="deleteById" parameterType="sysUser">
@@ -123,21 +236,65 @@
 	<update id="update" parameterType="sysUser">
 		 UPDATE SYS_USER 
 		 <set>
-	        <if test="userName !=null and userName !=''">
-	         USER_NAME=#{userName},
-	        </if>
-	        <if test="realName !=null and userName !=''">
-	         REAL_NAME=#{realName},
-	        </if>
-	        <if test="password !=null and password !=''">
-	         PASSWORD=#{password},
-	        </if>
-	        <if test="agdeptNamee !=null and agdeptNamee !=''">
-	         DEPT_NAME=#{agdeptNamee},
-	        </if>
-	        <if test="memberId !=null and memberId !=''">
-	         MEMBER_ID=#{memberId} 
-	        </if>
+	          <if test="userName !=null and userName !=''">
+	                USER_NAME=#{userName},
+	          </if>
+	          <if test="realName !=null and userName !=''">
+	                REAL_NAME=#{realName},
+	          </if>
+	          <if test="memberId !=null and memberId !=''">
+	                MEMBER_ID=#{memberId},
+	          </if>
+	          <if test="status !=null and status >0">
+	                STATUS=#{status},
+	          </if>
+	          <if test="jobTitle !=null and jobTitle !=''">
+	                JOB_TITLE=#{jobTitle},
+	          </if>
+	          <if test="mail !=null and mail !=''">
+	                MAIL=#{mail},
+	          </if>
+	          <if test="pwd !=null and pwd !=''">
+	                PWD=#{pwd},
+	          </if>
+	          <if test="photoUrl !=null and photoUrl !=''">
+	                PHOTO_URL=#{photoUrl},
+	          </if>
+	          <if test="token !=null and token !=''">
+	                TOKEN=#{token},
+	          </if>
+	          <if test="personalQQ !=null and personalQQ !=''">
+	                PERSONAL_QQ=#{personalQQ},
+	          </if>
+	          <if test="enterpriseQQ !=null and enterpriseQQ !=''">
+	                ENTERPRISE_QQ=#{enterpriseQQ},
+	          </if>
+	          <if test="phone !=null and phone !=''">
+	                PHONE=#{phone},
+	          </if>
+	          <if test="workPhone !=null and workPhone !=''">
+	                WORK_PHONE=#{workPhone},
+	          </if>
+	          <if test="extension !=null and extension !=''">
+	                EXTENSION=#{extension},
+	          </if>
+	          <if test="superiorId !=null and superiorId !=''">
+	                SUPERIOR_USER_ID=#{superiorId},
+	          </if>
+	          <if test="deptName !=null and deptName !=''">
+	                DEPT_NAME=#{deptName},
+	          </if>
+	          <if test="deviceToken !=null and deviceToken !=''">
+	                DEVICE_TOKEN=#{deviceToken},
+	          </if>
+	          <if test="creatorId !=null and creatorId !=''">
+	                CREATOR_ID=#{creatorId},
+	          </if>
+	                CREATOR_DATE=SYSDATE,
+	          <if test="updateId !=null and updateId !=''">
+	                UPDATE_ID=#{updateId},
+	          </if>
+	                UPDATE_DATE=SYSDATE 
          </set> 
          where id=#{id}
 	</update>

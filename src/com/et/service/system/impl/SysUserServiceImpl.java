@@ -32,4 +32,16 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUser> implements SysU
       System.out.println("初始化");
       setBaseDao(sysUserMapper);
    }
+
+
+   @Override
+   public SysUser getSysUserByPhone(String phone) {
+      return sysUserMapper.getSysUserByPhone(phone);
+   }
+
+
+   @Override
+   public SysUser getSysUserByUserName(String userName) {
+      return sysUserMapper.getSysUserByUserName(userName);
+   }
 }

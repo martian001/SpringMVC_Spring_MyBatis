@@ -33,19 +33,19 @@ public class CodeGenerateMachine {
          String srcPath = "C:/Users/Administrator/git/SpringMVC_Spring_MyBatis/src/";
          String mapperPath = "C:/Users/Administrator/git/SpringMVC_Spring_MyBatis/mapper/";
          List<String> tempLates = new ArrayList<>();
-         tempLates.add("MapperTempLate.ftl-Mapper");
-         tempLates.add("ServiceTempLate.ftl-Service");
-         tempLates.add("ServiceImplTempLate.ftl-Service");
-         tempLates.add("BeanTempLate.ftl-Bean");
+//         tempLates.add("MapperTempLate.ftl-Mapper");
+//         tempLates.add("ServiceTempLate.ftl-Service");
+//         tempLates.add("ServiceImplTempLate.ftl-Service");
+//         tempLates.add("BeanTempLate.ftl-Bean");
          tempLates.add("ActionTempLate.ftl-Action");
         // tempLates.add("MapperXmlTempLate.ftl-Mapper");
 
          List<Map<String, Object>> list = new ArrayList<>();
-         String name = "SysMenu";
-         String lowercaseBeanName = "sysMenu";
+         String name = "SysUser";
+         String lowercaseBeanName = "sysUser";
          String dateTime = DateUtils.getCurrentDateTime();
          String version = "1.0";
-         String classAnnotation = "系统菜单";
+         String classAnnotation = "系统用户";
          String packageModule = "system";
          String packageRoot = "com/et/";
          String table = "SYS_USER";

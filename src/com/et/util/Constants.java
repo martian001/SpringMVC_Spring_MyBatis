@@ -1,36 +1,16 @@
-package com.et.service.system;
-
-import com.et.base.BaseService;
-import com.et.bean.system.SysUser;
+package com.et.util;
 
 /**
  * ★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★<br>
  * ★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★<br>
  * ★☆ @author： liangyanjun <br>
- * ★☆ @time：2016年5月24日上午9:57:47 <br>
+ * ★☆ @time：2016年6月23日下午3:47:31 <br>
  * ★☆ @version： <br>
  * ★☆ @lastMotifyTime： <br>
  * ★☆ @ClassAnnotation： <br>
  * ★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★<br>
  * ★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★<br>
  */
-
-public interface SysUserService extends BaseService<SysUser> {
-
-   /**
-    *@author:liangyanjun
-    *@time:2016年6月23日下午4:28:32
-    *@param userName
-    *@return
-    */
-   SysUser getSysUserByPhone(String phone);
-
-   /**
-    *@author:liangyanjun
-    *@time:2016年6月23日下午5:12:55
-    *@param userName
-    *@return
-    */
-   SysUser getSysUserByUserName(String userName);
-
+public class Constants {
+   public static final String LOGIN_USER = "login_user";
 }
