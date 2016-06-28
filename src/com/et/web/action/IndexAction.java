@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.et.annotation.PermissionAnno;
 import com.et.base.BaseAction;
 import com.et.bean.system.SysMenu;
 import com.et.bean.system.SysUser;
@@ -36,6 +37,7 @@ public class IndexAction extends BaseAction {
    @Resource
    private SysUserService sysUserService;
 
+   @PermissionAnno(methodId="to_index")
    @RequestMapping("/to_index.do")
    public String toIndex(ModelMap model) {
       fillMenus(model);
@@ -87,6 +89,7 @@ public class IndexAction extends BaseAction {
     *@param resp
     *@return
     */
+   @PermissionAnno(methodId="login")
    @RequestMapping("/login.do")
    public String login(ModelMap model,String userName, String password, String captcha, HttpServletRequest req,HttpServletResponse resp) {
       SysUser sysUser =sysUserService.getSysUserByUserName(userName);
