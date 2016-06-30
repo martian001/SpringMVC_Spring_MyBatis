@@ -119,3 +119,4 @@ function convertDateTime(strDate){
     // 返回 YYYY-MM-dd hh:mm:ss
     return strDateTime;
 }
+

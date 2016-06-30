@@ -55,10 +55,10 @@ FROM
 					AND B.DEPT_NAME LIKE '%${deptName}%'
 				</if>
 				<if test="startDate != null and startDate !=''">
-					AND A.start_Date <![CDATA[>=]]> #{startDate}
+					AND A.start_Date <![CDATA[>=]]> TO_DATE(#{startDate},'yyyy-MM-dd')
 				</if>
 				<if test="endDate != null and endDate !=''">
-					AND A.END_DATE <![CDATA[<=]]> #{endDate}
+					AND A.END_DATE <![CDATA[<=]]>TO_DATE(#{endDate},'yyyy-MM-dd')
 				</if>
 				<if test="status !=null and status >0">
 					AND A.STATUS = #{status}
@@ -68,7 +68,7 @@ FROM
 				</if>
 			</trim>
 		</where>
-		<![CDATA[ ) T WHERE ROWNUM <=#{page}*#{rows} ) D WHERE D.RN > ((#{page}-1)*#{rows}) ]]>
+		<![CDATA[ ) T WHERE ROWNUM <=#{rows} ) D WHERE D.RN > #{offset} ]]>
 	</select>
 	<!-- 根据条件查询数量 -->
 	<select id="getCheckingInIndexTotal" resultType="Integer" parameterType="checkingIn">
@@ -90,10 +90,10 @@ FROM
 					AND B.DEPT_NAME LIKE '%${deptName}%'
 				</if>
 				<if test="startDate != null and startDate !=''">
-					AND A.START_DATE <![CDATA[>=]]> #{startDate}
+					AND A.START_DATE <![CDATA[>=]]> TO_DATE(#{startDate},'yyyy-MM-dd')
 				</if>
 				<if test="endDate != null and endDate !=''">
-					AND A.END_DATE <![CDATA[<=]]> #{endDate}
+					AND A.END_DATE <![CDATA[<=]]> TO_DATE(#{endDate},'yyyy-MM-dd')
 				</if>
 				<if test="status !=null and status >0">
 					AND A.STATUS = #{status}

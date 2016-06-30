@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ include file="../common.jsp"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -8,6 +7,7 @@
 <meta name="renderer" content="webkit">
 <meta http-equiv="Cache-Control" content="no-siteapp" />
 <title>主页</title>
+<%@ include file="../common.jsp"%>
 <link rel="shortcut icon" href="favicon.ico">
 <link href="css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
 <link href="css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">

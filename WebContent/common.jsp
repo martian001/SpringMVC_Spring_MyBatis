@@ -18,6 +18,12 @@
 <script type="text/javascript" src="${ctx }js/plug-in/jquery.jqprint.js"></script>
 
 <script type="text/javascript" src="${ctx }js/common.js" ></script>
-<!--  <script src="js/jquery.min.js?v=2.1.4"></script> -->
- <script src="js/bootstrap.min.js?v=3.3.6"></script>
+<!-- bootstrap -->
+<script src="${ctx }js/bootstrap.min.js?v=3.3.6"></script>
 
+<!-- bootstrap表格 分页 -->
+<%-- <script src="${ctx }js/plugins/bootstrap-table/bootstrap-table.min.js"></script>
+<script src="${ctx }js/plugins/bootstrap-table/bootstrap-table-mobile.min.js"></script>
+<link href="${ctx }css/plugins/bootstrap-table/bootstrap-table.min.css" rel="stylesheet">
+<script src="${ctx }js/demo/bootstrap-table-demo.min.js"></script>
+ --%>

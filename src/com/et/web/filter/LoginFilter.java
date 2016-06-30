@@ -53,6 +53,7 @@ public class LoginFilter implements Filter {
             || servletPath.endsWith(".ico")
             || servletPath.endsWith(".html")
             || servletPath.endsWith(".htm")
+            || servletPath.endsWith(".json")
             || servletPath.endsWith("login.do")
             || servletPath.endsWith("logout.do")
             ) {

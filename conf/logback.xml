@@ -99,7 +99,7 @@
 	
 
 	<root>
-		<level value="INFO" />
+		<level value="debug" />
 		<appender-ref ref="STDOUT" />
 		<appender-ref ref="FILEINFO" />
 		<appender-ref ref="FILEERROR" />

@@ -45,7 +45,7 @@ public class PermissionInterceptor implements HandlerInterceptor {
       System.out.println(handlerMethod.getBean());
       PermissionAnno permissionAnno = handlerMethod.getMethod().getAnnotation(PermissionAnno.class);
       if (permissionAnno != null) {
-         System.out.println(handlerMethod.getMethod().getAnnotation(PermissionAnno.class).methodId());
+         System.out.println(permissionAnno.methodId());
       }
       System.out.println("通过实现接口在执行action之前执行该方法preHandle" + handler);
       return true;// 是否执行action
