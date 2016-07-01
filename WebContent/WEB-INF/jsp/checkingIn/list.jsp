@@ -62,18 +62,17 @@
 			showToggle : true,
 			//pageSize : 10,
 			//pageNumber : 1, 
-			search : true,
 			showColumns : true,
 			showRefresh : true,
 			pagination : true,
-			search : true,
+			//search : true,
 			sortable : true,
 			showPaginationSwitch : true,//隐藏/显示分页
 			queryParams : queryParams,
 			rowStyle : rowStyleFn,
 			sidePagination : "server", //服务端请求
 			silentSort : true,
-			showExport : true,
+			//showExport : true,
 			//exportTypes : [ 'csv', 'txt', 'xml' ],
 			clickToSelect : true,
 			url : '${ctx }checkingInAction/checkingInAction_list.do',
@@ -119,7 +118,7 @@
  </form>
  <!-- 操作按钮 -->
  <div style="padding-bottom: 5px">
-  <a href="#" class="easyui-linkbutton" onclick="delByIds()" iconCls="icon-edit" plain="true">删除</a> <a href="#" class="easyui-linkbutton"
+  <!-- <a href="#" class="easyui-linkbutton" onclick="delByIds()" iconCls="icon-edit" plain="true">删除</a> --> <a href="#" class="easyui-linkbutton"
    onclick="openUploanFile()" iconCls="icon-edit" plain="true"
   >上传文件</a>
  </div>
@@ -145,9 +144,9 @@
  <div>
   <div style="float: left; font:">迟到:</div>
   <div style="background-color: #F7642C; width: 20px; height: 20px; float: left;"></div>
-  <div style="float: left;">晚上加班:</div>
+  <div style="float: left;">，晚上加班:</div>
   <div style="background-color: #03AF15; width: 20px; height: 20px; float: left;"></div>
-  <div style="float: left;">周六日加班:</div>
+  <div style="float: left;">，周六日加班:</div>
   <div style="background-color: #00ADE7; width: 20px; height: 20px; float: left;"></div>
  </div>
  

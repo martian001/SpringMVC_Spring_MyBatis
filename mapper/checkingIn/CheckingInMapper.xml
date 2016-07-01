@@ -169,7 +169,7 @@ SELECT A.* FROM CHECKING_IN A
 		 <if test="status != null and status >0">
 		  STATUS,
 		 </if>
-		 <if test="overtime != null and overtime >0">
+		 <if test="overTime != null and overTime >0">
 		  OVER_TIME,
 		</if>
 	  </trim>
@@ -193,8 +193,8 @@ SELECT A.* FROM CHECKING_IN A
 		<if test="status != null and status >0">
 		  #{status},
 		</if>
-		<if test="overtime != null and overtime >0">
-		  #{overtime}
+		<if test="overTime != null and overTime >0">
+		  #{overTime}
 		</if>
 	  </trim>
 	</insert>
@@ -222,8 +222,8 @@ SELECT A.* FROM CHECKING_IN A
 			 <if test="status != null and status >0">
 				STATUS=#{status},
 			 </if>
-			 <if test="overtime != null and overtime >0">
-			    OVER_TIME=#{overtime}
+			 <if test="overTime != null and overTime >0">
+			    OVER_TIME=#{overTime}
 			 </if>
 		</set>
 		   WHERE ID = #{ID}

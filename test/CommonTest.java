@@ -47,8 +47,9 @@ public class CommonTest {
          Map<String, String> late = new TreeMap<>();
          // 获取指定单元格的对象引用
          for (int i = 1; i < rsRows; i++) {
+            int column = readsheet.findCell("姓名").getColumn();
+            String name = readsheet.getCell(column, i).getContents();
             String date = readsheet.getCell(4, i).getContents();
-            String name = readsheet.getCell(1, i).getContents();
             if ("梁衍君".equals(name)) {
                Integer hour = Integer.valueOf(date.substring(11, 13));
                String tempDate = date.substring(0, 11);// 2016-04-02

@@ -259,7 +259,7 @@ DELETE FROM CHECKING_IN;
 DELETE FROM CHECKING_IN_RECORD;
 
 insert into SYS_USER (ID, USER_NAME, MEMBER_ID, JOB_TITLE, MAIL, PWD, PHOTO_URL, TOKEN, PERSONAL_QQ, ENTERPRISE_QQ, PHONE, WORK_PHONE, EXTENSION, REAL_NAME, STATUS, SUPERIOR_USER_ID, DEPT_NAME, DEVICE_TOKEN, CREATOR_DATE, CREATOR_ID, UPDATE_ID, UPDATE_DATE)
-values ('27EF608425F9499D980CC63FA63C5DA9', 'admin', null, null, null, 'c44b01947c9e6e3f', null, null, null, null, null, null, null, '超级管理员', null, null, '', null, sysdate, null, null, sysdate);
+values ('27EF608425F9499D980CC63FA63C5DA9', 'admin', null, null, null, '123456', null, null, null, null, null, null, null, 'the_one', null, null, '', null, sysdate, null, null, sysdate);
 
 
 

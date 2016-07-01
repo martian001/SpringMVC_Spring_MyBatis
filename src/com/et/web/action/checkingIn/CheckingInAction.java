@@ -86,9 +86,9 @@ public class CheckingInAction extends BaseAction {
          }
          // 获取指定单元格的对象引用
          for (int i = 1; i < rsRows; i++) {
-            String checkingInDate = readsheet.getCell(4, i).getContents();
-            String realName = readsheet.getCell(1, i).getContents();
-            String deptName = readsheet.getCell(3, i).getContents();
+            String checkingInDate = readsheet.getCell(readsheet.findCell("日期时间").getColumn(), i).getContents();
+            String realName = readsheet.getCell(readsheet.findCell("姓名").getColumn(), i).getContents();
+            String deptName = readsheet.getCell(readsheet.findCell("部门").getColumn(), i).getContents();
             System.out.println(realName + "," + checkingInDate + "," + deptName);
             String userId;
             SysUser sysUser = new SysUser();
