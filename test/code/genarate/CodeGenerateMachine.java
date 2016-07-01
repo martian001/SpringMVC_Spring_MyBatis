@@ -2,6 +2,7 @@ package code.genarate;
 
 import java.io.File;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -28,7 +29,7 @@ import freemarker.template.TemplateException;
  */
 public class CodeGenerateMachine {
    @Test
-   public void codeGenerate() {
+   public void codeGenerate() throws SQLException {
       try {
          String srcPath = "C:/Users/Administrator/git/SpringMVC_Spring_MyBatis/src/";
          String mapperPath = "C:/Users/Administrator/git/SpringMVC_Spring_MyBatis/mapper/";
@@ -37,18 +38,18 @@ public class CodeGenerateMachine {
 //         tempLates.add("ServiceTempLate.ftl-Service");
 //         tempLates.add("ServiceImplTempLate.ftl-Service");
 //         tempLates.add("BeanTempLate.ftl-Bean");
-         tempLates.add("ActionTempLate.ftl-Action");
-        // tempLates.add("MapperXmlTempLate.ftl-Mapper");
+//         tempLates.add("ActionTempLate.ftl-Action");
+         tempLates.add("MapperXmlTempLate.ftl-Mapper");
 
          List<Map<String, Object>> list = new ArrayList<>();
-         String name = "SysUser";
-         String lowercaseBeanName = "sysUser";
-         String dateTime = DateUtils.getCurrentDateTime();
-         String version = "1.0";
-         String classAnnotation = "系统用户";
-         String packageModule = "system";
-         String packageRoot = "com/et/";
-         String table = "SYS_USER";
+         String name = "CheckingIn";//类名
+         String lowercaseBeanName = "checkingIn";//类名小写
+         String dateTime = DateUtils.getCurrentDateTime();//当前时间
+         String version = "1.0";//版本号
+         String classAnnotation = "系统用户";//类注释
+         String packageModule = "checkingIn";//模块
+         String packageRoot = "com/et/";//包根路径
+         String tableName = "CHECKING_IN";//数据库表名
 
          for (String tempLate : tempLates) {
             Map<String, Object> map = new HashMap<String, Object>();
@@ -70,12 +71,15 @@ public class CodeGenerateMachine {
             if ("ActionTempLate.ftl".equals(tempLate)) {
                map.put("packageLayer", "web." + packageLayer.toLowerCase());
             }
-            map.put("table", table);
+            map.put("tableName", tableName);
             list.add(map);
          }
          for (Map<String, Object> m : list) {
             String ftlPath = (String) m.get("tempLate");
             String tempLate = (String) m.get("tempLate");
+            if ("MapperXmlTempLate.ftl".equals(tempLate)) {
+               m.put("fieldMaps", MapperXmlTempLateUtil.getMetaData(tableName));
+            }
             String templateParsing = CommomUtils.templateParsing(m, ftlPath);
             System.out.println(templateParsing);
             String folderPath = srcPath + packageRoot + m.get("packageLayer").toString().replace(".", File.separator) + File.separator
@@ -84,12 +88,13 @@ public class CodeGenerateMachine {
                folderPath = srcPath + packageRoot + m.get("packageLayer").toString().replace(".", File.separator) + File.separator + m.get("packageModule").toString()
                      + "/impl/";
             }
-            if ("MapperXmlTempLate.ftl".equals(tempLate)) {
-               folderPath = mapperPath + m.get("packageModule").toString();
-            }
             String fileName = (m.get("className").toString()) + ".java";
             if ("BeanTempLate.ftl".equals(tempLate)) {
                fileName = (m.get("beanName").toString()) + ".java";
+            }
+            if ("MapperXmlTempLate.ftl".equals(tempLate)) {
+               folderPath = mapperPath + m.get("packageModule").toString()+File.separator;
+               fileName = (m.get("beanName").toString()) + "Mapper.xml";
             }
             System.out.println(folderPath);
             System.out.println(fileName);

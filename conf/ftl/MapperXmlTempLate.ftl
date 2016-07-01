@@ -1,77 +1,95 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.et.mapper.${packageModule}.${beanName}Mapper">
-    <resultMap id="${lowercaseBeanName}Map" type="${lowercaseBeanName}">
-		<id property="id" column="ID" />
+	<resultMap id="${lowercaseBeanName}Map" type="${lowercaseBeanName}">
+		<#list fieldMaps as map>
+		<id property="${map.javaName}" column="${map.jdbcName}" />
+		</#list>
 	</resultMap>
+	<sql id="column_list">
+        <#list fieldMaps as map>${map.jdbcName}<#if map_has_next>,</#if></#list>
+	</sql>
 	<!-- 查询所有 -->
 	<select id="getAll" resultMap="${lowercaseBeanName}Map">
-		<![CDATA[SELECT * FROM ${table} ]]>
+		SELECT
+		<include refid="column_list" />
+		FROM ${tableName}
 	</select>
-	<!-- 根据条件分页查询  -->
-	<select id="findPage" resultMap="${lowercaseBeanName}Map" parameterType="${lowercaseBeanName}">
-	<if test="page != -1">
-	SELECT D.* FROM (SELECT T.*, ROWNUM RN FROM (
-	</if>
-    SELECT * FROM ${table} A
-		<where>
-			<trim>
-				<if test="id!=null and id !=''">
-					AND A.ID = #{id}
-				</if>
-			</trim>
-		</where>
-		<if test="page != -1">
-		 ) T WHERE ROWNUM <=#{page}*#{rows} ) D WHERE D.RN > ((#{page}-1)*#{rows}) 
-		</if>
+	<!-- 根据id获取 -->
+	<select id="getById" resultMap="checkingInMap">
+		SELECT <include refid="column_list" /> FROM ${tableName} WHERE ID=${r'#{id}'}
 	</select>
-	<!-- 根据条件查询数量 -->
-	<select id="getTotal" resultType="Integer" parameterType="${lowercaseBeanName}">
-	<![CDATA[
-	SELECT COUNT(1) FROM
-			(SELECT * FROM ${table} A
-	]]>
-		<where>
-			<!-- 用来处理如果where后面是以and开头的条件,那么可以自动去掉and -->
-			<trim>
-				<if test="id!=null and id !=''">
-					AND A.ID = #{id}
-				</if>
-			</trim>
-		</where>
-		) T
-	</select>
-	<select id="getById" resultMap="${lowercaseBeanName}Map">
-		<![CDATA[SELECT * FROM ${table} WHERE ID=#{id}]]>
-	</select>
-	<insert id="insert" parameterType="${lowercaseBeanName}" useGeneratedKeys="true" keyProperty="id">
-	   <selectKey keyProperty="id" resultType="String" order="BEFORE">
-        SELECT SYS_GUID() FROM DUAL
-       </selectKey>
-		INSERT INTO ${table}
+	<!-- 插入一条数据 -->
+	<insert id="insert" parameterType="${lowercaseBeanName}">
+		<selectKey keyProperty="id" resultType="String" order="BEFORE">
+			SELECT SYS_GUID() FROM DUAL
+		</selectKey>
+		INSERT INTO ${tableName}
 		<trim prefix="(" suffix=")" suffixOverrides=",">
-			  ID,
-	          <if test="userName !=null and userName !=''">
-	                USER_NAME,
-	          </if>
-         </trim>
-         <trim prefix="values (" suffix=")" suffixOverrides=",">
-			  #{id},
-	          <if test="userName !=null and userName !=''">
-	               #{userName} ,
-	          </if>
-         </trim>
+		    <#-- 遍历字段集合--> 
+			<#list fieldMaps as map>
+			<#-- 如果java类型是字符串，则检查字符串是否为空 ，如果是数字，则检查是否大于零--> 
+			<#if (map.javaType == "java.lang.String"||map.javaType == "java.util.Date")>
+		    <if test="${map.javaName} != null and ${map.javaName} !=''">
+		    <#else> 
+		    <if test="${map.javaName} != null and ${map.javaName} >0">
+		    </#if>
+				${map.jdbcName},
+			</if>
+		    </#list>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+		    <#-- 遍历字段集合--> 
+			<#list fieldMaps as map>
+			<#-- 如果java类型是字符串，则检查字符串是否为空 ，如果是数字，则检查是否大于零--> 
+			<#if (map.javaType == "java.lang.String"||map.javaType == "java.util.Date")>
+		    <if test="${map.javaName} != null and ${map.javaName} !=''">
+		    <#else> 
+		    <if test="${map.javaName} != null and ${map.javaName} >0">
+		    </#if>
+		     <#-- 如果jdbc类型是日期，则加入类型说明 --> 
+			<#if (map.jdbcType == "DATE"||map.javaType == "TIMESTAMP")>
+		    ${r'#{'}${map.javaName},jdbcType= ${map.jdbcType},javaType= ${map.javaType}${r'}'},
+		    <#else> 
+		    ${r'#{'}${map.javaName}${r'}'},
+		    </#if>
+			</if>
+		    </#list>
+		</trim>
 	</insert>
+	<!-- 根据id删除数据 -->
 	<delete id="deleteById" parameterType="${lowercaseBeanName}">
-		<![CDATA[DELETE FROM ${table} WHERE ID=#{id}]]>
+		<![CDATA[DELETE FROM ${tableName} WHERE ID=${r'#{id}'}]]>
 	</delete>
-	<update id="update" parameterType="${lowercaseBeanName}">
-		 UPDATE ${table} 
-		 <set>
-	        <if test="userName !=null and userName !=''">
-	         USER_NAME=#{userName} ,
-	        </if>
-         </set> 
-         where id=#{id}
+	<!-- 根据id更新数据 -->
+		<update id="update" parameterType="${lowercaseBeanName}">
+		UPDATE ${tableName}
+		<set>
+		    <#-- 遍历字段集合--> 
+			<#list fieldMaps as map>
+			<#-- 如果java类型是字符串，则检查字符串是否为空 ，如果是数字，则检查是否大于零--> 
+			<#if (map.javaType == "java.lang.String"||map.javaType == "java.util.Date")>
+		    <if test="${map.javaName} != null and ${map.javaName} !=''">
+		    <#else> 
+		    <if test="${map.javaName} != null and ${map.javaName} >0">
+		    </#if>
+		    <#-- 如果jdbc类型是日期，则加入类型说明 --> 
+			<#if (map.jdbcType == "DATE"||map.javaType == "TIMESTAMP")>
+		     ${map.jdbcName}=${r'#{'}${map.javaName},jdbcType= ${map.jdbcType},javaType= ${map.javaType}${r'}'},
+		    <#else> 
+		     ${map.jdbcName}=${r'#{'}${map.javaName}${r'}'},
+		    </#if>
+			</if>
+		    </#list>
+		</set>
+		WHERE ID = ${r'#{id}'}
 	</update>
+	<!-- 根据传入多个id删除数据 -->
+	<delete id="deleteByIds" parameterType="java.util.List">
+		DELETE FROM ${tableName} WHERE ID in
+		<foreach collection="list" item="item" index="index" open="("
+			separator="," close=")">
+			${r'#{item}'}
+		</foreach>
+	</delete>
 </mapper>

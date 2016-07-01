@@ -126,22 +126,22 @@ public class CheckingInAction extends BaseAction {
             Date endDate = DateUtils.stringToDate(checkingInIndex.getEndDate());
             int hours = startDate.getHours();
             int minutes = startDate.getMinutes();
-            int overtime = 0;
+            int overTime = 0;
             int minutesDifference = 0;
             boolean isLate;
             Date lateDate = DateUtils.stringToDate(tempDate + " 9:30:00");
             if ((hours < 9) || (hours < 10 && minutes <= 10)) {
                startDate = DateUtils.stringToDate(tempDate + " 9:00:00");
                minutesDifference = DateUtils.minutesDifference(startDate, endDate);
-               overtime = minutesDifference - 540;
+               overTime = minutesDifference - 540;
             } else if ((hours < 10 && minutes > 10)) {
                startDate = DateUtils.stringToDate(tempDate + " 9:30:00");
                minutesDifference = DateUtils.minutesDifference(startDate, endDate);
-               overtime = minutesDifference - 540;
+               overTime = minutesDifference - 540;
             } else if ((hours >= 12 && hours <= 14) || (hours <= 14 && minutes <= 10)) {
                startDate = DateUtils.stringToDate(tempDate + " 14:00:00");
                minutesDifference = DateUtils.minutesDifference(startDate, endDate);
-               overtime = minutesDifference - 240;
+               overTime = minutesDifference - 240;
             } else {
                startDate = DateUtils.stringToDate(tempDate + " 14:00:00");
                lateDate = DateUtils.stringToDate(tempDate + " 14:10:00");
@@ -154,8 +154,8 @@ public class CheckingInAction extends BaseAction {
             } else {
                checkingIn.setStatus(1);
             }
-            if (overtime >= 120) {
-               checkingIn.setOvertime(overtime);
+            if (overTime >= 120) {
+               checkingIn.setOverTime(overTime);
             }
             checkingIn.setUserId(checkingInIndex.getUserId());
             checkingIn.setStartDate(DateUtils.stringToDate(startDateStr));
