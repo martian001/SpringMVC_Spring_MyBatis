@@ -45,15 +45,11 @@ public class LoginFilter implements Filter {
          return;
       }
       // 2.如果请求的是静态文件或登录页面，放过
-      if (servletPath.endsWith(".css")
-            || servletPath.contains(".js")
-            || servletPath.endsWith(".png")
-            || servletPath.endsWith(".jpg")
-            || servletPath.endsWith(".gif")
-            || servletPath.endsWith(".ico")
-            || servletPath.endsWith(".html")
-            || servletPath.endsWith(".htm")
-            || servletPath.endsWith(".json")
+      if ( servletPath.contains("/css/")
+            || servletPath.contains("/font/")
+            || servletPath.contains("/img/")
+            || servletPath.contains("/js/")
+            || servletPath.contains("/plugins/")
             || servletPath.endsWith("login.do")
             || servletPath.endsWith("logout.do")
             ) {

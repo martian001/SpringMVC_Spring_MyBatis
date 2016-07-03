@@ -8,10 +8,11 @@
    String ctx = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
    request.setAttribute("ctx", ctx);
 %>
+<script type="text/javascript" src="${ctx }js/jquery.min.js?v=2.1.4"></script>
+
 <!-- easyui -->
 <link rel="stylesheet" type="text/css" href="${ctx }js/plug-in/jquery-easyui-1.4.5/themes/default/easyui.css">
 <link rel="stylesheet" type="text/css" href="${ctx }js/plug-in/jquery-easyui-1.4.5/themes/icon.css">
-<script type="text/javascript" src="${ctx }js/plug-in/jquery-easyui-1.4.5/jquery.min.js"></script>
 <script type="text/javascript" src="${ctx }js/plug-in/jquery-easyui-1.4.5/jquery.easyui.min.js"></script>
 <script type="text/javascript" src="${ctx }js/plug-in/jquery-easyui-1.4.5/locale/easyui-lang-zh_CN.js"></script>
 <!-- 页面打印 -->
