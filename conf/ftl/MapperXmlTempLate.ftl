@@ -14,9 +14,26 @@
 		SELECT
 		<include refid="column_list" />
 		FROM ${tableName}
+		<where>
+			<trim>
+		<#-- 遍历字段集合--> 
+		<#list fieldMaps as map>
+		    <#-- 如果java类型是字符串，则检查字符串是否为空 ，如果是数字，则检查是否大于零--> 
+		    <#if (map.javaType == "java.lang.String"||map.javaType == "java.util.Date")>
+		      <if test="${map.javaName} != null and ${map.javaName} !=''">
+	          ${map.jdbcName}=${r'#{'}${map.javaName}${r'}'}<#if map_has_next> AND</#if>
+	          </if>
+		    <#else> 
+		      <if test="${map.javaName} != null and ${map.javaName} >0">
+	          ${map.jdbcName}=${r'#{'}${map.javaName}${r'}'}<#if map_has_next> AND</#if>
+	          </if>
+		    </#if>
+		</#list>
+			</trim>
+		</where>
 	</select>
 	<!-- 根据id获取 -->
-	<select id="getById" resultMap="checkingInMap">
+	<select id="getById" resultMap="${lowercaseBeanName}Map">
 		SELECT <include refid="column_list" /> FROM ${tableName} WHERE ID=${r'#{id}'}
 	</select>
 	<!-- 插入一条数据 -->
@@ -48,7 +65,7 @@
 		    <if test="${map.javaName} != null and ${map.javaName} >0">
 		    </#if>
 		     <#-- 如果jdbc类型是日期，则加入类型说明 --> 
-			<#if (map.jdbcType == "DATE"||map.javaType == "TIMESTAMP")>
+			<#if (map.jdbcType == "DATE"||map.jdbcType == "TIMESTAMP")>
 		    ${r'#{'}${map.javaName},jdbcType= ${map.jdbcType},javaType= ${map.javaType}${r'}'},
 		    <#else> 
 		    ${r'#{'}${map.javaName}${r'}'},
@@ -74,7 +91,7 @@
 		    <if test="${map.javaName} != null and ${map.javaName} >0">
 		    </#if>
 		    <#-- 如果jdbc类型是日期，则加入类型说明 --> 
-			<#if (map.jdbcType == "DATE"||map.javaType == "TIMESTAMP")>
+			<#if (map.jdbcType == "DATE"||map.jdbcType == "TIMESTAMP")>
 		     ${map.jdbcName}=${r'#{'}${map.javaName},jdbcType= ${map.jdbcType},javaType= ${map.javaType}${r'}'},
 		    <#else> 
 		     ${map.jdbcName}=${r'#{'}${map.javaName}${r'}'},
