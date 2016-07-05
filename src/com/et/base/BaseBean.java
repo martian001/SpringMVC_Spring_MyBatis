@@ -12,17 +12,16 @@ package com.et.base;
  * ★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★<br>
  */
 public class BaseBean {
-   private int page = 1;
-   private int rows = 10;
-   private int limit;
-   private int offset;
+   private int page;
+   private int rows;//一页显示条数
+   private int limit;//一页显示条数
+   private int offset;//开始索引
    private String creatorId;
    private String creatorDate;
    private String updateId;
    private String updateDate;
 
    public int getRows() {
-      rows=getOffset()+limit;
       return rows;
    }
 
@@ -79,6 +78,13 @@ public class BaseBean {
    }
 
    public int getOffset() {
+      if (offset>0) {
+         limit = offset + limit;
+      }
+      if (page > 0) {
+         offset = (page - 1) * rows;
+         limit = page * rows;
+      }
       return offset;
    }
 

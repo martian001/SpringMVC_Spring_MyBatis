@@ -58,7 +58,7 @@
 		$('#upload-dialog').dialog('open').dialog('setTitle', "上传文件");
 	}
 	$(document).ready(function() {
-		$('#table1').bootstrapTable({
+		 $('#table1').bootstrapTable({
 			method : 'get',
 			cache : false,
 			//height : 400,
@@ -85,10 +85,7 @@
 			formatNoMatches : function() {
 				return '无符合条件的记录';
 			}
-		});
-		/* $(window).resize(function() {
-			$('#table1').bootstrapTable('resetView');
-		}); */
+		}); 
 	});
 </script>
 </head>
@@ -122,7 +119,7 @@
          <!-- 查询条件 -->
          <div style="padding: 5px">
           <div class="row">
-           <div class="col-md-8">
+           <div class="col-md-12">
             <label class="col-md-1 control-label" for="formGroupInputLarge1">姓名:</label>
             <div class="col-md-2">
              <input type="text" class="form-control" name="realName" id="formGroupInputLarge1" placeholder="姓名">
@@ -131,7 +128,7 @@
             <div class="col-md-2">
              <input type="text" class="form-control" name="deptName" id="formGroupInputLarge2" placeholder="部门">
             </div>
-            <label class="col-md-1 control-label" for="formGroupInputLarge4">是否迟到:</label>
+            <label class="col-md-2 control-label" for="formGroupInputLarge4">是否迟到:</label>
             <div class="col-md-2">
              <select class="form-control" name="status" id="formGroupInputLarge4">
               <option value=-1 selected="selected">--请选择--</option>
@@ -143,7 +140,7 @@
           </div>
           <br>
           <div class="row">
-           <div class="col-md-8">
+           <div class="col-md-12">
             <label class="col-md-1 control-label" for="formGroupInputLarge5">回家:</label>
             <div class="col-md-2">
              <input type="text" class="form-control" id="formGroupInputLarge5" placeholder="姓名">
@@ -152,13 +149,9 @@
             <div class="col-md-2">
              <input type="text" class="form-control" id="formGroupInputLarge6" placeholder="部门">
             </div>
-            <label class="col-md-1 control-label" for="formGroupInputLarge7">是否迟到:</label>
+            <label class="col-md-2 control-label" for="formGroupInputLarge7">是否迟到:</label>
             <div class="col-md-2">
              <input type="text" class="form-control" id="formGroupInputLarge7" placeholder="是否迟到">
-            </div>
-            <label class="col-md-1 control-label" for="formGroupInputLarge8">是否迟到:</label>
-            <div class="col-md-2">
-             <input type="text" class="form-control" id="formGroupInputLarge8" placeholder="是否迟到">
             </div>
            </div>
           </div>
@@ -216,7 +209,7 @@
      <div class="col-sm-12">
       <div class="ibox float-e-margins">
        <div class="ibox-content">
-        <table id="table1" data-mobile-responsive="true" data-show-pagination-switch="true">
+        <table id="table1">
          <thead>
           <tr>
            <th data-field="id" data-checkbox="true"></th>

@@ -16,5 +16,12 @@ function queryParams(params) { // 配置参数
 	// searchFrom.order=params.order;//排位命令（desc，asc）
 	searchFrom.limit = params.limit;
 	searchFrom.offset = params.offset;
+/*	searchFrom.rows = params.limit;
+	var page = $("[class='page-number active'] a").text();
+	if (page != null && page != '') {
+		searchFrom.page = page;
+	} else {
+		searchFrom.page = 1;
+	}*/
 	return searchFrom;
 }
