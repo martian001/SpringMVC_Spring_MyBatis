@@ -1,4 +1,4 @@
-package com.qfang.xk.aom.server.${packageModule}.service;
+package com.xlkfinance.bms.server.aom.${packageModule}.mapper;
 
 import java.util.List;
 

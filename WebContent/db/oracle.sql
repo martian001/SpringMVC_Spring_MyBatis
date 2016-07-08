@@ -257,9 +257,10 @@ SELECT * FROM SYS_MENU FOR UPDATE;
 DELETE FROM SYS_USER;
 DELETE FROM CHECKING_IN;
 DELETE FROM CHECKING_IN_RECORD;
+DELETE FROM SYS_MENU;
 
 insert into SYS_USER (ID, USER_NAME, MEMBER_ID, JOB_TITLE, MAIL, PWD, PHOTO_URL, TOKEN, PERSONAL_QQ, ENTERPRISE_QQ, PHONE, WORK_PHONE, EXTENSION, REAL_NAME, STATUS, SUPERIOR_USER_ID, DEPT_NAME, DEVICE_TOKEN, CREATOR_DATE, CREATOR_ID, UPDATE_ID, UPDATE_DATE)
-values ('27EF608425F9499D980CC63FA63C5DA9', 'admin', null, null, null, '123456', null, null, null, null, null, null, null, 'the_one', null, null, '', null, sysdate, null, null, sysdate);
+values ('27EF608425F9499D980CC63FA63C5DA9', 'admin', null, null, null, '123456', null, null, null, null, null, null, null, '超级管理员', null, null, '', null, sysdate, null, null, sysdate);
 
 
 
@@ -270,6 +271,9 @@ insert into sys_menu(ID,parent_id,menu_name,icon_cls,menu_url,menu_index,status)
 values('1177A99FDCC84ED7B26A7BA5718ABFD6','ADB3BA34FC734DA6871FEAB074A6BFD3','学生','','to_studentAction_list.do',1,2);
 insert into sys_menu(ID,parent_id,menu_name,icon_cls,menu_url,menu_index,status)
 values('F8B588250B534CB7B3773C79EB52899E','ADB3BA34FC734DA6871FEAB074A6BFD3','考勤','','checkingInAction/to_checkingInAction_list.do',2,2);
+insert into sys_menu(ID,parent_id,menu_name,icon_cls,menu_url,menu_index,status)
+values('98338D78D44244D4AB0F401140ABE634','ADB3BA34FC734DA6871FEAB074A6BFD3','jqgrid_list','','checkingInAction/to_jqgrid_list.do',2,2);
+
 
 insert into sys_menu(ID,parent_id,menu_name,icon_cls,menu_url,menu_index,status)
 values('D01F308C37EF4C7A92F2DE84A625BEB1','ADB3BA34FC734DA6871FEAB074A6BFD3','菜单','','checkingInAction/to_checkingInAction_list.do',2,3);

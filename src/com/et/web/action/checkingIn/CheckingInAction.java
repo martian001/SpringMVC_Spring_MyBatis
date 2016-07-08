@@ -55,7 +55,22 @@ public class CheckingInAction extends BaseAction {
    public String to_list() {
       return PATH + "/list";
    }
+   @RequestMapping("/to_jqgrid_list.do")
+   public String to_jqgrid_list() {
+      return PATH + "/jqgrid_list";
+   }
 
+   @RequestMapping("/checkingInAction_jqgrid_list.do")
+   public void jqgrid_list(CheckingInIndex checkingInIndex, HttpServletResponse response) {
+      Map<String, Object> resultMap = new HashMap<String, Object>();
+      List<CheckingInIndex> list = checkingInService.queryCheckingInIndex(checkingInIndex);
+      int total = checkingInService.getCheckingInIndexTotal(checkingInIndex);
+      // 输出
+      resultMap.put("rows", list);
+      resultMap.put("total", total/checkingInIndex.getRows());
+      resultMap.put("records", total);
+      outputJson(resultMap, response);
+   }
    @RequestMapping("/checkingInAction_list.do")
    public void list(CheckingInIndex checkingInIndex, HttpServletResponse response) {
       Map<String, Object> resultMap = new HashMap<String, Object>();

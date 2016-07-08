@@ -75,7 +75,7 @@ public class MapperXmlTempLateUtil {
    @Test
    public void testMetaData() throws Exception {
       Map<String, Object> m = new HashMap<String, Object>();
-      String tableName = "ORG_USER_INFO";
+      String tableName = "T_SMS_VALIDATE_CODE_INFO";
       m.put("tableName", tableName);
       m.put("beanName", jdbcToJavaName2(tableName));
       m.put("packageModule", "system");

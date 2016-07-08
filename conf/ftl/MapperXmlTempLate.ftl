@@ -18,14 +18,14 @@
 			<trim>
 		<#-- 遍历字段集合--> 
 		<#list fieldMaps as map>
-		    <#-- 如果java类型是字符串，则检查字符串是否为空 ，如果是数字，则检查是否大于零--> 
+		     <#-- 如果java类型是字符串，则检查字符串是否为空 ，如果是数字，则检查是否大于零--> 
 		    <#if (map.javaType == "java.lang.String"||map.javaType == "java.util.Date")>
 		      <if test="${map.javaName} != null and ${map.javaName} !=''">
-	          ${map.jdbcName}=${r'#{'}${map.javaName}${r'}'}<#if map_has_next> AND</#if>
+	          <#if (map_index!=fieldMaps?size && map_index!=0)>AND </#if>${map.jdbcName}=${r'#{'}${map.javaName}${r'}'}
 	          </if>
 		    <#else> 
 		      <if test="${map.javaName} != null and ${map.javaName} >0">
-	          ${map.jdbcName}=${r'#{'}${map.javaName}${r'}'}<#if map_has_next> AND</#if>
+	          <#if (map_index!=fieldMaps?size && map_index!=0)>AND </#if>${map.jdbcName}=${r'#{'}${map.javaName}${r'}'}
 	          </if>
 		    </#if>
 		</#list>
