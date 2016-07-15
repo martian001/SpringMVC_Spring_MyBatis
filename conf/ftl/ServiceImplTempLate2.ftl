@@ -51,7 +51,11 @@ public class ${beanName}ServiceImpl implements Iface {
     */
    @Override
    public ${beanName} getById(int pid) throws ThriftServiceException, TException {
-      return ${lowercaseBeanName}Mapper.getById(pid);
+      ${beanName} ${lowercaseBeanName} = ${lowercaseBeanName}Mapper.getById(pid);
+      if (${lowercaseBeanName}==null) {
+         return new ${beanName}();
+      }
+      return ${lowercaseBeanName};
    }
 
    /**

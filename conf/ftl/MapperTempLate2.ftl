@@ -1,4 +1,6 @@
-package com.qfang.xk.aom.server.${packageModule}.mapper;
+package com.xlkfinance.bms.server.aom.${packageModule}.mapper;
+
+import java.util.List;
 
 import org.mybatis.spring.annotation.MapperScan;
 

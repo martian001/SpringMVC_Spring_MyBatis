@@ -117,18 +117,18 @@ public class CodeGenerateMachine {
          List<String> tempLates = new ArrayList<>();
 //         tempLates.add("ServiceImplTempLate2.ftl-Service");
 //         tempLates.add("MapperTempLate2.ftl-Mapper");
-         tempLates.add("MapperXmlTempLate2.ftl-Mapper");
+//         tempLates.add("MapperXmlTempLate2.ftl-Mapper");
 //         tempLates.add("TestTempLate.ftl-Test");
-//         tempLates.add("ThriftTempLate.ftl-");
+         tempLates.add("ThriftTempLate.ftl-");
 
          List<Map<String, Object>> list = new ArrayList<>();
-         String tableName = "t_sms_validate_code_info";// 数据库表名
+         String tableName = "ORG_PARTNER_INFO";// 数据库表名
          String name = MapperXmlTempLateUtil.jdbcToJavaName2(tableName);// 类名
          String lowercaseBeanName = MapperXmlTempLateUtil.startLowerCase(name);// 类名小写
          String dateTime = DateUtils.getCurrentDateTime();// 当前时间
          String version = "1.0";// 版本号
-         String classAnnotation = "短信验证码信息表";// 类注释
-         String packageModule = "orgSystem";// 模块
+         String classAnnotation = "机构合伙人";// 类注释
+         String packageModule = "partner";// 模块
          String packageRoot = "com/xlkfinance/bms/server/aom/";// 包根路径
 
          for (String tempLate : tempLates) {
@@ -169,7 +169,7 @@ public class CodeGenerateMachine {
             }
             System.out.println(folderPath);
             System.out.println(fileName);
-             FileUtils.textToFile(templateParsing, folderPath, fileName);
+           //  FileUtils.textToFile(templateParsing, folderPath, fileName);
          }
       } catch (TemplateException e) {
          e.printStackTrace();
