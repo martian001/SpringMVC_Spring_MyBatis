@@ -116,7 +116,7 @@
 											} ],
 											pager : "#pager_list_2",
 											viewrecords : true,
-											caption : "jqGrid 示例2",
+											//caption : "jqGrid 示例2",
 											add : true,
 											edit : true,
 											addtext : "Add",
@@ -132,10 +132,11 @@
 										//loadonce : true,//如果为ture则数据只从服务器端抓取一次，之后所有操作都是在客户端执行，翻页功能会被禁用
 										//sortable:true
 										});
-						/* $("#table_list_2").jqGrid("navGrid", "#pager_list_2", {
+						 $("#table_list_2").jqGrid("navGrid", "#pager_list_2", {
 							edit : true,
 							add : true,
 							del : true,
+							refresh : true,
 							search : true
 						}, {
 							height : 200,
@@ -144,7 +145,7 @@
 						$(window).bind("resize", function() {
 							var width = $(".jqGrid_wrapper").width();
 							$("#table_list_2").setGridWidth(width)
-						}) */
+						}) 
 					});
 </script>
 </head>
