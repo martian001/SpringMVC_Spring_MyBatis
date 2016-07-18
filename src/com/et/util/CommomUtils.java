@@ -24,6 +24,25 @@ import freemarker.template.TemplateException;
  * ★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★<br>
  */
 public class CommomUtils {
+   
+   public static String getRootPath() {
+      String classPath = CommomUtils.class.getClassLoader().getResource("/").getPath();
+      String rootPath = "";
+      // windows下
+      if ("\\".equals(File.separator)) {
+         // System.out.println("windows");
+         rootPath = classPath.substring(1, classPath.indexOf("/WEB-INF/classes"));
+         rootPath = rootPath.replace("/", "\\");
+      }
+      // linux下
+      if ("/".equals(File.separator)) {
+         // System.out.println("linux");
+         rootPath = classPath.substring(0, classPath.indexOf("/WEB-INF/classes"));
+         rootPath = rootPath.replace("\\", "/");
+      }
+      rootPath = rootPath.substring(0, rootPath.lastIndexOf(File.separator)+1);
+      return rootPath;
+   }
    /**
     * 解析模版
     *@author:liangyanjun

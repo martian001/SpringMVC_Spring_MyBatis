@@ -8,9 +8,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.codehaus.jackson.map.ObjectMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.alibaba.fastjson.JSON;
 import com.et.bean.Json;
+import com.et.util.ExceptionUtil;
+import com.et.util.FileDownload;
 
 
 /**
@@ -25,6 +32,7 @@ import com.et.bean.Json;
  * ★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★<br>
  */
 public class BaseAction {
+   private Logger logger = LoggerFactory.getLogger(BaseAction.class);
    /**
     * 获取服务端的地址
     * 例如：http://localhost:8080
@@ -79,6 +87,25 @@ public class BaseAction {
          pw.close();
       } catch (IOException e) {
          System.out.println("输出GSON出错：" + e);
+      }
+   }
+   /**
+    * 文件下载
+    *@author:liangyanjun
+    *@time:2016年7月18日上午11:23:24
+    *@param response
+    *@param request
+    *@param path
+    *@param model
+    */
+   @RequestMapping(value = "download")
+   protected void download(HttpServletResponse response, HttpServletRequest request, @RequestParam("path") String path, ModelMap model) {
+      try {
+         FileDownload.downloadLocal(response, request, path);
+      } catch (IOException e) {
+         fillReturnJson(response, false, "下载文件异常");
+         logger.error("下载文件异常" + ExceptionUtil.getExceptionMessage(e));
+         e.printStackTrace();
       }
    }
 }
