@@ -37,5 +37,4 @@ public class ${beanName} extends BaseBean{
   public int rows; 
   public String deviceToken; 
   public String orgName; 
-  public List<SysRole> roles; 
 }
