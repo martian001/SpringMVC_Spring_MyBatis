@@ -30,7 +30,7 @@ public class FileDownload {
 	 */
 	public static void downloadLocal(HttpServletResponse response, HttpServletRequest request, String path) throws IOException {
 		//path = request/*.getServletContext()*/.getRealPath("/") + path;
-		path = CommomUtils.getRootPath()+path;
+		path = CommonUtil.getRootPath()+path;
 		File file = new File(path);// path是根据日志路径和文件名拼接出来的
 		String filename = request.getParameter("fileName");
 		filename = (filename == null? file.getName():filename);// 获取日志文件名称
@@ -51,7 +51,7 @@ public class FileDownload {
 
 	public static void downloadLocalFile(HttpServletResponse response, HttpServletRequest request, String path,String fileName) throws IOException {
 		//path = request/*.getServletContext()*/.getRealPath("/") + path;
-		path = CommomUtils.getRootPath()+path;
+		path = CommonUtil.getRootPath()+path;
 		File file = new File(path);// path是根据日志路径和文件名拼接出来的
 		String filename = file.getName();// 获取日志文件名称
 		if(fileName!=null || ! "".equals(fileName)){

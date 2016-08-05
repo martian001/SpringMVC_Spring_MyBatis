@@ -13,7 +13,7 @@ import org.junit.Test;
 
 import com.et.bean.checkingIn.CheckingIn;
 import com.et.bean.system.Student;
-import com.et.util.CommomUtils;
+import com.et.util.CommonUtil;
 
 /**
  ★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★
@@ -44,7 +44,7 @@ public class TestDao {
    @Test
    public void test11() {
       SqlSession openSession = sessionFactory.openSession();
-      openSession.insert("com.et.bean.Student.insert", new Student(CommomUtils.getUUID(), "a哈哈", 11));
+      openSession.insert("com.et.bean.Student.insert", new Student(CommonUtil.getUUID(), "a哈哈", 11));
       openSession.commit();
       openSession.close();
    }

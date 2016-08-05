@@ -30,38 +30,34 @@ function ajaxSearchPage(datagrid, formId) {
 	// 清空所选择的行数据
 	clearSelectRows(datagrid);
 }
-/**
- * 清除datagrid的选中数据
- * 
- * @param datagrid
- *            datagrid ID
- */
-function clearSelectRows(datagrid) {
-	// 清除所有选择的行。
-	$(datagrid).datagrid("clearSelections");
-	// 清除所有勾选的行。
-	$(datagrid).datagrid("clearChecked");
-}
-
 //提交文件
-function submitFileForm(fileForm,url){
-	if($("#offlineMeetingFiles").textbox('getValue')!=''){
-		$(fileForm).attr('enctype','multipart/form-data');
-		$(fileForm).form('submit',{
-			url:url,
-			success:function(data) {
+function submitFileForm(fileForm) {
+	if ($("#offlineMeetingFiles").val() != '') {
+		$(fileForm).ajaxSubmit({
+			success : function(data) {
 				var ret = eval("(" + data + ")");
 				if (ret && ret.header["success"]) {
-					$.messager.alert("操作提示", "保存成功！");
-				}else{
-					$.messager.alert('操作提示', ret.header["msg"], 'error');
+					layer.confirm(ret.header["msg"], {
+						icon : 6,
+						btn : [ '是' ]
+					//按钮
+					}, function() {
+					    $('#fileUploadModal').modal('hide');
+					    layer.closeAll('dialog');
+					});
+				} else {
+					layer.alert(ret.header["msg"], {
+						icon : 5
+					});
 				}
-			    $("#offlineMeetingFiles").textbox('setValue','');
-			},
+			}
+
 		});
-	}else{
-		$.messager.alert('操作','请选择文件!','info');
-	} 
+	} else {
+		layer.alert('请选择文件!', {
+			icon : 0
+		});
+	}
 }
 //时间格式转换
 function convertDate(val,row){

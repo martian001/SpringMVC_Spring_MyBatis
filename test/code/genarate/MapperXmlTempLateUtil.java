@@ -12,7 +12,7 @@ import java.util.Map;
 
 import org.junit.Test;
 
-import com.et.util.CommomUtils;
+import com.et.util.CommonUtil;
 
 /**
  * ★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★<br>
@@ -90,7 +90,7 @@ public class MapperXmlTempLateUtil {
       // System.out.println(javaName + "(" + javaType + ") -----------" + jdbcName + "(" + jdbcType + ")");
       // }
       m.put("fieldMaps", maps);
-      String templateParsing = CommomUtils.templateParsing(m, "MapperXmlTempLate2.ftl");
+      String templateParsing = CommonUtil.templateParsing(m, "MapperXmlTempLate2.ftl");
       System.out.println(templateParsing);
    }
 

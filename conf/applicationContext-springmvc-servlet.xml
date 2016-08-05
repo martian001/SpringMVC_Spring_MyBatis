@@ -45,13 +45,20 @@
 		<!-- 如果用jstl,那么就要把下面的打开 -->
 		<!-- <property name="viewClass"  value="org.springframework.web.servlet.view.JstlView" /> -->
 	</bean>
+	<!-- 系统参数 -->
+	<bean name="webSysConfig" class="com.et.bean.WebSysConfig">
+		<property name="uploadFileRoot" value="${upload.file.root.path}" />
+		<property name="maxRequestSize" value="${upload.file.max.request.size}" />
+		<property name="maxFileSize" value="${upload.file.max.file.size}" />
+		<property name="fileType" value="${upload.file.type}" />
+	</bean>
     <!-- 多文件上传配置 -->
-	<bean id="multipartResolver" class="com.et.web.listener.CommonsMultipartResolverExt" p:defaultEncoding="utf-8" >
+	<!-- <bean id="multipartResolver" class="com.et.web.listener.CommonsMultipartResolverExt" p:defaultEncoding="utf-8" >
 		<property name="maxUploadSize">
 			<value>104857600</value>
 		</property>
 		<property name="maxInMemorySize">
 			<value>4096</value>
 		</property>
-	</bean> 
+	</bean>  -->
 </beans>

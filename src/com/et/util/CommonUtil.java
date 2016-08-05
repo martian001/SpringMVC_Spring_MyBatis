@@ -23,10 +23,10 @@ import freemarker.template.TemplateException;
  * ★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★<br>
  * ★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★<br>
  */
-public class CommomUtils {
+public class CommonUtil {
    
    public static String getRootPath() {
-      String classPath = CommomUtils.class.getClassLoader().getResource("/").getPath();
+      String classPath = CommonUtil.class.getClassLoader().getResource("/").getPath();
       String rootPath = "";
       // windows下
       if ("\\".equals(File.separator)) {
@@ -57,7 +57,7 @@ public class CommomUtils {
       /* 创建一configuration */
       Configuration cfg = new Configuration();
       // 这里我设置模版的根目录
-      String path = CommomUtils.class.getResource("/ftl").getPath();
+      String path = CommonUtil.class.getResource("/ftl").getPath();
       cfg.setDirectoryForTemplateLoading(new File(path));
       cfg.setObjectWrapper(new DefaultObjectWrapper());
       /* 而以下代码你通常会在一个应用生命周期中执行多次 */

@@ -1,5 +1,6 @@
 package com.et.web.action.checkingIn;
 
+import java.io.File;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
@@ -16,17 +17,17 @@ import jxl.Workbook;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.et.base.BaseAction;
 import com.et.bean.checkingIn.CheckingIn;
 import com.et.bean.checkingIn.CheckingInIndex;
 import com.et.bean.checkingIn.CheckingInRecord;
+import com.et.bean.system.BizFile;
 import com.et.bean.system.SysUser;
 import com.et.service.checkingIn.CheckingInRecordService;
 import com.et.service.checkingIn.CheckingInService;
 import com.et.service.system.SysUserService;
+import com.et.util.CommonUtil;
 import com.et.util.DateUtils;
 
 /**
@@ -83,9 +84,12 @@ public class CheckingInAction extends BaseAction {
    }
 
    @RequestMapping("/initExlData.do")
-   public void initExlData(@RequestParam(value = "file", required = false) MultipartFile file, HttpServletRequest request, HttpServletResponse response) {
+   public void initExlData(HttpServletRequest request, HttpServletResponse response) {
       try {
-         jxl.Workbook readwb = Workbook.getWorkbook(file.getInputStream());
+         Map<String, Object> fileMap = getFileMap(request, response, "", "chackingIn");
+         BizFile bizFile = (BizFile) fileMap.get("bizFile");
+         File file=new File(CommonUtil.getRootPath()+bizFile.getFileUrl());
+         jxl.Workbook readwb = Workbook.getWorkbook(file);
          // Sheet的下标是从0开始
          // 获取第一张Sheet表
          Sheet readsheet = readwb.getSheet(0);

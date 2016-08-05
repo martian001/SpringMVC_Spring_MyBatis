@@ -13,4 +13,6 @@ package com.et.util;
  */
 public class Constants {
    public static final String LOGIN_USER = "login_user";
+   public static final String SEPARATOR = "/";
+   public static final int STATUS_ENABLED = 1;
 }

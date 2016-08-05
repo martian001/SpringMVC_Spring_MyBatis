@@ -10,9 +10,8 @@ import java.util.Map;
 
 import org.junit.Test;
 
-import com.et.util.CommomUtils;
+import com.et.util.CommonUtil;
 import com.et.util.DateUtils;
-import com.et.util.FileUtils;
 
 import freemarker.template.TemplateException;
 
@@ -34,11 +33,11 @@ public class CodeGenerateMachine {
          String srcPath = "C:/Users/Administrator/git/SpringMVC_Spring_MyBatis/src/";
          String mapperPath = "C:/Users/Administrator/git/SpringMVC_Spring_MyBatis/mapper/";
          List<String> tempLates = new ArrayList<>();
-         tempLates.add("MapperTempLate.ftl-Mapper");
-         tempLates.add("ServiceTempLate.ftl-Service");
-         tempLates.add("ServiceImplTempLate.ftl-Service");
-         tempLates.add("BeanTempLate.ftl-Bean");
-         tempLates.add("ActionTempLate.ftl-Action");
+//         tempLates.add("MapperTempLate.ftl-Mapper");
+//         tempLates.add("ServiceTempLate.ftl-Service");
+//         tempLates.add("ServiceImplTempLate.ftl-Service");
+//         tempLates.add("BeanTempLate.ftl-Bean");
+//         tempLates.add("ActionTempLate.ftl-Action");
          tempLates.add("MapperXmlTempLate.ftl-Mapper");
 
          List<Map<String, Object>> list = new ArrayList<>();
@@ -80,7 +79,7 @@ public class CodeGenerateMachine {
             if ("MapperXmlTempLate.ftl".equals(tempLate)) {
                m.put("fieldMaps", MapperXmlTempLateUtil.getMetaData(tableName));
             }
-            String templateParsing = CommomUtils.templateParsing(m, ftlPath);
+            String templateParsing = CommonUtil.templateParsing(m, ftlPath);
             System.out.println(templateParsing);
             String folderPath = srcPath + packageRoot + m.get("packageLayer").toString().replace(".", File.separator) + File.separator
                   + m.get("packageModule").toString() + File.separator;
@@ -98,7 +97,7 @@ public class CodeGenerateMachine {
             }
             System.out.println(folderPath);
             System.out.println(fileName);
-            FileUtils.textToFile(templateParsing, folderPath, fileName);
+            //FileUtils.textToFile(templateParsing, folderPath, fileName);
          }
       } catch (TemplateException e) {
          e.printStackTrace();

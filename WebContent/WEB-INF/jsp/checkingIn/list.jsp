@@ -55,9 +55,11 @@
 	}
 
 	function openUploanFile() {
-		$('#upload-dialog').dialog('open').dialog('setTitle', "上传文件");
+		$("#fileUploadForm").attr("action","${ctx }checkingInAction/initExlData.do")
+		$('#fileUploadModal').modal('show');
 	}
 	$(document).ready(function() {
+		$('#file-pretty input[type="file"]').prettyFile();
 		 $('#table1').bootstrapTable({
 			method : 'get',
 			cache : false,
@@ -240,7 +242,31 @@
    </div>
   </div>
  </div>
-
+<div class="modal fade" id="fileUploadModal" tabindex="-1" role="dialog" aria-labelledby="fileUploadModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+     <div class="modal-content animated flipInY">
+      <div class="modal-header">
+       <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+       <h4 class="modal-title" id="fileUploadModalLabel">文件上传</h4>
+      </div>
+      <form id="fileUploadForm" name="fileUploadForm" method="post" 
+      >
+       <div class="modal-body">
+        <div id="file-pretty">
+         <div class="form-group">
+          <label class="font-noraml">文件选择（单选）</label> <input type="file" class="form-control" name="offlineMeetingFile" id="offlineMeetingFiles">
+          <input type="hidden" name="pid" value="12">
+         </div>
+        </div>
+       </div>
+       <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+        <button type="button" class="btn btn-primary" onclick="submitFileForm('#fileUploadForm')">提交</button>
+       </div>
+      </form>
+     </div>
+    </div>
+   </div>
 
 
 
@@ -380,7 +406,9 @@
   <br />
  </div> --%>
 
+ <!-- 需要延迟加载的资源 -->
 <script src="${ctx}js/plugins/datapicker/bootstrap-datepicker.js"></script>
+ <script src="${ctx }js/plugins/prettyfile/bootstrap-prettyfile.js"></script>
 <!-- 需要延迟加载的资源 -->
 <%@ include file="../../delayLoadCommon.jsp"%>
 </body>
