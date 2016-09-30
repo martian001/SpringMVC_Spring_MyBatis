@@ -1,4 +1,4 @@
-package com.et.web.action.system;
+package com.et.web.controller.system;
 
 import java.util.HashMap;
 import java.util.List;
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.et.base.BaseAction;
+import com.et.base.BaseController;
 import com.et.bean.system.SysUser;
 import com.et.service.system.SysUserService;
 
@@ -27,7 +27,7 @@ import com.et.service.system.SysUserService;
  * ★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★<br>
  */
 @Controller
-public class SysUserAction extends BaseAction {
+public class SysUserController extends BaseController {
    @Resource
    private SysUserService sysUserService;
 

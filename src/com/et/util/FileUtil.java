@@ -32,7 +32,7 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.et.base.BaseAction;
+import com.et.base.BaseController;
 import com.et.web.listener.FileUploadListener;
 
 /**
@@ -280,7 +280,7 @@ public class FileUtil {
     * 从request中取出FileUploadStatus Bean
     */
    public static FileUploadStatus getStatusBean(HttpServletRequest request) {
-      BaseAction beanCtrl = BaseAction.getInstance();
+      BaseController beanCtrl = BaseController.getInstance();
       return beanCtrl.getUploadStatus(request.getRemoteAddr());
    }
 
@@ -289,7 +289,7 @@ public class FileUtil {
     */
    public static void saveStatusBean(HttpServletRequest request, FileUploadStatus statusBean) {
       statusBean.setUploadAddr(request.getRemoteAddr());
-      BaseAction beanCtrl = BaseAction.getInstance();
+      BaseController beanCtrl = BaseController.getInstance();
       beanCtrl.setUploadStatus(statusBean);
    }
 

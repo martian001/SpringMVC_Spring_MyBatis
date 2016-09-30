@@ -41,7 +41,7 @@ CREATE TABLE CHECKING_IN_RECORD (
   MONTH INTEGER
 );
 
---ϵͳ�˵���
+--系统菜单表
 CREATE TABLE SYS_MENU 
 (
    ID                  VARCHAR2(55) PRIMARY KEY,
@@ -57,22 +57,22 @@ CREATE TABLE SYS_MENU
    UPDATE_DATE        DATE
 );
 COMMENT ON TABLE SYS_MENU IS
-'ϵͳ�˵�';
+'系统菜单';
 COMMENT ON COLUMN SYS_MENU.ID IS
 'ID';
 COMMENT ON COLUMN SYS_MENU.PARENT_ID IS
-'��ID';
+'父ID';
 COMMENT ON COLUMN SYS_MENU.MENU_NAME IS
-'�˵�����';
+'菜单名称';
 COMMENT ON COLUMN SYS_MENU.ICON_CLS IS
-'�˵�ͼ��';
+'菜单图标';
 COMMENT ON COLUMN SYS_MENU.MENU_URL IS
-'�˵�URL';
+'菜单URL';
 COMMENT ON COLUMN SYS_MENU.MENU_INDEX IS
-'��ʾ˳��';
+'显示顺序';
 COMMENT ON COLUMN SYS_MENU.STATUS IS
-'״̬';
---ϵͳ����Ȩ�ޱ�
+'状态';
+--系统功能权限表
 CREATE TABLE SYS_PERMISSION 
 (
    ID                  VARCHAR2(55) PRIMARY KEY,
@@ -88,22 +88,22 @@ CREATE TABLE SYS_PERMISSION
    UPDATE_DATE        DATE
 );
 COMMENT ON TABLE SYS_PERMISSION IS
-'ϵͳ����Ȩ��';
+'系统功能权限';
 COMMENT ON COLUMN SYS_PERMISSION.ID IS
-'����';
+'主键';
 COMMENT ON COLUMN SYS_PERMISSION.PERMIS_TYPE IS
-'Ȩ�����ͣ�����/����Ȩ�ޣ�';
+'权限类型（数据/操作权限）';
 COMMENT ON COLUMN SYS_PERMISSION.PERMIS_NAME IS
-'Ȩ������';
+'权限名称';
 COMMENT ON COLUMN SYS_PERMISSION.PERMIS_DESC IS
-'Ȩ������';
+'权限描述';
 COMMENT ON COLUMN SYS_PERMISSION.PERMIS_CODE IS
-'Ȩ�޴��룬ϵͳΨһ';
+'权限代码，系统唯一';
 COMMENT ON COLUMN SYS_PERMISSION.MENU_ID IS
-'�˵�ID';
+'菜单ID';
 COMMENT ON COLUMN SYS_PERMISSION.STATUS IS
-'״̬';
---ϵͳ��ɫ��
+'状态';
+--系统角色表
 CREATE TABLE SYS_ROLE 
 (
    ID                  VARCHAR2(55) PRIMARY KEY,
@@ -118,20 +118,20 @@ CREATE TABLE SYS_ROLE
    UPDATE_DATE        DATE
 );
 COMMENT ON TABLE SYS_ROLE IS
-'ϵͳ��ɫ';
+'系统角色';
 COMMENT ON COLUMN SYS_ROLE.ID IS
-'����';
+'主键';
 COMMENT ON COLUMN SYS_ROLE.ROLE_NAME IS
-'��ɫ����';
+'角色名称';
 COMMENT ON COLUMN SYS_ROLE.ROLE_DESC IS
-'��ɫ����';
+'角色描述';
 COMMENT ON COLUMN SYS_ROLE.ROLE_CODE IS
-'��ɫ����';
+'角色编码';
 COMMENT ON COLUMN SYS_ROLE.STATUS IS
-'״̬';
+'状态';
 COMMENT ON COLUMN SYS_ROLE.PARENT_ID IS
-'������ɫID';
---��ɫ-Ȩ�޹�ϵ��
+'从属角色ID';
+--角色-权限关系表
 CREATE TABLE SYS_ROLE_PERMISSION 
 (
    ID                  VARCHAR2(55) PRIMARY KEY,
@@ -144,16 +144,16 @@ CREATE TABLE SYS_ROLE_PERMISSION
    UPDATE_DATE        DATE
 );
 COMMENT ON TABLE SYS_ROLE_PERMISSION IS
-'��ɫ-Ȩ�޹�ϵ��';
+'角色-权限关系表';
 COMMENT ON COLUMN SYS_ROLE_PERMISSION.ID IS
-'����';
+'主键';
 COMMENT ON COLUMN SYS_ROLE_PERMISSION.ROLE_ID IS
-'��ɫID';
+'角色ID';
 COMMENT ON COLUMN SYS_ROLE_PERMISSION.PERMIS_ID IS
-'����Ȩ��ID';
+'功能权限ID';
 COMMENT ON COLUMN SYS_ROLE_PERMISSION.STATUS IS
-'״̬';
---ϵͳ�û���
+'状态';
+--系统用户表
 CREATE TABLE SYS_USER 
 (
    ID                  VARCHAR2(55) PRIMARY KEY,
@@ -180,44 +180,44 @@ CREATE TABLE SYS_USER
    UPDATE_DATE        DATE
 );
 COMMENT ON TABLE SYS_USER IS
-'ϵͳ�û�';
+'系统用户';
 COMMENT ON COLUMN SYS_USER.ID IS
-'����';
+'主键';
 COMMENT ON COLUMN SYS_USER.USER_NAME IS
-'�û��˻���';
+'用户账户号';
 COMMENT ON COLUMN SYS_USER.MEMBER_ID IS
-'Ա������';
+'员工工号';
 COMMENT ON COLUMN SYS_USER.JOB_TITLE IS
-'ְλ';
+'职位';
 COMMENT ON COLUMN SYS_USER.MAIL IS
-'��������';
+'电子邮箱';
 COMMENT ON COLUMN SYS_USER.PWD IS
-'����';
+'密码';
 COMMENT ON COLUMN SYS_USER.PHOTO_URL IS
-'ͷ��';
+'头像';
 COMMENT ON COLUMN SYS_USER.TOKEN IS
-'����';
+'令牌';
 COMMENT ON COLUMN SYS_USER.PERSONAL_QQ IS
-'����QQ';
+'个人QQ';
 COMMENT ON COLUMN SYS_USER.ENTERPRISE_QQ IS
-'��ҵQQ';
+'企业QQ';
 COMMENT ON COLUMN SYS_USER.PHONE IS
-'�ֻ�����';
+'手机号码';
 COMMENT ON COLUMN SYS_USER.WORK_PHONE IS
-'�����绰';
+'工作电话';
 COMMENT ON COLUMN SYS_USER.EXTENSION IS
-'�ֻ�';
+'分机';
 COMMENT ON COLUMN SYS_USER.REAL_NAME IS
-'����';
+'姓名';
 COMMENT ON COLUMN SYS_USER.STATUS IS
-'״̬ (0 ��ɾ�� 1����)';
+'状态 (0 已删除 1正常)';
 COMMENT ON COLUMN SYS_USER.SUPERIOR_USER_ID IS
-'ֱ���ϼ�';
+'直属上级';
 COMMENT ON COLUMN SYS_USER.DEPT_NAME IS
-'��������';
+'部门名称';
 COMMENT ON COLUMN SYS_USER.DEVICE_TOKEN IS
-'�豸TOKEN';
---�û���ɫ��ϵ��
+'设备TOKEN';
+--用户角色关系表
 CREATE TABLE SYS_USER_ROLE 
 (
    ID                  VARCHAR2(55) PRIMARY KEY,
@@ -230,15 +230,15 @@ CREATE TABLE SYS_USER_ROLE
    UPDATE_DATE        DATE
 );
 COMMENT ON TABLE SYS_USER_ROLE IS
-'�û���ɫ��ϵ��';
+'用户角色关系表';
 COMMENT ON COLUMN SYS_USER_ROLE.ID IS
-'����';
+'主键';
 COMMENT ON COLUMN SYS_USER_ROLE.USER_ID IS
-'�û�ID';
+'用户ID';
 COMMENT ON COLUMN SYS_USER_ROLE.ROLE_ID IS
-'��ɫID';
+'角色ID';
 COMMENT ON COLUMN SYS_USER_ROLE.STATUS IS
-'״̬';
+'状态';
 
 
 
@@ -260,32 +260,32 @@ DELETE FROM CHECKING_IN_RECORD;
 DELETE FROM SYS_MENU;
 
 insert into SYS_USER (ID, USER_NAME, MEMBER_ID, JOB_TITLE, MAIL, PWD, PHOTO_URL, TOKEN, PERSONAL_QQ, ENTERPRISE_QQ, PHONE, WORK_PHONE, EXTENSION, REAL_NAME, STATUS, SUPERIOR_USER_ID, DEPT_NAME, DEVICE_TOKEN, CREATOR_DATE, CREATOR_ID, UPDATE_ID, UPDATE_DATE)
-values ('27EF608425F9499D980CC63FA63C5DA9', 'admin', null, null, null, '123456', null, null, null, null, null, null, null, '��������Ա', null, null, '', null, sysdate, null, null, sysdate);
+values ('27EF608425F9499D980CC63FA63C5DA9', 'admin', null, null, null, '123456', null, null, null, null, null, null, null, '超级管理员', null, null, '', null, sysdate, null, null, sysdate);
 
 
 
 insert into sys_menu(ID,parent_id,menu_name,icon_cls,menu_url,menu_index,status)
-values('ADB3BA34FC734DA6871FEAB074A6BFD3','','ϵͳ����','fa fa-home','#',1,2);
+values('ADB3BA34FC734DA6871FEAB074A6BFD3','','系统管理','fa fa-home','#',1,2);
 
 insert into sys_menu(ID,parent_id,menu_name,icon_cls,menu_url,menu_index,status)
-values('1177A99FDCC84ED7B26A7BA5718ABFD6','ADB3BA34FC734DA6871FEAB074A6BFD3','ѧ��','','to_studentAction_list.do',1,2);
+values('1177A99FDCC84ED7B26A7BA5718ABFD6','ADB3BA34FC734DA6871FEAB074A6BFD3','学生','','to_studentAction_list.do',1,2);
 insert into sys_menu(ID,parent_id,menu_name,icon_cls,menu_url,menu_index,status)
-values('F8B588250B534CB7B3773C79EB52899E','ADB3BA34FC734DA6871FEAB074A6BFD3','����','','checkingInAction/to_checkingInAction_list.do',2,2);
+values('F8B588250B534CB7B3773C79EB52899E','ADB3BA34FC734DA6871FEAB074A6BFD3','考勤','','checkingInAction/to_checkingInAction_list.do',2,2);
 insert into sys_menu(ID,parent_id,menu_name,icon_cls,menu_url,menu_index,status)
 values('98338D78D44244D4AB0F401140ABE634','ADB3BA34FC734DA6871FEAB074A6BFD3','jqgrid_list','','checkingInAction/to_jqgrid_list.do',2,2);
 
 
 insert into sys_menu(ID,parent_id,menu_name,icon_cls,menu_url,menu_index,status)
-values('D01F308C37EF4C7A92F2DE84A625BEB1','ADB3BA34FC734DA6871FEAB074A6BFD3','�˵�','','checkingInAction/to_checkingInAction_list.do',2,3);
+values('D01F308C37EF4C7A92F2DE84A625BEB1','ADB3BA34FC734DA6871FEAB074A6BFD3','菜单','','checkingInAction/to_checkingInAction_list.do',2,3);
 
 
 insert into sys_menu(ID,parent_id,menu_name,icon_cls,menu_url,menu_index,status)
-values('D6D975BFFB0240FA8B7AECDE471384EB','','��������','fa fa-home','#',1,2);
+values('D6D975BFFB0240FA8B7AECDE471384EB','','其他管理','fa fa-home','#',1,2);
 
 insert into sys_menu(ID,parent_id,menu_name,icon_cls,menu_url,menu_index,status)
-values('62B2845A47E740D38329DE165D02E01D','D6D975BFFB0240FA8B7AECDE471384EB','����1','','to_studentAction_list.do',1,2);
+values('62B2845A47E740D38329DE165D02E01D','D6D975BFFB0240FA8B7AECDE471384EB','其他1','','to_studentAction_list.do',1,2);
 insert into sys_menu(ID,parent_id,menu_name,icon_cls,menu_url,menu_index,status)
-values('FDD62B1C756F4ACFA97E4C826D349D99','D6D975BFFB0240FA8B7AECDE471384EB','����2','','checkingInAction/to_checkingInAction_list.do',2,2);
+values('FDD62B1C756F4ACFA97E4C826D349D99','D6D975BFFB0240FA8B7AECDE471384EB','其他2','','checkingInAction/to_checkingInAction_list.do',2,2);
 
 insert into sys_menu(ID,parent_id,menu_name,icon_cls,menu_url,menu_index,status)
-values('EF6BE58AF8F54E54B5E8733E0C688305','FDD62B1C756F4ACFA97E4C826D349D99','����2_Q','','checkingInAction/to_checkingInAction_list.do',2,2);
+values('EF6BE58AF8F54E54B5E8733E0C688305','FDD62B1C756F4ACFA97E4C826D349D99','其他2_Q','','checkingInAction/to_checkingInAction_list.do',2,2);

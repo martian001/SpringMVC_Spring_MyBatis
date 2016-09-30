@@ -1,4 +1,4 @@
-package com.et.web.action.system;
+package com.et.web.controller.system;
 
 import java.util.HashMap;
 import java.util.List;
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.et.base.BaseAction;
+import com.et.base.BaseController;
 import com.et.bean.system.SysMenu;
 import com.et.service.system.SysMenuService;
 
@@ -27,7 +27,7 @@ import com.et.service.system.SysMenuService;
  * ★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★<br>
  */
 @Controller
-public class SysMenuAction extends BaseAction {
+public class SysMenuController extends BaseController {
    @Resource
    private SysMenuService sysMenuService;
 

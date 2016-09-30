@@ -1,4 +1,4 @@
-package com.et.web.action.checkingIn;
+package com.et.web.controller.checkingIn;
 
 import java.io.File;
 import java.util.Arrays;
@@ -18,7 +18,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.et.base.BaseAction;
+import com.et.base.BaseController;
 import com.et.bean.checkingIn.CheckingIn;
 import com.et.bean.checkingIn.CheckingInIndex;
 import com.et.bean.checkingIn.CheckingInRecord;
@@ -43,7 +43,7 @@ import com.et.util.DateUtils;
  */
 @Controller
 @RequestMapping("/checkingInAction")
-public class CheckingInAction extends BaseAction {
+public class CheckingInController extends BaseController {
    private final String PATH = "checkingIn";
    @Resource
    private SysUserService sysUserService;

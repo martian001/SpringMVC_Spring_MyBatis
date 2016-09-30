@@ -41,10 +41,10 @@ import com.et.util.ParseDocAndDocxUtil;
  * ★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★<br>
  * ★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★<br>
  */
-public class BaseAction {
-   private Logger logger = LoggerFactory.getLogger(BaseAction.class);
+public class BaseController {
+   private Logger logger = LoggerFactory.getLogger(BaseController.class);
    private Vector<FileUploadStatus> vector = new Vector<FileUploadStatus>();
-   private static BaseAction baseAction = new BaseAction();
+   private static BaseController baseAction = new BaseController();
    @Resource(name = "webSysConfig")
    private WebSysConfig webSysConfig;
    /**
@@ -216,7 +216,7 @@ public class BaseAction {
     *@time:2016年8月5日上午11:13:28
     *@return
     */
-   public static BaseAction getInstance() {
+   public static BaseController getInstance() {
       return baseAction;
    }
    public FileUploadStatus getUploadStatus(String strID) {

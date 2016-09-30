@@ -1,4 +1,4 @@
-package com.et.web.action.system;
+package com.et.web.controller.system;
 
 import java.util.HashMap;
 import java.util.List;
@@ -12,7 +12,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.et.base.BaseAction;
+import com.et.base.BaseController;
 import com.et.bean.system.Student;
 import com.et.service.system.MailService;
 import com.et.service.system.StudentService;
@@ -29,7 +29,7 @@ import com.et.service.system.StudentService;
 ★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★
  */
 @Controller
-public class StudentAction extends BaseAction {
+public class StudentController extends BaseController {
    @Resource
    private StudentService studentService;
    @Resource

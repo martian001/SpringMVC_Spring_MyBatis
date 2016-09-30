@@ -113,4 +113,6 @@
 			</props>
 		</property>
 	</bean> 
+		<!-- shiro的配置 -->
+	<import resource="classpath:security-config.xml" />
 </beans>

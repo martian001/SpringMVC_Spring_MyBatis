@@ -34,30 +34,7 @@ public class LoginFilter implements Filter {
 
    @Override
    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-      HttpServletRequest hsr = (HttpServletRequest) request;
-      HttpServletResponse resp = (HttpServletResponse) response;
-      HttpSession session = hsr.getSession();
-      String servletPath = hsr.getServletPath();
-      Object sessionObj = session.getAttribute(Constants.LOGIN_USER);
-      // 1.如果用户已经登录，放过
-      if (sessionObj != null) {
-         chain.doFilter(request, response);
-         return;
-      }
-      // 2.如果请求的是静态文件或登录页面，放过
-      if ( servletPath.contains("/css/")
-            || servletPath.contains("/font/")
-            || servletPath.contains("/img/")
-            || servletPath.contains("/js/")
-            || servletPath.contains("/plugins/")
-            || servletPath.endsWith("login.do")
-            || servletPath.endsWith("logout.do")
-            ) {
-         chain.doFilter(request, response);
-         return;
-      }
-      // 不符合以上情况，重定向到登录页面:如session失效,没有登录直接请求本应用其他页面
-      resp.sendRedirect(hsr.getContextPath() + redirectUrl);
+       chain.doFilter(request, response);
    }
 
    @Override

@@ -1,8 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
-<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@ include file="../../common.jsp"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,18 +9,41 @@
 <title>H+ 后台主题UI框架 - 登录</title>
 <meta name="keywords" content="H+后台主题,后台bootstrap框架,会员中心主题,后台HTML,响应式后台">
 <meta name="description" content="H+是一个完全响应式，基于Bootstrap3最新版本开发的扁平化主题，她采用了主流的左右两栏式布局，使用了Html5+CSS3等现代技术">
-<link href="css/bootstrap.min.css" rel="stylesheet">
-<link href="css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
-<link href="css/animate.min.css" rel="stylesheet">
-<link href="css/style.min.css" rel="stylesheet">
-<link href="css/login.min.css" rel="stylesheet">
+<link href="${ctx}css/login.min.css" rel="stylesheet">
 <!--[if lt IE 9]>
     <meta http-equiv="refresh" content="0;ie.html" />
     <![endif]-->
 <script>
-	if (window.top !== window.self) {
-		window.top.location = window.location
-	};
+	$(document).ready(function() {
+		$("#loginForm").validate({
+			rules : {
+				userName : {
+					required : true
+				},
+				password : {
+					required : true
+				}
+			},
+			submitHandler : function(form) {
+				$.ajax({
+				    url: "${ctx}ignore/login.do",
+				    cache: true,
+				    type: "POST",
+				    data: $("#loginForm").serialize(),
+				    async: false,
+					success : function(result) { //表单提交后更新页面显示的数据
+						var ret = eval("(" + result + ")");
+						if (ret && ret["success"]) {
+							window.parent.location=getWebRootPath()+"/index.do";
+						} else {
+							$("#loginMsg").html(ret["msg"]);
+							$("#loginMsgDiv").show(300).delay(5000).hide(300);
+						}
+					}
+				});
+			}
+		});
+		})
 </script>
 
 </head>
@@ -80,15 +100,15 @@
     </div>
    </div>
    <div class="col-sm-5">
-    <form method="post" action="${ctx}login.do">
+    <form method="post" action="#" id="loginForm">
      <h4 class="no-margins">登录：</h4>
      <p class="m-t-md">登录到H+后台主题UI框架</p>
      <input type="text" name="userName" class="form-control uname" required="" placeholder="用户名" /> <input type="password" name="password" required="" class="form-control pword m-b" placeholder="密码" />
-     <c:if test="${msg!=null }">
-      <div class="alert alert-danger">${msg }</div>
-     </c:if>
+     <div class="form-group" id="loginMsgDiv" style="display: none;">
+      <div class="alert alert-danger" id="loginMsg">${msg}</div>
+     </div>
       <a href="#">忘记密码了？</a>
-     <button class="btn btn-success btn-block">登录</button>
+     <button class="btn btn-success btn-block" type="submit">登录</button>
     </form>
    </div>
   </div>
