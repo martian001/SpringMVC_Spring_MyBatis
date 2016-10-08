@@ -5,15 +5,19 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.et.base.BaseController;
 import com.et.bean.system.SysUser;
 import com.et.service.system.SysUserService;
+import com.et.util.CryptographyUtil;
+import com.et.util.StringUtil;
 
 /**
  * ★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★<br>
@@ -27,16 +31,17 @@ import com.et.service.system.SysUserService;
  * ★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★<br>
  */
 @Controller
+@RequestMapping("/sysUserController")
 public class SysUserController extends BaseController {
    @Resource
    private SysUserService sysUserService;
 
-   @RequestMapping("/to_sysUserAction_list.do")
-   public String to_list() {
-      return "sysUserAction/list";
+   @RequestMapping("/toList.do")
+   public String toList() {
+      return "system/sysUserList";
    }
 
-   @RequestMapping("/sysUserAction_list.do")
+   @RequestMapping("/list.do")
    public void list(SysUser query, HttpServletResponse response) {
       Map<String, Object> resultMap = new HashMap<String, Object>();
       List<SysUser> sysUserList = sysUserService.findPage(query);
@@ -47,33 +52,128 @@ public class SysUserController extends BaseController {
       outputJson(resultMap, response);
    }
 
-   @RequestMapping("/sysUserAction_delete.do")
+   @RequestMapping("/delete.do")
    public String delete(String id) {
       sysUserService.deleteById(id);
-      return "forward:to_sysUserAction_list.do";
+      return "forward:toList.do";
    }
 
-   @RequestMapping("/sysUserAction_addUI.do")
-   public String addUI() {
-      return "sysUserAction/addUI";
+   @RequestMapping("/toAddOrUpdate.do")
+   public String toAddOrUpdate(ModelMap map, String id) {
+      if (!StringUtil.isBlank(id)) {
+          SysUser sysUser = sysUserService.getById(id);
+          map.put("sysUser", sysUser);
+       }
+      return "system/sysUserAddOrUpdate";
    }
 
-   @RequestMapping("/sysUserAction_editUI.do")
-   public String editUI(ModelMap map, String id) {
-      SysUser sysUser = sysUserService.getById(id);
-      map.put("sysUser", sysUser);
-      return "sysUserAction/editUI";
-   }
+   @RequestMapping("/addOrUpdate.do")
+   public void addOrUpdate(SysUser sysUser,HttpServletRequest req, HttpServletResponse resp) {
+       String id = sysUser.getId();
+       String userName = sysUser.getUserName();// 用户名
+       String phone = sysUser.getPhone();// 手机号码
+       String realName = sysUser.getRealName();// 真实姓名
+       String memberId = sysUser.getMemberId();// 工号
+       int status = sysUser.getStatus();// 状态,1表示启用,2表示禁用
+       String deptName = sysUser.getDeptName();// 部门
+       String mail = sysUser.getMail();// 邮箱
+       String pwd = sysUser.getPwd();// 密码
+       String remark = sysUser.getRemark();// 备注
+       if (StringUtil.isBlank(userName, phone, realName, memberId, deptName, mail)) {
+          fillReturnJson(resp, false, "参数不合法，请输入必填项");
+          return;
+       }
 
-   @RequestMapping("/sysUserAction_add.do")
-   public String add(SysUser sysUser) {
-      sysUserService.insert(sysUser);
-      return "forward:to_sysUserAction_list.do";
+       if (StringUtil.isBlank(id)) {
+          if (StringUtil.isBlank(pwd)) {
+             fillReturnJson(resp, false, "参数不合法，请输入必填项");
+             return;
+          }
+          // 检查数据是否存在
+          if (sysUserService.checkUserNameIsExist(userName)) {
+             fillReturnJson(resp, false, "该登录名已存在！");
+             return;
+          }
+          if (sysUserService.checkPhoneIsExist(phone)) {
+             fillReturnJson(resp, false, "该手机号码已存在！");
+             return;
+          }
+       }
+       SysUser loginUser = getLoginUser(req);
+       // 有id为更新操作，否则为新增操作
+       if (!StringUtil.isBlank(id)) {
+          // 更新信息
+          SysUser updatesysUser = sysUserService.getById(id);
+          updatesysUser.setRealName(realName);
+          updatesysUser.setMemberId(memberId);
+          updatesysUser.setStatus(status);
+          updatesysUser.setDeptName(deptName);
+          updatesysUser.setRemark(remark);
+          updatesysUser.setMail(mail);
+          updatesysUser.setUpdateId(loginUser.getId());
+          sysUserService.update(updatesysUser);
+       } else {
+          // 添加
+          sysUser.setPwd(CryptographyUtil.encBase64(pwd));
+          sysUser.setUpdateId(loginUser.getId());
+          sysUser.setCreatorId(loginUser.getId());
+          sysUserService.insert(sysUser);
+       }
+       fillReturnJson(resp, true, "提交成功");
    }
-
-   @RequestMapping("/sysUserAction_update.do")
-   public String update(SysUser sysUser) {
-      sysUserService.update(sysUser);
-      return "forward:to_sysUserAction_list.do";
+   /**
+    * 检查用户名是否已存在
+    * 存在返回true，不存在返回false
+    *@author:liangyanjun
+    *@time:2016年7月8日下午3:26:40
+    *@param userName
+    *@param Id
+    *@param response
+    * @throws TException 
+    */
+   @RequestMapping(value="/checkUserNameIsExist" , method=RequestMethod.POST)
+   public void checkUserNameIsExist(String userName, String Id, HttpServletResponse resp){
+      if (StringUtil.isBlank(userName)) {
+         fillReturnJson(resp, false, "参数不合法");
+         return;
+      }
+      boolean flag = false;
+      SysUser sysUser = sysUserService.getSysUserByUserName(userName);
+      if (sysUser!=null&&!StringUtil.isBlank(sysUser.getId())) {
+         flag = true;
+         if (!StringUtil.isBlank(Id) && Id.equals(sysUser.getId())) {
+            flag=false;
+         }
+      }
+      // 输出
+      fillReturnJson(resp, flag, "查询成功");
+   }
+   
+   /**
+    * 检查手机号码是否已存在
+    * 存在返回true，不存在返回false
+    *@author:liangyanjun
+    *@time:2016年7月8日下午3:30:03
+    *@param phone
+    *@param resp
+    * @param Id 
+    * @throws TException 
+    */
+   @RequestMapping(value="/checkPhoneIsExist" , method=RequestMethod.POST)
+   public void checkPhoneIsExist(String phone , String Id, HttpServletResponse resp){
+      if (StringUtil.isBlank(phone)) {
+         fillReturnJson(resp, false, "参数不合法");
+         return;
+      }
+      boolean flag = false;
+      SysUser sysUser = sysUserService.getSysUserByPhone(phone);
+      if (sysUser!=null&&!StringUtil.isBlank(sysUser.getId())) {
+          flag = true;
+          if (!StringUtil.isBlank(Id) && Id.equals(sysUser.getId())) {
+             flag=false;
+          }
+       }
+      // 输出
+      fillReturnJson(resp, flag, "查询成功");
    }
 }

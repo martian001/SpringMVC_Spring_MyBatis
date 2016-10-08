@@ -27,6 +27,7 @@ import com.et.service.system.SysUserService;
 import com.et.shiro.CaptchaUsernamePasswordToken;
 import com.et.shiro.IncorrectCaptchaException;
 import com.et.util.Constants;
+import com.et.util.CryptographyUtil;
 import com.et.util.ExceptionUtil;
 import com.et.util.LogTypeConstant;
 
@@ -109,7 +110,7 @@ public class IndexController extends BaseController {
        token.setCaptcha(captcha);
        token.setRememberMe(true);
        try {
-           token.setPassword(password.toCharArray());
+           token.setPassword(CryptographyUtil.encBase64(password).toCharArray());
            token.setUsername(userName);
            subject.login(token);
        } catch (UnknownSessionException use) {

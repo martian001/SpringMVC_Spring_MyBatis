@@ -33,6 +33,7 @@ public class SysUser extends BaseBean {
    public String superiorName;
    public String deptName;
    public String deviceToken;
+   public String remark;
 
    public String getId() {
       return id;
@@ -186,7 +187,15 @@ public class SysUser extends BaseBean {
       this.deviceToken = deviceToken;
    }
 
-   @Override
+   public String getRemark() {
+    return remark;
+}
+
+public void setRemark(String remark) {
+    this.remark = remark;
+}
+
+@Override
    public int hashCode() {
       final int prime = 31;
       int result = 1;
@@ -313,12 +322,14 @@ public class SysUser extends BaseBean {
       return true;
    }
 
-   @Override
-   public String toString() {
-      return "SysUser [id=" + id + ", userName=" + userName + ", realName=" + realName + ", memberId=" + memberId + ", status=" + status + ", jobTitle=" + jobTitle
-            + ", mail=" + mail + ", pwd=" + pwd + ", photoUrl=" + photoUrl + ", token=" + token + ", personalQQ=" + personalQQ + ", enterpriseQQ=" + enterpriseQQ
-            + ", phone=" + phone + ", workPhone=" + workPhone + ", extension=" + extension + ", superiorId=" + superiorId + ", superiorName=" + superiorName
-            + ", deptName=" + deptName + ", deviceToken=" + deviceToken + "]";
-   }
+    @Override
+    public String toString() {
+        return "SysUser [id=" + id + ", userName=" + userName + ", realName=" + realName + ", memberId=" + memberId + ", status=" + status
+                + ", jobTitle=" + jobTitle + ", mail=" + mail + ", pwd=" + pwd + ", photoUrl=" + photoUrl + ", token=" + token
+                + ", personalQQ=" + personalQQ + ", enterpriseQQ=" + enterpriseQQ + ", phone=" + phone + ", workPhone=" + workPhone
+                + ", extension=" + extension + ", superiorId=" + superiorId + ", superiorName=" + superiorName + ", deptName=" + deptName
+                + ", deviceToken=" + deviceToken + ", remark=" + remark + "]";
+    }
+  
 
 }

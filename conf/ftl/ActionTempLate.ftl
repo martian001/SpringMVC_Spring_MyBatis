@@ -1,4 +1,4 @@
-package com.et.web.action.${packageModule};
+package com.et.web.controller.${packageModule};
 
 import java.util.HashMap;
 import java.util.List;
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.et.base.BaseAction;
+import com.et.base.BaseController;
 import com.et.bean.${packageModule}.${beanName};
 import com.et.service.${packageModule}.${beanName}Service;
 
@@ -27,16 +27,25 @@ import com.et.service.${packageModule}.${beanName}Service;
  * ★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★<br>
  */
 @Controller
-public class ${beanName}Action extends BaseAction {
+@RequestMapping("/${lowercaseBeanName}Controller")
+public class ${beanName}Controller extends BaseController {
+   private String path="${packageModule}";
    @Resource
    private ${beanName}Service ${lowercaseBeanName}Service;
-
-   @RequestMapping("/to_${lowercaseBeanName}Action_list.do")
+   private Logger logger = LoggerFactory.getLogger({beanName}Controller.class);
+   
+   @ExceptionHandler
+   public String exception(HttpServletRequest request, HttpServletResponse response, Exception e) {
+       logger.error(ExceptionUtil.getExceptionMessage(e), e);
+       fillReturnJson(response, false, "出现未知异常,请与系统管理员联系!");
+       return null;
+   }
+   @RequestMapping("/toList.do")
    public String to_list() {
-      return "${lowercaseBeanName}Action/list";
+      return path+"/list";
    }
 
-   @RequestMapping("/${lowercaseBeanName}Action_list.do")
+   @RequestMapping("/list.do")
    public void list(${beanName} query, HttpServletResponse response) {
       Map<String, Object> resultMap = new HashMap<String, Object>();
       List<${beanName}> ${lowercaseBeanName}List = ${lowercaseBeanName}Service.findPage(query);
@@ -47,33 +56,33 @@ public class ${beanName}Action extends BaseAction {
       outputJson(resultMap, response);
    }
 
-   @RequestMapping("/${lowercaseBeanName}Action_delete.do")
+   @RequestMapping("/delete.do")
    public String delete(String id) {
       ${lowercaseBeanName}Service.deleteById(id);
-      return "forward:to_${lowercaseBeanName}Action_list.do";
+      return "forward:to_${lowercaseBeanName}list.do";
    }
 
-   @RequestMapping("/${lowercaseBeanName}Action_addUI.do")
+   @RequestMapping("/addUI.do")
    public String addUI() {
-      return "${lowercaseBeanName}Action/addUI";
+      return path+"/addUI";
    }
 
-   @RequestMapping("/${lowercaseBeanName}Action_editUI.do")
+   @RequestMapping("/editUI.do")
    public String editUI(ModelMap map, String id) {
       ${beanName} ${lowercaseBeanName} = ${lowercaseBeanName}Service.getById(id);
       map.put("${lowercaseBeanName}", ${lowercaseBeanName});
-      return "${lowercaseBeanName}Action/editUI";
+      return path+"/editUI";
    }
 
-   @RequestMapping("/${lowercaseBeanName}Action_add.do")
+   @RequestMapping("/add.do")
    public String add(${beanName} ${lowercaseBeanName}) {
       ${lowercaseBeanName}Service.insert(${lowercaseBeanName});
-      return "forward:to_${lowercaseBeanName}Action_list.do";
+      return "forward:to_${lowercaseBeanName}list.do";
    }
 
-   @RequestMapping("/${lowercaseBeanName}Action_update.do")
+   @RequestMapping("/update.do")
    public String update(${beanName} ${lowercaseBeanName}) {
       ${lowercaseBeanName}Service.update(${lowercaseBeanName});
-      return "forward:to_${lowercaseBeanName}Action_list.do";
+      return "forward:to_${lowercaseBeanName}list.do";
    }
 }

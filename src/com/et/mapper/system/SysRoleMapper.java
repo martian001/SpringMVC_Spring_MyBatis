@@ -1,22 +1,22 @@
-package com.et.bean.${packageModule};
+package com.et.mapper.system;
 
-import com.et.base.BaseBean;
+import org.mybatis.spring.annotation.MapperScan;
+
+import com.achievo.framework.mybatis.mapper.BaseMapper;
+import com.et.base.BaseDao;
 
 /**
  * ★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★<br>
  * ★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★<br>
  * ★☆ @author： liangyanjun <br>
- * ★☆ @time：${dateTime} <br>
- * ★☆ @version：  ${version}<br>
+ * ★☆ @time：2016-10-08 16:40:55 <br>
+ * ★☆ @version：  1.0<br>
  * ★☆ @lastMotifyTime： <br>
- * ★☆ @ClassAnnotation： ${classAnnotation}<br>
+ * ★☆ @ClassAnnotation： 角色<br>
  * ★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★<br>
  * ★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★<br>
  */
-public class ${beanName} extends BaseBean{
-<#list fieldMaps as map>
-   <#if (map.javaName != "creatorId" && map.javaName != "creatorDate" && map.javaName != "updateId" && map.javaName != "updateDate")>
-   public ${map.javaSimpleType} ${map.javaName}; //
-   </#if>
-</#list>
+@MapperScan
+public interface SysRoleMapper<T, PK> extends BaseMapper<T, PK>,BaseDao<T>{
+
 }

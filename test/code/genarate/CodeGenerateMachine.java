@@ -12,6 +12,7 @@ import org.junit.Test;
 
 import com.et.util.CommonUtil;
 import com.et.util.DateUtils;
+import com.et.util.FileUtil;
 
 import freemarker.template.TemplateException;
 
@@ -30,24 +31,24 @@ public class CodeGenerateMachine {
    @Test
    public void codeGenerate() throws SQLException {
       try {
-         String srcPath = "C:/Users/Administrator/git/SpringMVC_Spring_MyBatis/src/";
-         String mapperPath = "C:/Users/Administrator/git/SpringMVC_Spring_MyBatis/mapper/";
+         String srcPath = "D:/eclipse-jee-luna-R-win32-x86_64/eclipse_workspace/SpringMVC_Spring_MyBatis/src/";
+         String mapperPath = "D:/eclipse-jee-luna-R-win32-x86_64/eclipse_workspace/SpringMVC_Spring_MyBatis/mapper/";
          List<String> tempLates = new ArrayList<>();
-//         tempLates.add("MapperTempLate.ftl-Mapper");
-//         tempLates.add("ServiceTempLate.ftl-Service");
-//         tempLates.add("ServiceImplTempLate.ftl-Service");
-//         tempLates.add("BeanTempLate.ftl-Bean");
-//         tempLates.add("ActionTempLate.ftl-Action");
+         tempLates.add("MapperTempLate.ftl-Mapper");
+         tempLates.add("ServiceTempLate.ftl-Service");
+         tempLates.add("ServiceImplTempLate.ftl-Service");
+         tempLates.add("BeanTempLate.ftl-Bean");
+        // tempLates.add("ActionTempLate.ftl-Controller");
          tempLates.add("MapperXmlTempLate.ftl-Mapper");
 
          List<Map<String, Object>> list = new ArrayList<>();
-         String tableName = "ORG_ASSETS_COOPERATION_INFO";// 数据库表名
+         String tableName = "SYS_ROLE";// 数据库表名
          String name = MapperXmlTempLateUtil.jdbcToJavaName2(tableName);// 类名
          String lowercaseBeanName = MapperXmlTempLateUtil.startLowerCase(name);// 类名小写
          String dateTime = DateUtils.getCurrentDateTime();// 当前时间
          String version = "1.0";// 版本号
-         String classAnnotation = "机构管理平台-资产合作信息";// 类注释
-         String packageModule = "org";// 模块
+         String classAnnotation = "角色";// 类注释
+         String packageModule = "system";// 模块
          String packageRoot = "com/et/";// 包根路径
 
          for (String tempLate : tempLates) {
@@ -76,9 +77,7 @@ public class CodeGenerateMachine {
          for (Map<String, Object> m : list) {
             String ftlPath = (String) m.get("tempLate");
             String tempLate = (String) m.get("tempLate");
-            if ("MapperXmlTempLate.ftl".equals(tempLate)) {
-               m.put("fieldMaps", MapperXmlTempLateUtil.getMetaData(tableName));
-            }
+            m.put("fieldMaps", MapperXmlTempLateUtil.getMetaData(tableName));
             String templateParsing = CommonUtil.templateParsing(m, ftlPath);
             System.out.println(templateParsing);
             String folderPath = srcPath + packageRoot + m.get("packageLayer").toString().replace(".", File.separator) + File.separator
@@ -97,7 +96,7 @@ public class CodeGenerateMachine {
             }
             System.out.println(folderPath);
             System.out.println(fileName);
-            //FileUtils.textToFile(templateParsing, folderPath, fileName);
+            FileUtil.textToFile(templateParsing, folderPath, fileName);
          }
       } catch (TemplateException e) {
          e.printStackTrace();

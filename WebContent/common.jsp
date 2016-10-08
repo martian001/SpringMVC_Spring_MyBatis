@@ -16,13 +16,22 @@
 <script type="text/javascript" src="${ctx }js/jquery.min.js?v=2.1.4"></script>
 <!-- jquery-form.js -->
 <script type="text/javascript" src="${ctx }js/jquery-form.js"></script>
+<script type="text/javascript" src="${ctx }js/accounting.js" ></script>
 <script type="text/javascript" src="${ctx }js/common.js" ></script>
+<script type="text/javascript" src="${ctx }js/fieldFormat.js" ></script>
+<script type="text/javascript" src="${ctx }js/jquery.formatCurrency-1.4.0.js" ></script>
 <!-- bootstrap -->
 <script src="${ctx }js/bootstrap.min.js?v=3.3.6"></script>
 <!-- validate表单校验 -->
 <script src="${ctx}js/plugins/validate/jquery.validate.min.js"></script>
 <script src="${ctx}js/plugins/validate/messages_zh.min.js"></script>
+<script src="${ctx}js/plugins/validate/validate-methods.js"></script>
 <!-- layer弹层组件 -->
 <script src="${ctx}js/plugins/layer/layer.min.js"></script>
 <!-- jqgrid-->
 <link href="${ctx}css/plugins/jqgrid/ui.jqgridffe4.css?0820" rel="stylesheet">
+<!-- 文件工具js，包括文件上传下载等-->
+<script type="text/javascript" src="${ctx }js/fileUtil.js" ></script>
+<!-- 多文件上传 -->
+<link href="${ctx}js/plugins/uploadify/css/uploadify.css" rel="stylesheet" type="text/css" />
+<script src="${ctx}js/plugins/uploadify/jquery.uploadify.js" type="text/javascript"></script>

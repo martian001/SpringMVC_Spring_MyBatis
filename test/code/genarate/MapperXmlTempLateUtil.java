@@ -26,7 +26,7 @@ import com.et.util.CommonUtil;
  * ★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★<br>
  */
 public class MapperXmlTempLateUtil {
-   private final static String URL = "jdbc:oracle:thin:@192.168.0.212:1521:orcl";
+   private final static String URL = "jdbc:oracle:thin:@127.0.0.1:1521:orcl";
    private final static String DRIVER = "oracle.jdbc.driver.OracleDriver";
    private static Connection conn = null;
 
@@ -62,7 +62,7 @@ public class MapperXmlTempLateUtil {
    static {// 静态代码块.
       try {
          Class.forName(DRIVER);
-         conn = DriverManager.getConnection(URL, "bms_bak", "Ab123456");// url,用户名和密码
+         conn = DriverManager.getConnection(URL, "oadb", "Ab123456");// url,用户名和密码
       } catch (Exception e) {
          e.printStackTrace();
       }
@@ -118,6 +118,7 @@ public class MapperXmlTempLateUtil {
          fieldMap.put("jdbcType", jdbcType);
          fieldMap.put("javaName", javaName.toString());
          fieldMap.put("javaType", javaType);
+         fieldMap.put("javaSimpleType", javaType.substring(javaType.lastIndexOf(".")+1));
          maps.add(fieldMap);
       }
       return maps;

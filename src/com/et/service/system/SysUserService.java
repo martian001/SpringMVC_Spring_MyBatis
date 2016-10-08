@@ -33,4 +33,8 @@ public interface SysUserService extends BaseService<SysUser> {
     */
    SysUser getSysUserByUserName(String userName);
 
+   boolean checkUserNameIsExist(String userName);
+
+   boolean checkPhoneIsExist(String phone);
+
 }

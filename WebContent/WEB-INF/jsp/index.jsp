@@ -71,7 +71,7 @@
      <i class="fa fa-backward"></i>
     </button>
     <nav class="page-tabs J_menuTabs">
-    <div class="page-tabs-content">
+    <div class="page-tabs-content" id="page-tabs-content">
      <a href="javascript:;" class="active J_menuTab" data-id="index_v1.html">首页</a>
     </div>
     </nav>

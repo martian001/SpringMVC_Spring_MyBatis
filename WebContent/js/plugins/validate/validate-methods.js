@@ -196,10 +196,6 @@ $(function(){
          var reg = RegExp(/[(\ )(\`)(\~)(\!)(\@)(\#)(\$)(\%)(\^)(\&)(\*)(\()(\))(\+)(\=)(\|)(\{)(\})(\')(\:)(\;)(\')(',)(\[)(\])(\.)(\<)(\>)(\/)(\?)(\~)(\！)(\@)(\#)(\￥)(\%)(\…)(\&)(\*)(\（)(\）)(\—)(\+)(\|)(\{)(\})(\【)(\】)(\‘)(\；)(\：)(\”)(\“)(\’)(\。)(\，)(\、)(\？)]+/);   
          return this.optional(element) || !reg.test(value);       
     }, "含有中英文特殊字符");   
-    // 检查机构代码是否存在
-    jQuery.validator.addMethod("checkOrgCodeIsExist", function(value, element) { 
-      return this.optional(element) || checkOrgCodeIsExist(value);    
-    }, "该机构代码已经注册。"); 
     // 检查用户名是否已存在
     jQuery.validator.addMethod("checkUserNameIsExist", function(value, element) { 
     	return this.optional(element) || checkUserNameIsExist(value);    
@@ -208,10 +204,6 @@ $(function(){
     jQuery.validator.addMethod("checkPhoneIsExist", function(value, element) { 
     	return this.optional(element) || checkPhoneIsExist(value);    
     }, "该手机号码已经注册。"); 
-    // 检查email是否已存在
-    jQuery.validator.addMethod("checkEmailIsExist", function(value, element) { 
-    	return this.optional(element) || checkEmailIsExist(value);    
-    }, "该email已经注册。"); 
     jQuery.validator.addMethod("selectNone", function(value, element) {
         return this.optional(element) || value != -1;
     }, "必须选择一项");
@@ -280,32 +272,14 @@ function isPlateNo(plateNo){
     }
     return false;
 }
-// 检查机构代码是否存在
-function checkOrgCodeIsExist(orgCode){
-	var flag = false;
-	var pid =getUserId();
-	$.ajax({
-	    url: getWebRootPath()+"/orgController/ignore/checkOrgCodeIsExist.action",
-	    type: "POST",
-	    data: {orgCode:orgCode,pid:pid},
-	    async: false,
-		success : function(result) { //表单提交后更新页面显示的数据
-			var ret = eval("(" + result + ")");
-			if (ret && !ret.header["success"]) {
-				flag= true;
-			}
-		}
-	});
-	return flag
-}
 // 检查用户名是否已存在
 function checkUserNameIsExist(userName){
 	var flag = false;
-	var pid =getUserId();
+	var id =getUserId();
 	$.ajax({
-		url: getWebRootPath()+"/sysOrgUserController/ignore/checkUserNameIsExist.action",
+		url: getWebRootPath()+"/sysUserController/checkUserNameIsExist.do",
 		type: "POST",
-		data: {userName:userName,pid:pid},
+		data: {userName:userName,id:id},
 		async: false,
 		success : function(result) { //表单提交后更新页面显示的数据
 			var ret = eval("(" + result + ")");
@@ -319,29 +293,11 @@ function checkUserNameIsExist(userName){
 // 检查手机号码是否已存在
 function checkPhoneIsExist(phone){
 	var flag = false;
-	var pid =getUserId();
+	var id =getUserId();
 	$.ajax({
-		url: getWebRootPath()+"/sysOrgUserController/ignore/checkPhoneIsExist.action",
+		url: getWebRootPath()+"/sysUserController/checkPhoneIsExist.do",
 		type: "POST",
-		data: {phone:phone,pid:pid},
-		async: false,
-		success : function(result) { //表单提交后更新页面显示的数据
-			var ret = eval("(" + result + ")");
-			if (ret && !ret.header["success"]) {
-				flag= true;
-			}
-		}
-	});
-	return flag
-}
-// 检查email是否已存在
-function checkEmailIsExist(email){
-	var flag = false;
-	var pid =getUserId();
-	$.ajax({
-		url: getWebRootPath()+"/sysOrgUserController/ignore/checkEmailIsExist.action",
-		type: "POST",
-		data: {email:email,pid:pid},
+		data: {phone:phone,id:id},
 		async: false,
 		success : function(result) { //表单提交后更新页面显示的数据
 			var ret = eval("(" + result + ")");
@@ -353,10 +309,10 @@ function checkEmailIsExist(email){
 	return flag
 }
 function getUserId(){
-	var pid = 0;
-	var temp = $("#pid").val();
+	var id = 0;
+	var temp = $("#id").val();
 	if (temp != undefined && temp != "") {
-		pid = temp;
+		id = temp;
 	}
-	return pid;
+	return id;
 }

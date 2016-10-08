@@ -175,7 +175,7 @@ public class BaseController {
     *@time:2016年8月5日上午11:45:44
     *@return
     */
-   private SysUser getLoginUser(HttpServletRequest req) {
+   protected SysUser getLoginUser(HttpServletRequest req) {
       return (SysUser) req.getSession().getAttribute(Constants.LOGIN_USER);
    }
 

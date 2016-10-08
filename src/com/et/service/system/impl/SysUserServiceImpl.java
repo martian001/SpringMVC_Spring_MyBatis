@@ -44,4 +44,21 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUser> implements SysU
    public SysUser getSysUserByUserName(String userName) {
       return sysUserMapper.getSysUserByUserName(userName);
    }
+
+
+    /** @author:liangyanjun
+     * @time:2016年10月8日上午10:04:31 */
+    @Override
+    public boolean checkUserNameIsExist(String userName) {
+        SysUser sysUser = sysUserMapper.getSysUserByUserName(userName);
+        return sysUser != null;
+    }
+
+    /** @author:liangyanjun
+     * @time:2016年10月8日上午10:04:31 */
+    @Override
+    public boolean checkPhoneIsExist(String phone) {
+        SysUser sysUser = sysUserMapper.getSysUserByPhone(phone);
+        return sysUser != null;
+    }
 }

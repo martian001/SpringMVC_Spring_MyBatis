@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.et.mapper.system.SysRoleMapper">
+	<resultMap id="sysRoleMap" type="sysRole">
+		<id property="id" column="ID" />
+		<id property="roleName" column="ROLE_NAME" />
+		<id property="roleDesc" column="ROLE_DESC" />
+		<id property="roleCode" column="ROLE_CODE" />
+		<id property="status" column="STATUS" />
+		<id property="parentId" column="PARENT_ID" />
+		<id property="creatorDate" column="CREATOR_DATE" />
+		<id property="creatorId" column="CREATOR_ID" />
+		<id property="updateId" column="UPDATE_ID" />
+		<id property="updateDate" column="UPDATE_DATE" />
+	</resultMap>
+	<sql id="column_list">
+        ID,ROLE_NAME,ROLE_DESC,ROLE_CODE,STATUS,PARENT_ID,CREATOR_DATE,CREATOR_ID,UPDATE_ID,UPDATE_DATE
+	</sql>
+	<!-- 查询所有 -->
+	<select id="getAll" resultMap="sysRoleMap">
+		SELECT
+		<include refid="column_list" />
+		FROM SYS_ROLE
+		<where>
+			<trim>
+		      <if test="id != null and id !=''">
+	          ID=#{id}
+	          </if>
+		      <if test="roleName != null and roleName !=''">
+	          AND ROLE_NAME=#{roleName}
+	          </if>
+		      <if test="roleDesc != null and roleDesc !=''">
+	          AND ROLE_DESC=#{roleDesc}
+	          </if>
+		      <if test="roleCode != null and roleCode !=''">
+	          AND ROLE_CODE=#{roleCode}
+	          </if>
+		      <if test="status != null and status >0">
+	          AND STATUS=#{status}
+	          </if>
+		      <if test="parentId != null and parentId !=''">
+	          AND PARENT_ID=#{parentId}
+	          </if>
+		      <if test="creatorDate != null and creatorDate !=''">
+	          AND CREATOR_DATE=#{creatorDate}
+	          </if>
+		      <if test="creatorId != null and creatorId !=''">
+	          AND CREATOR_ID=#{creatorId}
+	          </if>
+		      <if test="updateId != null and updateId !=''">
+	          AND UPDATE_ID=#{updateId}
+	          </if>
+		      <if test="updateDate != null and updateDate !=''">
+	          AND UPDATE_DATE=#{updateDate}
+	          </if>
+			</trim>
+		</where>
+	</select>
+	<!-- 根据id获取 -->
+	<select id="getById" resultMap="sysRoleMap">
+		SELECT <include refid="column_list" /> FROM SYS_ROLE WHERE ID=#{id}
+	</select>
+	<!-- 插入一条数据 -->
+	<insert id="insert" parameterType="sysRole">
+		<selectKey keyProperty="id" resultType="String" order="BEFORE">
+			SELECT SYS_GUID() FROM DUAL
+		</selectKey>
+		INSERT INTO SYS_ROLE
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+		    <if test="id != null and id !=''">
+				ID,
+			</if>
+		    <if test="roleName != null and roleName !=''">
+				ROLE_NAME,
+			</if>
+		    <if test="roleDesc != null and roleDesc !=''">
+				ROLE_DESC,
+			</if>
+		    <if test="roleCode != null and roleCode !=''">
+				ROLE_CODE,
+			</if>
+		    <if test="status != null and status >0">
+				STATUS,
+			</if>
+		    <if test="parentId != null and parentId !=''">
+				PARENT_ID,
+			</if>
+		    <if test="creatorDate != null and creatorDate !=''">
+				CREATOR_DATE,
+			</if>
+		    <if test="creatorId != null and creatorId !=''">
+				CREATOR_ID,
+			</if>
+		    <if test="updateId != null and updateId !=''">
+				UPDATE_ID,
+			</if>
+		    <if test="updateDate != null and updateDate !=''">
+				UPDATE_DATE,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+		    <if test="id != null and id !=''">
+		    #{id},
+			</if>
+		    <if test="roleName != null and roleName !=''">
+		    #{roleName},
+			</if>
+		    <if test="roleDesc != null and roleDesc !=''">
+		    #{roleDesc},
+			</if>
+		    <if test="roleCode != null and roleCode !=''">
+		    #{roleCode},
+			</if>
+		    <if test="status != null and status >0">
+		    #{status},
+			</if>
+		    <if test="parentId != null and parentId !=''">
+		    #{parentId},
+			</if>
+		    <if test="creatorDate != null and creatorDate !=''">
+		    #{creatorDate,jdbcType= DATE,javaType= java.util.Date},
+			</if>
+		    <if test="creatorId != null and creatorId !=''">
+		    #{creatorId},
+			</if>
+		    <if test="updateId != null and updateId !=''">
+		    #{updateId},
+			</if>
+		    <if test="updateDate != null and updateDate !=''">
+		    #{updateDate,jdbcType= DATE,javaType= java.util.Date},
+			</if>
+		</trim>
+	</insert>
+	<!-- 根据id删除数据 -->
+	<delete id="deleteById" parameterType="sysRole">
+		<![CDATA[DELETE FROM SYS_ROLE WHERE ID=#{id}]]>
+	</delete>
+	<!-- 根据id更新数据 -->
+		<update id="update" parameterType="sysRole">
+		UPDATE SYS_ROLE
+		<set>
+		    <if test="id != null and id !=''">
+		     ID=#{id},
+			</if>
+		    <if test="roleName != null and roleName !=''">
+		     ROLE_NAME=#{roleName},
+			</if>
+		    <if test="roleDesc != null and roleDesc !=''">
+		     ROLE_DESC=#{roleDesc},
+			</if>
+		    <if test="roleCode != null and roleCode !=''">
+		     ROLE_CODE=#{roleCode},
+			</if>
+		    <if test="status != null and status >0">
+		     STATUS=#{status},
+			</if>
+		    <if test="parentId != null and parentId !=''">
+		     PARENT_ID=#{parentId},
+			</if>
+		    <if test="creatorDate != null and creatorDate !=''">
+		     CREATOR_DATE=#{creatorDate,jdbcType= DATE,javaType= java.util.Date},
+			</if>
+		    <if test="creatorId != null and creatorId !=''">
+		     CREATOR_ID=#{creatorId},
+			</if>
+		    <if test="updateId != null and updateId !=''">
+		     UPDATE_ID=#{updateId},
+			</if>
+		    <if test="updateDate != null and updateDate !=''">
+		     UPDATE_DATE=#{updateDate,jdbcType= DATE,javaType= java.util.Date},
+			</if>
+		</set>
+		WHERE ID = #{id}
+	</update>
+	<!-- 根据传入多个id删除数据 -->
+	<delete id="deleteByIds" parameterType="java.util.List">
+		DELETE FROM SYS_ROLE WHERE ID in
+		<foreach collection="list" item="item" index="index" open="("
+			separator="," close=")">
+			#{item}
+		</foreach>
+	</delete>
+	<!-- 根据条件分页查询 mysql -->
+	<select id="findPage" resultMap="sysRoleMap" parameterType="sysRole">
+	<if test="page != -1">
+	SELECT D.* FROM (SELECT T.*, ROWNUM RN FROM (
+	</if>
+    SELECT <include refid="column_list" /> FROM SYS_ROLE A
+		<where>
+			<trim>
+				<if test="roleName != null and roleName !=''">
+					AND A.ROLE_NAME LIKE '%${roleName}%'
+				</if>
+				<if test="roleCode != null and roleCode !=''">
+					AND A.ROLE_CODE LIKE '%${roleCode}%'
+				</if>
+				<if test="status !=null and status >0">
+					AND A.STATUS = #{status}
+				</if>
+				<if test="parentId !=null and parentId !=''">
+					AND A.PARENT_ID = #{parentId}
+				</if>
+				<if test="id!=null and id !=''">
+					AND A.ID = #{id}
+				</if>
+			</trim>
+		</where>
+		<if test="page != -1">
+		<![CDATA[ ) T WHERE ROWNUM <=#{page}*#{rows} ) D WHERE D.RN > ((#{page}-1)*#{rows}) ]]>
+		</if>
+	</select>
+	<!-- 根据条件查询数量 -->
+	<select id="getTotal" resultType="Integer" parameterType="sysRole">
+	<![CDATA[
+	SELECT COUNT(1) FROM
+			(SELECT ID FROM SYS_ROLE A
+	]]>
+		<where>
+			<trim>
+				<if test="roleName != null and roleName !=''">
+					AND A.ROLE_NAME LIKE '%${roleName}%'
+				</if>
+				<if test="roleCode != null and roleCode !=''">
+					AND A.ROLE_CODE LIKE '%${roleCode}%'
+				</if>
+				<if test="status !=null and status >0">
+					AND A.STATUS = #{status}
+				</if>
+				<if test="parentId !=null and parentId !=''">
+					AND A.PARENT_ID = #{parentId}
+				</if>
+				<if test="id!=null and id !=''">
+					AND A.ID = #{id}
+				</if>
+			</trim>
+		</where>
+		) T
+	</select>
+</mapper>

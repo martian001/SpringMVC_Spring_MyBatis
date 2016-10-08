@@ -1,22 +1,20 @@
-package com.et.bean.${packageModule};
+package com.et.service.system;
 
-import com.et.base.BaseBean;
+import com.et.base.BaseService;
+import com.et.bean.system.SysRole;
 
 /**
  * ★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★<br>
  * ★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★<br>
  * ★☆ @author： liangyanjun <br>
- * ★☆ @time：${dateTime} <br>
- * ★☆ @version：  ${version}<br>
+ * ★☆ @time：2016-10-08 16:40:55 <br>
+ * ★☆ @version：  1.0<br>
  * ★☆ @lastMotifyTime： <br>
- * ★☆ @ClassAnnotation： ${classAnnotation}<br>
+ * ★☆ @ClassAnnotation： 角色<br>
  * ★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★<br>
  * ★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★<br>
  */
-public class ${beanName} extends BaseBean{
-<#list fieldMaps as map>
-   <#if (map.javaName != "creatorId" && map.javaName != "creatorDate" && map.javaName != "updateId" && map.javaName != "updateDate")>
-   public ${map.javaSimpleType} ${map.javaName}; //
-   </#if>
-</#list>
+
+public interface SysRoleService extends BaseService<SysRole> {
+
 }

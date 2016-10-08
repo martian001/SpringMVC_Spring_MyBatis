@@ -22,10 +22,11 @@
 		<id property="superiorName" column="SUPERIOR_NAME" />
 		<id property="deptName" column="DEPT_NAME" />
 		<id property="deviceToken" column="DEVICE_TOKEN" />
-		<id property="creatorId" column="creator_id" />
-		<id property="creatorDate" column="creator_date" />
-		<id property="updateId" column="update_id" />
-		<id property="updateDate" column="update_date" />
+		<id property="creatorId" column="CREATOR_ID" />
+		<id property="creatorDate" column="CREATOR_DATE" />
+		<id property="updateId" column="UPDATE_ID" />
+		<id property="updateDate" column="UPDATE_DATE" />
+		<id property="remark" column="REMARK" />
 	</resultMap>
 	<!-- 查询所有 -->
 	<select id="getAll" resultMap="sysUserMap">
@@ -50,6 +51,9 @@
 				</if>
 				<if test="memberId != null and memberId !=''">
 					AND A.MEMBER_ID LIKE '%${memberId}%'
+				</if>
+				<if test="status !=null and status !=''">
+					AND A.STATUS = #{status}
 				</if>
 				<if test="id!=null and id !=''">
 					AND A.ID = #{id}
@@ -81,6 +85,9 @@
 				</if>
 				<if test="memberId != null and memberId !=''">
 					AND A.MEMBER_ID LIKE '%${memberId}%'
+				</if>
+				<if test="status !=null and status !=''">
+					AND A.STATUS = #{status}
 				</if>
 				<if test="id!=null and id !=''">
 					AND A.ID = #{id}
@@ -166,6 +173,9 @@
 	                UPDATE_ID, 
 	          </if>
 	                UPDATE_DATE, 
+	          <if test="remark !=null and remark !=''">
+	                REMARK, 
+	          </if>
          </trim>
          <trim prefix="values (" suffix=")" suffixOverrides=",">
 			  #{id},
@@ -228,6 +238,9 @@
 	                #{updateId},
 	          </if>
 	                SYSDATE, 
+	          <if test="remark !=null and remark !=''">
+	                #{remark},
+	          </if>
          </trim>
 	</insert>
 	<delete id="deleteById" parameterType="sysUser">
