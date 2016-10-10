@@ -25,6 +25,16 @@
 	        <filter-name>shiroFilter</filter-name>  
 	        <url-pattern>/*</url-pattern>  
 	</filter-mapping>
+	<!-- session失效过滤器 -->
+	<filter>  
+	    <filter-name>SessionInvalidFilter</filter-name>  
+	    <filter-class>com.et.web.filter.SessionInvalidFilter</filter-class>  
+	</filter> 
+	<filter-mapping>  
+	        <filter-name>SessionInvalidFilter</filter-name>  
+	        <url-pattern>/*</url-pattern>  
+	</filter-mapping>
+	
 		<!-- 实例化Spring容器,应用启动时,该监听器被执行,它会读取Spring相关配置文件,其默认会到WEB-INF中查找applicationContext.xml -->
 	<listener>
 		<description>spring监听器</description>
@@ -95,4 +105,7 @@
 		<error-code>500</error-code>
 		<location>/WEB-INF/errorpage/500.jsp</location>
 	</error-page>
+	<session-config>
+         <session-timeout>180</session-timeout>
+    </session-config>
 </web-app>

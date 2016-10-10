@@ -37,8 +37,8 @@
 	<!-- 过滤器 -->
 	<bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
 		<property name="securityManager" ref="securityManager" />
-		<property name="loginUrl" value="/ignore/to_login.do" />
-		<property name="unauthorizedUrl" value="/ignore/to_login.do" />
+		<property name="loginUrl" value="/to_login.do" />
+		<property name="unauthorizedUrl" value="/to_login.do" />
 		<property name="filters">
 			<util:map>
 				<entry key="authc" value-ref="formAuthenticationFilter" />
@@ -52,6 +52,7 @@
 				/img/** = anon
 				/js/** = anon
 				/**/ignore/**= anon
+				/to_login.do= anon
 				/ignore/**= anon
 				/** = authc
 			</value>

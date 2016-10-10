@@ -16,14 +16,14 @@ import com.et.base.BaseBean;
  * ★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★<br>
  */
 public class SysMenu extends BaseBean {
-   private String id;
-   private String parentId;
-   private String menuName;
-   private String iconCls;
-   private String menuUrl;
-   private int status;
-   private int menuIndex;
-   private List<SysMenu> childrenList;
+   private String id;//
+   private String parentId;//父ID
+   private String menuName;//菜单名称
+   private String iconCls;//菜单图标
+   private String menuUrl;//菜单URL
+   private int status;//状态
+   private int menuIndex;//显示顺序
+   private List<SysMenu> childrenList;//
 
    public String getId() {
       return id;

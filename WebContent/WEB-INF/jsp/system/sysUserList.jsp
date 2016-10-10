@@ -41,7 +41,8 @@
 													},
 													{
 														name : "userName",
-														index : "userName"
+														index : "userName",
+														sortable : false
 													},
 													{
 														name : "realName",

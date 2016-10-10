@@ -5,15 +5,21 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.et.base.BaseController;
 import com.et.bean.system.SysMenu;
+import com.et.bean.system.SysUser;
 import com.et.service.system.SysMenuService;
+import com.et.util.ExceptionUtil;
+import com.et.util.StringUtil;
 
 /**
  * ★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★<br>
@@ -27,53 +33,79 @@ import com.et.service.system.SysMenuService;
  * ★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★<br>
  */
 @Controller
+@RequestMapping("/sysMenuController")
 public class SysMenuController extends BaseController {
+   private String path = "system";
    @Resource
    private SysMenuService sysMenuService;
-
-   @RequestMapping("/to_sysMenuAction_list.do")
+   private Logger logger = LoggerFactory.getLogger(SysRoleController.class);
+   
+   @ExceptionHandler
+   public String exception(HttpServletRequest request, HttpServletResponse response, Exception e) {
+       logger.error(ExceptionUtil.getExceptionMessage(e), e);
+       fillReturnJson(response, false, "出现未知异常,请与系统管理员联系!");
+       return null;
+   }
+   
+   @RequestMapping("/toSysMenuList.do")
    public String to_list() {
-      return "sysMenuAction/list";
+      return path+"/sysMenuList";
    }
 
-   @RequestMapping("/sysMenuAction_list.do")
+   @RequestMapping("/list.do")
    public void list(SysMenu query, HttpServletResponse response) {
-      Map<String, Object> resultMap = new HashMap<String, Object>();
-      List<SysMenu> sysMenuList = sysMenuService.findPage(query);
+      List<SysMenu> list = sysMenuService.findPage(query);
       int total = sysMenuService.getTotal(query);
       // 输出
-      resultMap.put("rows", sysMenuList);
-      resultMap.put("total", total);
-      outputJson(resultMap, response);
+      outputPage(query.getRows(), response, list, total);
    }
 
-   @RequestMapping("/sysMenuAction_delete.do")
-   public String delete(String id) {
+   @RequestMapping("/delete.do")
+   public void delete(String id,HttpServletResponse resp) {
+      if (StringUtil.isBlank(id)) {
+           fillReturnJson(resp, false, "缺少参数，请重新操作");
+           return;
+      }
       sysMenuService.deleteById(id);
-      return "forward:to_sysMenuAction_list.do";
+      fillReturnJson(resp, true, "提交成功");
    }
+   /** 新增或修改角色
+    * 
+    * @author:liangyanjun
+    * @time:2016年10月8日下午6:09:37
+    * @param sysMenu
+    * @param req
+    * @param resp */
+   @RequestMapping("/addOrUpdate.do")
+   public void addOrUpdate(SysMenu sysMenu, HttpServletRequest req, HttpServletResponse resp) {
+       String id = sysMenu.getId();
+       String menuName = sysMenu.getMenuName();
+       String parentId = sysMenu.getParentId();
+       String iconCls = sysMenu.getIconCls();
+       Integer status = sysMenu.getStatus();
+       String menuUrl = sysMenu.getMenuUrl();
+       int menuIndex = sysMenu.getMenuIndex();
+       if (StringUtil.isBlank(menuName, menuUrl) || status <= 0) {
+           fillReturnJson(resp, false, "参数不合法，请输入必填项");
+           return;
+       }
+       SysUser loginUser = getLoginUser(req);
+       String loginUserId = loginUser.getId();
+       sysMenu.setUpdateId(loginUserId);
 
-   @RequestMapping("/sysMenuAction_addUI.do")
-   public String addUI() {
-      return "sysMenuAction/addUI";
-   }
-
-   @RequestMapping("/sysMenuAction_editUI.do")
-   public String editUI(ModelMap map, String id) {
-      SysMenu sysMenu = sysMenuService.getById(id);
-      map.put("sysMenu", sysMenu);
-      return "sysMenuAction/editUI";
-   }
-
-   @RequestMapping("/sysMenuAction_add.do")
-   public String add(SysMenu sysMenu) {
-      sysMenuService.insert(sysMenu);
-      return "forward:to_sysMenuAction_list.do";
-   }
-
-   @RequestMapping("/sysMenuAction_update.do")
-   public String update(SysMenu sysMenu) {
-      sysMenuService.update(sysMenu);
-      return "forward:to_sysMenuAction_list.do";
+       if (StringUtil.isBlank(id)) {//新增
+           sysMenu.setCreatorId(loginUserId);
+           sysMenuService.insert(sysMenu);
+       } else {//修改
+           SysMenu updatesysMenu = sysMenuService.getById(id);
+           updatesysMenu.setMenuName(menuName);
+           updatesysMenu.setParentId(parentId);
+           updatesysMenu.setIconCls(iconCls);
+           updatesysMenu.setStatus(status);
+           updatesysMenu.setMenuUrl(menuUrl);
+           updatesysMenu.setMenuIndex(menuIndex);
+           sysMenuService.update(updatesysMenu);
+       }
+       fillReturnJson(resp, true, "提交成功");
    }
 }

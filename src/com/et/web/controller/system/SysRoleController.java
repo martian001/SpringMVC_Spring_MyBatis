@@ -60,13 +60,10 @@ public class SysRoleController extends BaseController {
 
     @RequestMapping("/list.do")
     public void list(SysRole query, HttpServletResponse response) {
-        Map<String, Object> resultMap = new HashMap<String, Object>();
-        List<SysRole> sysRoleList = sysRoleService.findPage(query);
+        List<SysRole> list = sysRoleService.findPage(query);
         int total = sysRoleService.getTotal(query);
         // 输出
-        resultMap.put("rows", sysRoleList);
-        resultMap.put("total", total);
-        outputJson(resultMap, response);
+        outputPage(query.getRows(), response, list, total);
     }
 
     @RequestMapping("/delete.do")

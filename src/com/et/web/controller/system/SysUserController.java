@@ -43,13 +43,10 @@ public class SysUserController extends BaseController {
 
    @RequestMapping("/list.do")
    public void list(SysUser query, HttpServletResponse response) {
-      Map<String, Object> resultMap = new HashMap<String, Object>();
-      List<SysUser> sysUserList = sysUserService.findPage(query);
+      List<SysUser> list = sysUserService.findPage(query);
       int total = sysUserService.getTotal(query);
       // 输出
-      resultMap.put("rows", sysUserList);
-      resultMap.put("total", total);
-      outputJson(resultMap, response);
+      outputPage(query.getRows(), response, list, total);
    }
 
    @RequestMapping("/toAddOrUpdate.do")

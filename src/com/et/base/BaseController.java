@@ -249,4 +249,17 @@ public class BaseController {
       }
       return nReturn;
    }
+   
+   protected void outputPage(int rows, HttpServletResponse response, List list, int total) {
+       Map<String, Object> resultMap = new HashMap<String, Object>();
+       resultMap.put("rows", list);
+       int i = total / rows;
+       double j = Double.parseDouble(total + "") / rows;
+       if (j > i) {
+          i++;
+       }
+       resultMap.put("total", i);
+       resultMap.put("records", total);
+       outputJson(resultMap, response);
+    }
 }

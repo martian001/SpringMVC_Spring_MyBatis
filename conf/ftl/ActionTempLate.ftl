@@ -51,13 +51,10 @@ public class ${beanName}Controller extends BaseController {
 
    @RequestMapping("/list.do")
    public void list(${beanName} query, HttpServletResponse response) {
-      Map<String, Object> resultMap = new HashMap<String, Object>();
-      List<${beanName}> ${lowercaseBeanName}List = ${lowercaseBeanName}Service.findPage(query);
+      List<${beanName}> list = ${lowercaseBeanName}Service.findPage(query);
       int total = ${lowercaseBeanName}Service.getTotal(query);
       // 输出
-      resultMap.put("rows", ${lowercaseBeanName}List);
-      resultMap.put("total", total);
-      outputJson(resultMap, response);
+      outputPage(query.getRows(), response, list, total);
    }
 
    @RequestMapping("/delete.do")

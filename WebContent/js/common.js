@@ -20,7 +20,7 @@ $.ajaxSetup({
 				btn : [ '是','否' ]
 			//按钮
 			}, function() {
-				window.parent.location=getWebRootPath()+"/logout.action";
+				window.parent.location=getWebRootPath()+"/logout.do";
 			}, function() {
 			});
         }
@@ -176,7 +176,7 @@ function sendMsg(phoneId,category) {
 		if (isMobiel(phone)) {// 判断是否合法
 			sendMsgCodeTime();
 			$.ajax({
-				url : getWebRootPath()+"/smsValidateCodeController/ignore/sendCodeMsg.action",
+				url : getWebRootPath()+"/smsValidateCodeController/ignore/sendCodeMsg.do",
 				type : 'post',
 				data : 'phone=' + phone + '&category='+category,
 				dataType : 'html',
@@ -269,35 +269,7 @@ function formatterMoney(cellvalue, options, rowObject) {
 		return "-";
 	}
 }
-//机构或合伙人合作确认
-function confirmCooperat(url){
-	$.ajax({
-	    url: url,
-	    type: "POST",
-		error : function() {// 请求失败处理函数
-			layer.alert('请求失败', {
-				icon : 5
-			});
-		},
-	    success: function(data, status) {
-	    	var ret = eval("(" + data + ")");
-			if (ret && ret.header["success"]) {
-				layer.confirm(ret.header["msg"], {
-					icon : 6,
-					btn : [ '是','否' ]
-				//按钮
-				}, function() {
-					window.parent.location=getWebRootPath()+"/logout.action";
-				}, function() {
-				});
-			} else {
-				layer.alert(ret.header["msg"], {
-					icon : 5
-				});
-			}
-	    }
-	});
-}
+
 //打开新的ifream的tab窗口
 function openTab(url,tabName,dataId){
 	var contentDiv=parent.document.getElementById("content-main");

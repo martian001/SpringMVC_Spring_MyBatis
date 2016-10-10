@@ -19,6 +19,9 @@
 			<result column="C_STATUS" property="status" />
 		</collection>
 	</resultMap>
+		<sql id="column_list">
+        ID, PARENT_ID, MENU_NAME, ICON_CLS, MENU_URL, MENU_INDEX, STATUS,CREATOR_DATE,CREATOR_ID,UPDATE_ID,UPDATE_DATE
+	   </sql>
 	<!-- 查询所有 -->
 	<select id="getAll" resultMap="sysMenuMap">
 		<![CDATA[SELECT A.ID,
@@ -40,33 +43,39 @@
 	</select>
 	<!-- 根据条件分页查询 mysql -->
 	<select id="findPage" resultMap="sysMenuMap" parameterType="sysMenu">
-		SELECT D.* FROM (SELECT T.*, ROWNUM RN FROM (
-		SELECT * FROM SYS_MENU A
+		<if test="page != -1">
+			SELECT D.* FROM (SELECT T.*, ROWNUM RN FROM (
+		</if>
+		SELECT
+		<include refid="column_list" />
+		FROM SYS_MENU A
 		<where>
 			<trim>
-				<if test="userName != null and userName !=''">
-					AND A.USER_NAME LIKE '%${userName}%'
+				<if test="menuName != null and menuName !=''">
+					AND A.MENU_NAME LIKE '%${menuName}%'
 				</if>
-				<if test="id!=null and id !=''">
-					AND A.ID = #{id}
+				<if test="status !=null and status >0">
+					AND A.STATUS = #{status}
 				</if>
 			</trim>
 		</where>
+		<if test="page != -1">
 		<![CDATA[ ) T WHERE ROWNUM <=#{page}*#{rows} ) D WHERE D.RN > ((#{page}-1)*#{rows}) ]]>
+		</if>
 	</select>
 	<!-- 根据条件查询数量 -->
 	<select id="getTotal" resultType="Integer" parameterType="sysMenu">
 	<![CDATA[
 	SELECT COUNT(1) FROM
-			(SELECT * FROM SYS_MENU A
+			(SELECT ID FROM SYS_MENU A
 	]]>
 		<where>
 			<trim>
-				<if test="userName != null and userName !=''">
-					AND A.USER_NAME LIKE '%${userName}%'
+				<if test="menuName != null and menuName !=''">
+					AND A.MENU_NAME LIKE '%${menuName}%'
 				</if>
-				<if test="id!=null and id !=''">
-					AND A.ID = #{id}
+				<if test="status !=null and status >0">
+					AND A.STATUS = #{status}
 				</if>
 			</trim>
 		</where>
@@ -87,8 +96,9 @@
        B.MENU_URL AS C_MENU_URL,
        B.MENU_INDEX AS C_MENU_INDEX,
        B.STATUS AS C_STATUS
-  FROM SYS_MENU A, SYS_MENU B
- WHERE A.ID = B.PARENT_ID  AND A.ID=#{id}]]>
+    FROM SYS_MENU A LEFT JOIN SYS_MENU B
+    ON A.ID = B.PARENT_ID
+ WHERE A.ID=#{id}]]>
 	</select>
 	<insert id="insert" parameterType="sysMenu" useGeneratedKeys="true"
 		keyProperty="id">
@@ -111,10 +121,10 @@
 				MENU_URL,
 			</if>
 			<if test="menuIndex !=null and menuIndex >0">
-				MENU_INDEX
+				MENU_INDEX,
 			</if>
 			<if test="status !=null and status >0">
-				STATUS
+				STATUS,
 			</if>
 		</trim>
 		<trim prefix="values (" suffix=")" suffixOverrides=",">

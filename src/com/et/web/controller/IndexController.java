@@ -29,7 +29,6 @@ import com.et.shiro.IncorrectCaptchaException;
 import com.et.util.Constants;
 import com.et.util.CryptographyUtil;
 import com.et.util.ExceptionUtil;
-import com.et.util.LogTypeConstant;
 
 /**
  * ★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★<br>
@@ -85,7 +84,7 @@ public class IndexController extends BaseController {
       return "/profile";
    }
 
-   @RequestMapping("/ignore/to_login.do")
+   @RequestMapping("/to_login.do")
    public String toLogin(ModelMap model) {
       return "/login";
    }
@@ -150,7 +149,7 @@ public class IndexController extends BaseController {
        if (subject.isAuthenticated()) {
           subject.logout(); // session 会销毁，在SessionListener监听session销毁，清理权限缓存
        }
-      return "redirect:/ignore/to_login.do";
+      return "redirect:/to_login.do";
    }
 
 }

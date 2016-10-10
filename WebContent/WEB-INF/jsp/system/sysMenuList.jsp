@@ -9,13 +9,13 @@
 <title>Insert title here</title>
 <script type="text/javascript">
 	$(document).ready(function() {
-		sysRoleModalListener();
+		sysMenuModalListener();
 		$.jgrid.defaults.styleUI = "Bootstrap";
 		$("#table_list").jqGrid({
-			url : "${ctx}sysRoleController/list.do",
+			url : "${ctx}sysMenuController/list.do",
 			datatype : "json",
 			mtype : "POST",
-			caption : "系统角色列表",
+			caption : "系统菜单列表",
 			height : 450,
 			autowidth : true,
 			shrinkToFit : true,
@@ -26,18 +26,26 @@
 			rowNum : 10,
 			rowList : [ 10, 20, 30 ],
 			pager : "#pager_list",
-			colNames : [ "id", "角色名称", "角色编码", "状态", "从属角色ID", "角色描述" ],
+			colNames : [ "ID", "父ID", "菜单名称", "菜单图标", "菜单URL", "状态", "显示顺序" ],
 			colModel : [ {
 				name : "id",
 				index : "id",
-				hidden : true
-			}, {
-				name : "roleName",
-				index : "roleName",
 				sortable : false
 			}, {
-				name : "roleCode",
-				index : "roleCode",
+				name : "parentId",
+				index : "parentId",
+				hidden : true
+			},  {
+				name : "menuName",
+				index : "menuName",
+				sortable : false
+			}, {
+				name : "iconCls",
+				index : "iconCls",
+				sortable : false
+			}, {
+				name : "menuUrl",
+				index : "menuUrl",
 				sortable : false
 			}, {
 				name : "status",
@@ -46,12 +54,8 @@
 				unformat : unformatUseStatus,
 				sortable : false
 			}, {
-				name : "parentId",
-				index : "parentId",
-				sortable : false
-			}, {
-				name : "roleDesc",
-				index : "roleDesc",
+				name : "menuIndex",
+				index : "menuIndex",
 				sortable : false
 			} ],
 			gridComplete : function() { //列表生成后,给某一列绑定操作 例如删除操作
@@ -65,28 +69,36 @@
 			refresh : true
 		});
 
-		$("#sysRoleForm").validate({
+		$("#sysMenuForm").validate({
 			rules : {
-				roleName : {
+				parentId : {
+					maxlength : 50
+				},
+				menuName : {
 					required : true,
+					maxlength : 20
+				},
+				iconCls : {
 					maxlength : 20
 				},
 				status : {
 					required : true
 				},
-				roleCode : {
+				menuUrl : {
 					required : true,
-					maxlength : 20
+					maxlength : 50
 				},
-				roleDesc : {
-					maxlength : 200
+				menuIndex : {
+					maxlength : 2,
+					required : true,
+					isIntGtZero : true
 				}
 			},
 			submitHandler : function(form) {
 				$.ajax({
-					url : "${ctx}sysRoleController/addOrUpdate.do",
+					url : "${ctx}sysMenuController/addOrUpdate.do",
 					type : "POST",
-					data : $("#sysRoleForm").serialize(),
+					data : $("#sysMenuForm").serialize(),
 					async : false,
 					success : function(result) { //表单提交后更新页面显示的数据
 						var ret = eval("(" + result + ")");
@@ -95,7 +107,7 @@
 								icon : 6
 							});
 							searchList('#table_list');
-							$('#sysRoleModal').modal('hide');
+							$('#sysMenuModal').modal('hide');
 						} else {
 							layer.alert(ret.header["msg"], {
 								icon : 5
@@ -106,7 +118,7 @@
 			}
 		})
 	});
-	function openAddOrEditSysRole(openType) {
+	function openAddOrEditSysMenu(openType) {
 		if (openType == 2) {//编辑
 			var jqGridIds = $("#table_list")
 					.jqGrid('getGridParam', 'selarrrow');
@@ -123,26 +135,77 @@
 			}
 			var selObj = $("#table_list").jqGrid('getRowData', jqGridIds[0]);
 			var id = selObj.id;
-			var roleName = selObj.roleName;
+			var parentId = selObj.parentId;
+			var menuName = selObj.menuName;
+			var iconCls = selObj.iconCls;
+			var menuUrl = selObj.menuUrl;
 			var status = selObj.status;
-			var roleCode = selObj.roleCode;
-			var roleDesc = selObj.roleDesc;
-			$("#sysRoleId").val(id);
-			$("#roleName").val(roleName);
+			var menuIndex = selObj.menuIndex;
+			$("#sysMenuId").val(id);
+			$("#parentId").val(parentId);
+			$("#menuName").val(menuName);
+			$("#iconCls").val(iconCls);
+			$("#menuUrl").val(menuUrl);
 			$("#status").val(status);
-			$("#roleCode").val(roleCode);
-			$("#roleDesc").val(roleDesc);
+			$("#menuIndex").val(menuIndex);
 		}
-		$('#sysRoleModal').modal('show');
+		$('#sysMenuModal').modal('show');
+	}
+	
+	function deleteSysMenu() {
+		var jqGridIds = $("#table_list").jqGrid('getGridParam', 'selarrrow');
+		if (jqGridIds.length == 0) {
+			layer.alert('请选择数据', {
+				icon : 0
+			});
+			return;
+		} else if (jqGridIds.length > 1) {
+			layer.alert('只能选择一条数据，不能多选重置', {
+				icon : 0
+			});
+			return;
+		}
+		var selObj = $("#table_list").jqGrid('getRowData', jqGridIds[0]);
+		var id = selObj.id;
+		layer.confirm('确定删除?', {
+			icon : 0,
+			btn : [ '是', '否' ]
+		//按钮
+		}, function() {
+			$.ajax({
+				url : "${ctx}sysMenuController/delete.do",
+				type : "POST",
+				data : {
+					"id" : id
+				},
+				async : false,
+				success : function(result) { //表单提交后更新页面显示的数据
+					var ret = eval("(" + result + ")");
+					if (ret && ret.header["success"]) {
+						layer.alert(ret.header["msg"], {
+							icon : 6
+						});
+						searchList('#table_list');
+					} else {
+						layer.alert(ret.header["msg"], {
+							icon : 5
+						});
+					}
+				}
+			});
+		}, function() {
+		});
 	}
 	//对话框监听器
-	function sysRoleModalListener() {
-		$('#sysRoleModal').on('hide.bs.modal', function () {
-			$("#sysRoleId").val("");
-			$("#roleName").val("");
-			$("#status").val("1");
-			$("#roleCode").val("");
-			$("#roleDesc").val("");
+	function sysMenuModalListener() {
+		$('#sysMenuModal').on('hide.bs.modal', function() {
+			$("#sysMenuId").val("");
+			$("#parentId").val("");
+			$("#menuName").val("");
+			$("#iconCls").val("");
+			$("#menuUrl").val("");
+			$("#status").val(1);
+			$("#menuIndex").val("");
 		});
 	}
 </script>
@@ -170,15 +233,10 @@
 									<div style="padding: 5px">
 										<div class="row">
 											<div class="col-md-12">
-												<label class="col-md-1 control-label" for="roleName">角色名称:</label>
+												<label class="col-md-1 control-label" for="menuName">菜单名称:</label>
 												<div class="col-md-2">
-													<input type="text" class="form-control" name="roleName"
-														placeholder="角色名称">
-												</div>
-												<label class="col-md-1 control-label" for="roleCode">角色编码:</label>
-												<div class="col-md-2">
-													<input type="text" class="form-control" name="roleCode"
-														placeholder="角色编码">
+													<input type="text" class="form-control" name="menuName"
+														placeholder="菜单名称">
 												</div>
 												<label class="col-md-2 control-label" for="status">状态:</label>
 												<div class="col-md-2">
@@ -200,10 +258,9 @@
 											<button class="btn btn-warning " type="reset">
 												<i class="fa fa-warning"></i> <span class="bold">重置</span>
 											</button>
-											<a class="btn btn-outline btn-primary"
-												onclick="openAddOrEditSysRole(1)">增加</a> <a
-												class="btn btn-outline btn-primary"
-												onclick="openAddOrEditSysRole(2)">编辑</a>
+											    <a class="btn btn-outline btn-primary" onclick="openAddOrEditSysMenu(1)">增加</a> 
+												<a class="btn btn-outline btn-primary" onclick="openAddOrEditSysMenu(2)">编辑</a>
+												<a class="btn btn-outline btn-primary" onclick="deleteSysMenu()">删除</a>
 										</div>
 									</div>
 								</form>
@@ -229,35 +286,35 @@
 			</div>
 		</div>
 	</div>
-	<div class="modal fade" id="sysRoleModal" tabindex="-1" role="dialog"
-		aria-labelledby="sysRoleModalLabel" aria-hidden="true"
+	<div class="modal fade" id="sysMenuModal" tabindex="-1" menu="dialog"
+		aria-labelledby="sysMenuModalLabel" aria-hidden="true"
 		data-backdrop="static">
 		<div class="modal-dialog">
 			<div class="modal-content animated flipInY">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal"
 						aria-hidden="true">&times;</button>
-					<h4 class="modal-title" id="sysRoleModalLabel">新增角色</h4>
+					<h4 class="modal-title" id="sysMenuModalLabel">新增菜单</h4>
 				</div>
-				<form id="sysRoleForm" name="sysRoleForm" method="post"
+				<form id="sysMenuForm" name="sysMenuForm" method="post"
 					class="form-horizontal">
-					<input type="hidden" name="id" id="sysRoleId">
+					<input type="hidden" name="id" id="sysMenuId">
 					<div class="modal-body">
 						<div class="form-group">
-							<label for="roleName" class="col-sm-2 control-label"><span
-								class="requiredSty">*</span>角色名称:</label>
+							<label for="menuName" class="col-sm-2 control-label"><span
+								class="requiredSty">*</span>菜单名称:</label>
 							<div class="col-sm-4">
-								<input type="text" class="form-control" id="roleName"
-									name="roleName" maxlength="20" placeholder="角色名称">
+								<input type="text" class="form-control" id="menuName"
+									name="menuName" maxlength="20" placeholder="菜单名称">
 							</div>
-							<label for="roleCode" class="col-sm-2 control-label"><span
-								class="requiredSty">*</span>角色代码:</label>
+							<label for="menuIndex" class="col-sm-2 control-label"><span
+								class="requiredSty">*</span>显示顺序:</label>
 							<div class="col-sm-4">
 								<input type="text" class="form-control" maxlength="20"
-									id="roleCode" name="roleCode" placeholder="角色代码">
+									id="menuIndex" name="menuIndex" placeholder="显示顺序">
 							</div>
 						</div>
-						<div class="form-group">
+							<div class="form-group">
 							<label for="status" class="col-sm-2 control-label"><span
 								class="requiredSty">*</span>状态:</label>
 							<div class="col-sm-4">
@@ -266,19 +323,23 @@
 									<option value=2>无效</option>
 								</select>
 							</div>
-							<label for="parentId" class="col-sm-2 control-label"><span
-								class="requiredSty">*</span>从属角色:</label>
+							<label for="menuUrl" class="col-sm-2 control-label"><span
+								class="requiredSty">*</span>菜单URL:</label>
 							<div class="col-sm-4">
 								<input type="text" class="form-control" maxlength="20"
-									id="parentId" name="parentId" placeholder="从属角色">
+									id="menuUrl" name="menuUrl" placeholder="菜单URL">
 							</div>
 						</div>
 						<div class="form-group">
-							<label for="roleDesc" class="col-sm-2 control-label">角色描述:</label>
-							<div class="col-sm-10">
-								<textarea rows="1" cols="10" class="form-control"
-									name="roleDesc" id="roleDesc" placeholder="角色描述"
-									maxlength="200"></textarea>
+							<label for="parentId" class="col-sm-2 control-label">父级菜单ID:</label>
+							<div class="col-sm-4">
+								<input type="text" class="form-control" id="parentId"
+									name="parentId" maxlength="20" placeholder="父级菜单ID">
+							</div>
+							<label for="iconCls" class="col-sm-2 control-label">菜单图标:</label>
+							<div class="col-sm-4">
+								<input type="text" class="form-control" maxlength="20"
+									id="iconCls" name="iconCls" placeholder="菜单图标">
 							</div>
 						</div>
 					</div>

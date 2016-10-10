@@ -52,13 +52,10 @@ public class SysPermissionController extends BaseController {
 
     @RequestMapping("/list.do")
     public void list(SysPermission query, HttpServletResponse response) {
-        Map<String, Object> resultMap = new HashMap<String, Object>();
-        List<SysPermission> sysPermissionList = sysPermissionService.findPage(query);
+        List<SysPermission> list = sysPermissionService.findPage(query);
         int total = sysPermissionService.getTotal(query);
         // 输出
-        resultMap.put("rows", sysPermissionList);
-        resultMap.put("total", total);
-        outputJson(resultMap, response);
+        outputPage(query.getRows(), response, list, total);
     }
 
     /** 新增或修改角色
