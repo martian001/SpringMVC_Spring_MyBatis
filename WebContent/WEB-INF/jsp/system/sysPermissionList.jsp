@@ -9,13 +9,13 @@
 <title>Insert title here</title>
 <script type="text/javascript">
 	$(document).ready(function() {
-		sysRoleModalListener();
+		syspermisModalListener();
 		$.jgrid.defaults.styleUI = "Bootstrap";
 		$("#table_list").jqGrid({
-			url : "${ctx}sysRoleController/list.do",
+			url : "${ctx}sysPermissionController/list.do",
 			datatype : "json",
 			mtype : "POST",
-			caption : "系统角色列表",
+			caption : "系统权限列表",
 			height : 450,
 			autowidth : true,
 			shrinkToFit : true,
@@ -26,33 +26,34 @@
 			rowNum : 10,
 			rowList : [ 10, 20, 30 ],
 			pager : "#pager_list",
-			colNames : [ "id", "角色名称", "角色编码", "状态", "从属角色ID", "角色描述" ],
+			colNames : [ "id", "权限名称", "权限代码", "权限类型", "状态", "权限描述"],
 			colModel : [ {
 				name : "id",
 				index : "id",
 				hidden : true
 			}, {
-				name : "roleName",
-				index : "roleName"
+				name : "permisName",
+				index : "permisName",
+				sortable : false
 			}, {
-				name : "roleCode",
-				index : "roleCode",
+				name : "permisCode",
+				index : "permisCode",
+				sortable : false
+			}, {
+				name : "permisType",
+				index : "permisType",
+				formatter : formatterPermisType,
+				unformat : unformatPermisType,
 				sortable : false
 			}, {
 				name : "status",
 				index : "status",
 				formatter : formatterUseStatus,
-				unformat : function(cellvalue, options, row) {
-					return cellvalue;
-				},
+				unformat : unformatUseStatus,
 				sortable : false
 			}, {
-				name : "parentId",
-				index : "parentId",
-				sortable : false
-			}, {
-				name : "roleDesc",
-				index : "roleDesc",
+				name : "permisDesc",
+				index : "permisDesc",
 				sortable : false
 			} ],
 			gridComplete : function() { //列表生成后,给某一列绑定操作 例如删除操作
@@ -66,28 +67,31 @@
 			refresh : true
 		});
 
-		$("#sysRoleForm").validate({
+		$("#sysPermissionForm").validate({
 			rules : {
-				roleName : {
+				permisName : {
 					required : true,
 					maxlength : 20
 				},
 				status : {
 					required : true
 				},
-				roleCode : {
+				permisType : {
+					required : true
+				},
+				permisCode : {
 					required : true,
 					maxlength : 20
 				},
-				roleDesc : {
+				permisDesc : {
 					maxlength : 200
 				}
 			},
 			submitHandler : function(form) {
 				$.ajax({
-					url : "${ctx}sysRoleController/addOrUpdate.do",
+					url : "${ctx}sysPermissionController/addOrUpdate.do",
 					type : "POST",
-					data : $("#sysRoleForm").serialize(),
+					data : $("#sysPermissionForm").serialize(),
 					async : false,
 					success : function(result) { //表单提交后更新页面显示的数据
 						var ret = eval("(" + result + ")");
@@ -96,7 +100,7 @@
 								icon : 6
 							});
 							searchList('#table_list');
-							$('#sysRoleModal').modal('hide');
+							$('#syspermisModal').modal('hide');
 						} else {
 							layer.alert(ret.header["msg"], {
 								icon : 5
@@ -107,7 +111,7 @@
 			}
 		})
 	});
-	function openAddOrEditSysRole(openType) {
+	function openAddOrEditSyspermis(openType) {
 		if (openType == 2) {//编辑
 			var jqGridIds = $("#table_list")
 					.jqGrid('getGridParam', 'selarrrow');
@@ -124,26 +128,29 @@
 			}
 			var selObj = $("#table_list").jqGrid('getRowData', jqGridIds[0]);
 			var id = selObj.id;
-			var roleName = selObj.roleName;
+			var permisName = selObj.permisName;
+			var permisType = selObj.permisType;
 			var status = selObj.status;
-			var roleCode = selObj.roleCode;
-			var roleDesc = selObj.roleDesc;
-			$("#sysRoleId").val(id);
-			$("#roleName").val(roleName);
+			var permisCode = selObj.permisCode;
+			var permisDesc = selObj.permisDesc;
+			$("#syspermisId").val(id);
+			$("#permisName").val(permisName);
 			$("#status").val(status);
-			$("#roleCode").val(roleCode);
-			$("#roleDesc").val(roleDesc);
+			$("#permisType").val(permisType);
+			$("#permisCode").val(permisCode);
+			$("#permisDesc").val(permisDesc);
 		}
-		$('#sysRoleModal').modal('show');
+		$('#syspermisModal').modal('show');
 	}
 	//对话框监听器
-	function sysRoleModalListener() {
-		$('#sysRoleModal').on('hide.bs.modal', function () {
-			$("#sysRoleId").val("");
-			$("#roleName").val("");
+	function syspermisModalListener() {
+		$('#syspermisModal').on('hide.bs.modal', function () {
+			$("#syspermisId").val("");
+			$("#permisName").val("");
 			$("#status").val("1");
-			$("#roleCode").val("");
-			$("#roleDesc").val("");
+			$("#permisType").val("1");
+			$("#permisCode").val("");
+			$("#permisDesc").val("");
 		});
 	}
 </script>
@@ -171,15 +178,15 @@
 									<div style="padding: 5px">
 										<div class="row">
 											<div class="col-md-12">
-												<label class="col-md-1 control-label" for="roleName">角色名称:</label>
+												<label class="col-md-1 control-label" for="permisName">权限名称:</label>
 												<div class="col-md-2">
-													<input type="text" class="form-control" name="roleName"
-														placeholder="角色名称">
+													<input type="text" class="form-control" name="permisName"
+														placeholder="权限名称">
 												</div>
-												<label class="col-md-1 control-label" for="roleCode">角色编码:</label>
+												<label class="col-md-1 control-label" for="permisCode">权限编码:</label>
 												<div class="col-md-2">
-													<input type="text" class="form-control" name="roleCode"
-														placeholder="角色编码">
+													<input type="text" class="form-control" name="permisCode"
+														placeholder="权限编码">
 												</div>
 												<label class="col-md-2 control-label" for="status">状态:</label>
 												<div class="col-md-2">
@@ -202,9 +209,9 @@
 												<i class="fa fa-warning"></i> <span class="bold">重置</span>
 											</button>
 											<a class="btn btn-outline btn-primary"
-												onclick="openAddOrEditSysRole(1)">增加</a> <a
+												onclick="openAddOrEditSyspermis(1)">增加</a> <a
 												class="btn btn-outline btn-primary"
-												onclick="openAddOrEditSysRole(2)">编辑</a>
+												onclick="openAddOrEditSyspermis(2)">编辑</a>
 										</div>
 									</div>
 								</form>
@@ -230,32 +237,32 @@
 			</div>
 		</div>
 	</div>
-	<div class="modal fade" id="sysRoleModal" tabindex="-1" role="dialog"
-		aria-labelledby="sysRoleModalLabel" aria-hidden="true"
+	<div class="modal fade" id="syspermisModal" tabindex="-1" permis="dialog"
+		aria-labelledby="syspermisModalLabel" aria-hidden="true"
 		data-backdrop="static">
 		<div class="modal-dialog">
 			<div class="modal-content animated flipInY">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal"
 						aria-hidden="true">&times;</button>
-					<h4 class="modal-title" id="sysRoleModalLabel">新增角色</h4>
+					<h4 class="modal-title" id="syspermisModalLabel">新增权限</h4>
 				</div>
-				<form id="sysRoleForm" name="sysRoleForm" method="post"
+				<form id="sysPermissionForm" name="sysPermissionForm" method="post"
 					class="form-horizontal">
-					<input type="hidden" name="id" id="sysRoleId">
+					<input type="hidden" name="id" id="syspermisId">
 					<div class="modal-body">
 						<div class="form-group">
-							<label for="roleName" class="col-sm-2 control-label"><span
-								class="requiredSty">*</span>角色名称:</label>
+							<label for="permisName" class="col-sm-2 control-label"><span
+								class="requiredSty">*</span>权限名称:</label>
 							<div class="col-sm-4">
-								<input type="text" class="form-control" id="roleName"
-									name="roleName" maxlength="20" placeholder="角色名称">
+								<input type="text" class="form-control" id="permisName"
+									name="permisName" maxlength="20" placeholder="权限名称">
 							</div>
-							<label for="roleCode" class="col-sm-2 control-label"><span
-								class="requiredSty">*</span>角色代码:</label>
+							<label for="permisCode" class="col-sm-2 control-label"><span
+								class="requiredSty">*</span>权限代码:</label>
 							<div class="col-sm-4">
 								<input type="text" class="form-control" maxlength="20"
-									id="roleCode" name="roleCode" placeholder="角色代码">
+									id="permisCode" name="permisCode" placeholder="权限代码">
 							</div>
 						</div>
 						<div class="form-group">
@@ -267,18 +274,20 @@
 									<option value=2>无效</option>
 								</select>
 							</div>
-							<label for="parentId" class="col-sm-2 control-label"><span
-								class="requiredSty">*</span>从属角色:</label>
+							<label for="status" class="col-sm-2 control-label"><span
+								class="requiredSty">*</span>权限类型:</label>
 							<div class="col-sm-4">
-								<input type="text" class="form-control" maxlength="20"
-									id="parentId" name="parentId" placeholder="从属角色">
+								<select class="form-control" name="permisType" id="permisType">
+									<option value="1">功能权限</option>
+									<option value="2">数据权限</option>
+								</select>
 							</div>
 						</div>
 						<div class="form-group">
-							<label for="roleDesc" class="col-sm-2 control-label">角色描述:</label>
+							<label for="permisDesc" class="col-sm-2 control-label">权限描述:</label>
 							<div class="col-sm-10">
 								<textarea rows="1" cols="10" class="form-control"
-									name="roleDesc" id="roleDesc" placeholder="角色描述"
+									name="permisDesc" id="permisDesc" placeholder="权限描述"
 									maxlength="200"></textarea>
 							</div>
 						</div>

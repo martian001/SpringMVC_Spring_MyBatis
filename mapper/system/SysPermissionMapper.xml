@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.et.mapper.system.SysPermissionMapper">
+	<resultMap id="sysPermissionMap" type="sysPermission">
+		<id property="id" column="ID" />
+		<id property="permisType" column="PERMIS_TYPE" />
+		<id property="permisName" column="PERMIS_NAME" />
+		<id property="permisDesc" column="PERMIS_DESC" />
+		<id property="permisCode" column="PERMIS_CODE" />
+		<id property="menuId" column="MENU_ID" />
+		<id property="status" column="STATUS" />
+		<id property="creatorDate" column="CREATOR_DATE" />
+		<id property="creatorId" column="CREATOR_ID" />
+		<id property="updateId" column="UPDATE_ID" />
+		<id property="updateDate" column="UPDATE_DATE" />
+	</resultMap>
+	<sql id="column_list">
+		ID,PERMIS_TYPE,PERMIS_NAME,PERMIS_DESC,PERMIS_CODE,MENU_ID,STATUS,CREATOR_DATE,CREATOR_ID,UPDATE_ID,UPDATE_DATE
+	</sql>
+	<!-- 查询所有 -->
+	<select id="getAll" resultMap="sysPermissionMap">
+		SELECT
+		<include refid="column_list" />
+		FROM SYS_PERMISSION
+		<where>
+			<trim>
+				<if test="id != null and id !=''">
+					ID=#{id}
+				</if>
+				<if test="permisType != null and permisType !=''">
+					AND PERMIS_TYPE=#{permisType}
+				</if>
+				<if test="permisName != null and permisName !=''">
+					AND PERMIS_NAME=#{permisName}
+				</if>
+				<if test="permisDesc != null and permisDesc !=''">
+					AND PERMIS_DESC=#{permisDesc}
+				</if>
+				<if test="permisCode != null and permisCode !=''">
+					AND PERMIS_CODE=#{permisCode}
+				</if>
+				<if test="menuId != null and menuId !=''">
+					AND MENU_ID=#{menuId}
+				</if>
+				<if test="status != null and status >0">
+					AND STATUS=#{status}
+				</if>
+				<if test="creatorDate != null and creatorDate !=''">
+					AND CREATOR_DATE=#{creatorDate}
+				</if>
+				<if test="creatorId != null and creatorId !=''">
+					AND CREATOR_ID=#{creatorId}
+				</if>
+				<if test="updateId != null and updateId !=''">
+					AND UPDATE_ID=#{updateId}
+				</if>
+				<if test="updateDate != null and updateDate !=''">
+					AND UPDATE_DATE=#{updateDate}
+				</if>
+			</trim>
+		</where>
+	</select>
+	<!-- 根据id获取 -->
+	<select id="getById" resultMap="sysPermissionMap">
+		SELECT
+		<include refid="column_list" />
+		FROM SYS_PERMISSION WHERE ID=#{id}
+	</select>
+	<!-- 插入一条数据 -->
+	<insert id="insert" parameterType="sysPermission">
+		<selectKey keyProperty="id" resultType="String" order="BEFORE">
+			SELECT SYS_GUID() FROM DUAL
+		</selectKey>
+		INSERT INTO SYS_PERMISSION
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null and id !=''">
+				ID,
+			</if>
+			<if test="permisType != null and permisType !=''">
+				PERMIS_TYPE,
+			</if>
+			<if test="permisName != null and permisName !=''">
+				PERMIS_NAME,
+			</if>
+			<if test="permisDesc != null and permisDesc !=''">
+				PERMIS_DESC,
+			</if>
+			<if test="permisCode != null and permisCode !=''">
+				PERMIS_CODE,
+			</if>
+			<if test="menuId != null and menuId !=''">
+				MENU_ID,
+			</if>
+			<if test="status != null and status >0">
+				STATUS,
+			</if>
+			<if test="creatorDate != null and creatorDate !=''">
+				CREATOR_DATE,
+			</if>
+			<if test="creatorId != null and creatorId !=''">
+				CREATOR_ID,
+			</if>
+			<if test="updateId != null and updateId !=''">
+				UPDATE_ID,
+			</if>
+			<if test="updateDate != null and updateDate !=''">
+				UPDATE_DATE,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null and id !=''">
+				#{id},
+			</if>
+			<if test="permisType != null and permisType !=''">
+				#{permisType},
+			</if>
+			<if test="permisName != null and permisName !=''">
+				#{permisName},
+			</if>
+			<if test="permisDesc != null and permisDesc !=''">
+				#{permisDesc},
+			</if>
+			<if test="permisCode != null and permisCode !=''">
+				#{permisCode},
+			</if>
+			<if test="menuId != null and menuId !=''">
+				#{menuId},
+			</if>
+			<if test="status != null and status >0">
+				#{status},
+			</if>
+			<if test="creatorDate != null and creatorDate !=''">
+				#{creatorDate,jdbcType= DATE,javaType= java.util.Date},
+			</if>
+			<if test="creatorId != null and creatorId !=''">
+				#{creatorId},
+			</if>
+			<if test="updateId != null and updateId !=''">
+				#{updateId},
+			</if>
+			<if test="updateDate != null and updateDate !=''">
+				#{updateDate,jdbcType= DATE,javaType= java.util.Date},
+			</if>
+		</trim>
+	</insert>
+	<!-- 根据id删除数据 -->
+	<delete id="deleteById" parameterType="sysPermission">
+		<![CDATA[DELETE FROM SYS_PERMISSION WHERE ID=#{id}]]>
+	</delete>
+	<!-- 根据id更新数据 -->
+	<update id="update" parameterType="sysPermission">
+		UPDATE SYS_PERMISSION
+		<set>
+			<if test="id != null and id !=''">
+				ID=#{id},
+			</if>
+			<if test="permisType != null and permisType !=''">
+				PERMIS_TYPE=#{permisType},
+			</if>
+			<if test="permisName != null and permisName !=''">
+				PERMIS_NAME=#{permisName},
+			</if>
+			<if test="permisDesc != null and permisDesc !=''">
+				PERMIS_DESC=#{permisDesc},
+			</if>
+			<if test="permisCode != null and permisCode !=''">
+				PERMIS_CODE=#{permisCode},
+			</if>
+			<if test="menuId != null and menuId !=''">
+				MENU_ID=#{menuId},
+			</if>
+			<if test="status != null and status >0">
+				STATUS=#{status},
+			</if>
+			<if test="creatorDate != null and creatorDate !=''">
+				CREATOR_DATE=#{creatorDate,jdbcType= DATE,javaType=
+				java.util.Date},
+			</if>
+			<if test="creatorId != null and creatorId !=''">
+				CREATOR_ID=#{creatorId},
+			</if>
+			<if test="updateId != null and updateId !=''">
+				UPDATE_ID=#{updateId},
+			</if>
+			<if test="updateDate != null and updateDate !=''">
+				UPDATE_DATE=#{updateDate,jdbcType= DATE,javaType=
+				java.util.Date},
+			</if>
+		</set>
+		WHERE ID = #{id}
+	</update>
+	<!-- 根据传入多个id删除数据 -->
+	<delete id="deleteByIds" parameterType="java.util.List">
+		DELETE FROM SYS_PERMISSION WHERE ID in
+		<foreach collection="list" item="item" index="index" open="("
+			separator="," close=")">
+			#{item}
+		</foreach>
+	</delete>
+	<!-- 根据条件分页查询 mysql -->
+	<select id="findPage" resultMap="sysPermissionMap" parameterType="sysPermission">
+		<if test="page != -1">
+			SELECT D.* FROM (SELECT T.*, ROWNUM RN FROM (
+		</if>
+		SELECT
+		<include refid="column_list" />
+		FROM SYS_PERMISSION A
+		<where>
+			<trim>
+				<if test="permisName != null and permisName !=''">
+					AND A.PERMIS_NAME LIKE '%${permisName}%'
+				</if>
+				<if test="permisCode != null and permisCode !=''">
+					AND A.PERMIS_CODE LIKE '%${permisCode}%'
+				</if>
+				<if test="status !=null and status >0">
+					AND A.STATUS = #{status}
+				</if>
+				<if test="permisType !=null and permisType !=''">
+					AND A.PERMIS_TYPE = #{permisType}
+				</if>
+				<if test="id!=null and id !=''">
+					AND A.ID = #{id}
+				</if>
+			</trim>
+		</where>
+		<if test="page != -1">
+		<![CDATA[ ) T WHERE ROWNUM <=#{page}*#{rows} ) D WHERE D.RN > ((#{page}-1)*#{rows}) ]]>
+		</if>
+	</select>
+	<!-- 根据条件查询数量 -->
+	<select id="getTotal" resultType="Integer" parameterType="sysPermission">
+	<![CDATA[
+	SELECT COUNT(1) FROM
+			(SELECT ID FROM SYS_PERMISSION A
+	]]>
+		<where>
+			<trim>
+				<if test="permisName != null and permisName !=''">
+					AND A.PERMIS_NAME LIKE '%${permisName}%'
+				</if>
+				<if test="permisCode != null and permisCode !=''">
+					AND A.PERMIS_CODE LIKE '%${permisCode}%'
+				</if>
+				<if test="status !=null and status >0">
+					AND A.STATUS = #{status}
+				</if>
+				<if test="permisType !=null and permisType !=''">
+					AND A.PERMIS_TYPE = #{permisType}
+				</if>
+				<if test="id!=null and id !=''">
+					AND A.ID = #{id}
+				</if>
+			</trim>
+		</where>
+		) T
+	</select>
+</mapper>

@@ -5,16 +5,20 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.et.base.BaseController;
 import com.et.bean.${packageModule}.${beanName};
 import com.et.service.${packageModule}.${beanName}Service;
-
+import com.et.util.ExceptionUtil;
 /**
  * ★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★<br>
  * ★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★<br>
@@ -32,7 +36,7 @@ public class ${beanName}Controller extends BaseController {
    private String path="${packageModule}";
    @Resource
    private ${beanName}Service ${lowercaseBeanName}Service;
-   private Logger logger = LoggerFactory.getLogger({beanName}Controller.class);
+   private Logger logger = LoggerFactory.getLogger(${beanName}Controller.class);
    
    @ExceptionHandler
    public String exception(HttpServletRequest request, HttpServletResponse response, Exception e) {

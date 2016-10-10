@@ -52,12 +52,6 @@ public class SysUserController extends BaseController {
       outputJson(resultMap, response);
    }
 
-   @RequestMapping("/delete.do")
-   public String delete(String id) {
-      sysUserService.deleteById(id);
-      return "forward:toList.do";
-   }
-
    @RequestMapping("/toAddOrUpdate.do")
    public String toAddOrUpdate(ModelMap map, String id) {
       if (!StringUtil.isBlank(id)) {
