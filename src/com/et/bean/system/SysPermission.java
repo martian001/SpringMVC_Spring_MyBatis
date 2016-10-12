@@ -1,5 +1,7 @@
 package com.et.bean.system;
 
+import java.util.List;
+
 import com.et.base.BaseBean;
 
 /** ★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★<br>
@@ -12,14 +14,14 @@ import com.et.base.BaseBean;
  * ★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★<br>
  * ★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★<br> */
 public class SysPermission extends BaseBean {
-    public String id; //
-    public String permisType; //权限类型（功能权限=1/数据权限=2）
-    public String permisName; //权限名称
-    public String permisDesc; //权限描述
-    public String permisCode; //权限代码，系统唯一
-    public String menuId; //菜单ID
-    public Integer status; //状态
-
+    private String id; //
+    private String permisType; //权限类型（功能权限=1/数据权限=2）
+    private String permisName; //权限名称
+    private String permisDesc; //权限描述
+    private String permisCode; //权限代码，系统唯一
+    private String menuId; //菜单ID
+    private Integer status; //状态
+    private List<SysRole> roleList;
     public String getId() {
         return id;
     }
@@ -80,6 +82,14 @@ public class SysPermission extends BaseBean {
     public String toString() {
         return "SysPermission [id=" + id + ", permisType=" + permisType + ", permisName=" + permisName + ", permisDesc=" + permisDesc
                 + ", permisCode=" + permisCode + ", menuId=" + menuId + ", status=" + status + "]";
+    }
+
+    public List<SysRole> getRoleList() {
+        return roleList;
+    }
+
+    public void setRoleList(List<SysRole> roleList) {
+        this.roleList = roleList;
     }
 
 }

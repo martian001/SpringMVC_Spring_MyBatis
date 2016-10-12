@@ -1,8 +1,6 @@
 package com.et.web.controller.system;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -57,7 +55,27 @@ public class SysPermissionController extends BaseController {
         // 输出
         outputPage(query.getRows(), response, list, total);
     }
-
+    /**
+     * 
+     *@author:liangyanjun
+     *@time:2016年10月12日下午3:23:17
+     *@param query
+     *@param response
+     */
+    @RequestMapping("/rolePermissionList.do")
+    public void rolePermissionList(SysPermission query,Boolean isGrant, HttpServletResponse response) {
+        List<SysPermission> list = null;
+        int total = 0;
+        if (isGrant) {
+            list = sysPermissionService.findRolePermissionListPage(query);
+            total = sysPermissionService.getRolePermissionListTotal(query);
+        }else{
+            list = sysPermissionService.findNotGrantRolePermissionListPage(query);
+            total = sysPermissionService.getNotGrantRolePermissionListTotal(query);
+        }
+        // 输出
+        outputPage(query.getRows(), response, list, total);
+    }
     /** 新增或修改角色
      * 
      * @author:liangyanjun

@@ -12,84 +12,82 @@
 			.ready(
 					function() {
 						$.jgrid.defaults.styleUI = "Bootstrap";
-						$("#table_list")
-								.jqGrid(
-										{
-											url : "${ctx}sysUserController/list.do",
-											datatype : "json",
-											mtype : "POST",
-											caption : "系统用户列表",
-											height : 450,
-											autowidth : true,
-											shrinkToFit : true,
-											multiselect : true,
-											multiboxonly : true,
-											viewrecords : true,
-											postData : $
-													.serializeObject($("#searchFrom")),
-											rowNum : 10,
-											rowList : [ 10, 20, 30 ],
-											pager : "#pager_list",
-											colNames : [ "id", "用户名", "姓名",
-													"手机", "工号", "职位", "部门",
-													"状态", "操作" ],
-											colModel : [
-													{
-														name : "id",
-														index : "id",
-														hidden : true
-													},
-													{
-														name : "userName",
-														index : "userName",
-														sortable : false
-													},
-													{
-														name : "realName",
-														index : "realName",
-														sortable : false
-													},
-													{
-														name : "phone",
-														index : "phone",
-														sortable : false
-													},
-													{
-														name : "memberId",
-														index : "memberId",
-														sortable : false
-													},
-													{
-														name : "jobTitle",
-														index : "jobTitle",
-														sortable : false
-													},
-													{
-														name : "deptName",
-														index : "deptName",
-														sortable : false
-													},
-													{
-														name : "status",
-														index : "status",
-														formatter : formatterUseStatus,
-														sortable : false
-													},
-													{
-														name : "operate",
-														index : "operate",
-														sortable : false,
-														formatter : function(
-																cellvalue,
-																options, row) {
-															return '<a onclick=openTab("${ctx }sysUserController/toAddOrUpdate.do?id='
-																	+ row.id
-																	+ '","编辑用户","toUpdate.do") >编辑</a>'
-														}
-													} ],
-											gridComplete : function() { //列表生成后,给某一列绑定操作 例如删除操作
-											}
-										});
+						$("#table_list").jqGrid(
+								{   url : "${ctx}sysUserController/list.do",
+									datatype : "json",
+									mtype : "POST",
+									caption : "系统用户列表",
+									height : 450,
+									autowidth : true,
+									shrinkToFit : true,
+									multiselect : true,
+									multiboxonly : true,
+									viewrecords : true,
+									postData : $
+											.serializeObject($("#searchFrom")),
+									rowNum : 10,
+									rowList : [ 10, 20, 30 ],
+									pager : "#pager_list",
+									colNames : [ "id", "用户名", "姓名",
+											"手机", "工号", "职位", "部门",
+											"状态", "操作" ],
+									colModel : [
+											{
+												name : "id",
+												index : "id",
+												hidden : true
+											},
+											{
+												name : "userName",
+												index : "userName",
+												sortable : false
+											},
+											{
+												name : "realName",
+												index : "realName",
+												sortable : false
+											},
+											{
+												name : "phone",
+												index : "phone",
+												sortable : false
+											},
+											{
+												name : "memberId",
+												index : "memberId",
+												sortable : false
+											},
+											{
+												name : "jobTitle",
+												index : "jobTitle",
+												sortable : false
+											},
+											{
+												name : "deptName",
+												index : "deptName",
+												sortable : false
+											},
+											{
+												name : "status",
+												index : "status",
+												formatter : formatterUseStatus,
+												sortable : false
+											},
+											{
+												name : "operate",
+												index : "operate",
+												sortable : false,
+												formatter : function(
+														cellvalue,
+														options, row) {
+													return '<a onclick=openTab("${ctx }sysUserController/toAddOrUpdate.do?id='
+															+ row.id
+															+ '","编辑用户","toUpdate.do") >编辑</a>'
+												}
+											} ],
+									gridComplete : function() { //列表生成后,给某一列绑定操作 例如删除操作
+									}
+								});
 						$("#table_list").jqGrid("navGrid", "#pager_list", {
 							edit : false,
 							add : false,

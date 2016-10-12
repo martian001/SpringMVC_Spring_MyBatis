@@ -1,30 +1,22 @@
 package com.et.service.system;
 
-import java.util.List;
-
 import com.et.base.BaseService;
-import com.et.bean.system.SysPermission;
+import com.et.bean.system.SysRolePermission;
 
 /**
  * ★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★<br>
  * ★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★<br>
  * ★☆ @author： liangyanjun <br>
- * ★☆ @time：2016-10-10 11:15:18 <br>
+ * ★☆ @time：2016-10-12 15:19:50 <br>
  * ★☆ @version：  1.0<br>
  * ★☆ @lastMotifyTime： <br>
- * ★☆ @ClassAnnotation： 系统功能权限<br>
+ * ★☆ @ClassAnnotation： 角色-权限关系表<br>
  * ★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★<br>
  * ★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★<br>
  */
 
-public interface SysPermissionService extends BaseService<SysPermission> {
+public interface SysRolePermissionService extends BaseService<SysRolePermission> {
 
-    List<SysPermission> findRolePermissionListPage(SysPermission query);
-
-    int getRolePermissionListTotal(SysPermission query);
-    
-    List<SysPermission> findNotGrantRolePermissionListPage(SysPermission query);
-    
-    int getNotGrantRolePermissionListTotal(SysPermission query);
+    SysRolePermission getByPermiAndRoleId(String permiId, String roleId);
 
 }

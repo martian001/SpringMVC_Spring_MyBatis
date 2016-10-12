@@ -10,18 +10,104 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 		sysRoleModalListener();
+		initUserByRoleList();
+		initSysUserList();
+		initRoleList();
+		initRolePermissionList();
+		initNotGrantRolePermissionList();
+		$("#sysRoleForm").validate({
+			rules : {
+				roleName : {
+					required : true,
+					maxlength : 20
+				},
+				status : {
+					required : true
+				},
+				roleCode : {
+					required : true,
+					maxlength : 20
+				},
+				roleDesc : {
+					maxlength : 200
+				}
+			},
+			submitHandler : function(form) {
+				$.ajax({
+					url : "${ctx}sysRoleController/addOrUpdate.do",
+					type : "POST",
+					data : $("#sysRoleForm").serialize(),
+					async : false,
+					success : function(result) { //表单提交后更新页面显示的数据
+						var ret = eval("(" + result + ")");
+						if (ret && ret.header["success"]) {
+							layer.alert(ret.header["msg"], {
+								icon : 6
+							});
+							searchList('#role_table_list');
+							$('#sysRoleModal').modal('hide');
+						} else {
+							layer.alert(ret.header["msg"], {
+								icon : 5
+							});
+						}
+					}
+				});
+			}
+		})
+	});
+	function openAddOrEditSysRole(openType) {
+		if (openType == 2) {//编辑
+			var jqGridIds = $("#role_table_list")
+					.jqGrid('getGridParam', 'selarrrow');
+			if (jqGridIds.length == 0) {
+				layer.alert('请选择数据', {
+					icon : 0
+				});
+				return;
+			} else if (jqGridIds.length > 1) {
+				layer.alert('只能选择一条数据，不能多选重置', {
+					icon : 0
+				});
+				return;
+			}
+			var selObj = $("#role_table_list").jqGrid('getRowData', jqGridIds[0]);
+			var id = selObj.id;
+			var roleName = selObj.roleName;
+			var status = selObj.status;
+			var roleCode = selObj.roleCode;
+			var roleDesc = selObj.roleDesc;
+			$("#sysRoleId").val(id);
+			$("#roleName").val(roleName);
+			$("#status").val(status);
+			$("#roleCode").val(roleCode);
+			$("#roleDesc").val(roleDesc);
+		}
+		$('#sysRoleModal').modal('show');
+	}
+	//对话框监听器
+	function sysRoleModalListener() {
+		$('#sysRoleModal').on('hide.bs.modal', function () {
+			$("#sysRoleId").val("");
+			$("#roleName").val("");
+			$("#status").val("1");
+			$("#roleCode").val("");
+			$("#roleDesc").val("");
+		});
+	}
+	function initRoleList(){
 		$.jgrid.defaults.styleUI = "Bootstrap";
-		$("#table_list").jqGrid({
+		$("#role_table_list").jqGrid({
 			url : "${ctx}sysRoleController/list.do",
 			datatype : "json",
 			mtype : "POST",
 			caption : "系统角色列表",
-			height : 450,
+			height : 200,
 			autowidth : true,
 			shrinkToFit : true,
 			multiselect : true,
+			viewrecords : false,
 			multiboxonly : true,
-			viewrecords : true,
 			postData : $.serializeObject($("#searchFrom")),
 			rowNum : 10,
 			rowList : [ 10, 20, 30 ],
@@ -55,94 +141,488 @@
 				sortable : false
 			} ],
 			gridComplete : function() { //列表生成后,给某一列绑定操作 例如删除操作
-			}
+			},
+			onSelectRow : function(id) {
+				//选择角色的时候根据角色加载用户列表数据
+				var roleId = $("#role_table_list").jqGrid('getRowData', id).id;
+				$("#user_by_role_table_list").jqGrid('setGridParam', {
+					url : '${ctx}sysUserController/roleUserList.do',
+					datatype : 'json',
+					postData : {
+						"roleList[0].id" : roleId
+					}, //发送数据  
+					page : 1
+				}).trigger("reloadGrid"); //重新载入
+				//选择角色的时候根据角色加载已拥有权限列表数据
+				$("#permission_by_role_table_list1").jqGrid('setGridParam', {
+					url : '${ctx}sysPermissionController/rolePermissionList.do',
+					datatype : 'json',
+					postData : {
+						"roleList[0].id" : roleId,"isGrant":true
+					}, //发送数据  
+					page : 1
+				}).trigger("reloadGrid"); //重新载入
+				//选择角色的时候根据角色加载未拥有权限列表数据
+				$("#permission_by_role_table_list2").jqGrid('setGridParam', {
+					url : '${ctx}sysPermissionController/rolePermissionList.do',
+					datatype : 'json',
+					postData : {
+						"roleList[0].id" : roleId,"isGrant":false
+					}, //发送数据  
+					page : 1
+				}).trigger("reloadGrid"); //重新载入
+			},
 		});
-		$("#table_list").jqGrid("navGrid", "#pager_list", {
+		$("#role_table_list").jqGrid("navGrid", "#pager_list", {
 			edit : false,
 			add : false,
 			del : false,
 			search : false,
 			refresh : true
 		});
-
-		$("#sysRoleForm").validate({
-			rules : {
-				roleName : {
-					required : true,
-					maxlength : 20
-				},
-				status : {
-					required : true
-				},
-				roleCode : {
-					required : true,
-					maxlength : 20
-				},
-				roleDesc : {
-					maxlength : 200
-				}
-			},
-			submitHandler : function(form) {
-				$.ajax({
-					url : "${ctx}sysRoleController/addOrUpdate.do",
-					type : "POST",
-					data : $("#sysRoleForm").serialize(),
-					async : false,
-					success : function(result) { //表单提交后更新页面显示的数据
-						var ret = eval("(" + result + ")");
-						if (ret && ret.header["success"]) {
-							layer.alert(ret.header["msg"], {
-								icon : 6
-							});
-							searchList('#table_list');
-							$('#sysRoleModal').modal('hide');
-						} else {
-							layer.alert(ret.header["msg"], {
-								icon : 5
-							});
-						}
-					}
-				});
-			}
-		})
-	});
-	function openAddOrEditSysRole(openType) {
-		if (openType == 2) {//编辑
-			var jqGridIds = $("#table_list")
-					.jqGrid('getGridParam', 'selarrrow');
-			if (jqGridIds.length == 0) {
-				layer.alert('请选择数据', {
-					icon : 0
-				});
-				return;
-			} else if (jqGridIds.length > 1) {
-				layer.alert('只能选择一条数据，不能多选重置', {
-					icon : 0
-				});
-				return;
-			}
-			var selObj = $("#table_list").jqGrid('getRowData', jqGridIds[0]);
-			var id = selObj.id;
-			var roleName = selObj.roleName;
-			var status = selObj.status;
-			var roleCode = selObj.roleCode;
-			var roleDesc = selObj.roleDesc;
-			$("#sysRoleId").val(id);
-			$("#roleName").val(roleName);
-			$("#status").val(status);
-			$("#roleCode").val(roleCode);
-			$("#roleDesc").val(roleDesc);
-		}
-		$('#sysRoleModal').modal('show');
 	}
-	//对话框监听器
-	function sysRoleModalListener() {
-		$('#sysRoleModal').on('hide.bs.modal', function () {
-			$("#sysRoleId").val("");
-			$("#roleName").val("");
-			$("#status").val("1");
-			$("#roleCode").val("");
-			$("#roleDesc").val("");
+	function initUserByRoleList(){
+		$.jgrid.defaults.styleUI = "Bootstrap";
+		$("#user_by_role_table_list").jqGrid({
+						    url : "#",
+							datatype : "json",
+							mtype : "POST",
+							caption : "该角色下用户列表",
+							height : 200,
+							autowidth : true,
+							shrinkToFit : true,
+							multiselect : true,
+							viewrecords : false,
+							postData : $
+									.serializeObject($("#searchFrom")),
+							rowNum : 10,
+							rowList : [ 10, 20, 30 ],
+							pager : "#user_by_role_pager_list",
+							colNames : [ "id", "用户名", "姓名",
+									"手机", "工号", "职位", "部门",
+									"状态"],
+							colModel : [
+									{
+										name : "id",
+										index : "id",
+										hidden : true
+									},
+									{
+										name : "userName",
+										index : "userName",
+										sortable : false
+									},
+									{
+										name : "realName",
+										index : "realName",
+										sortable : false
+									},
+									{
+										name : "phone",
+										index : "phone",
+										sortable : false
+									},
+									{
+										name : "memberId",
+										index : "memberId",
+										sortable : false
+									},
+									{
+										name : "jobTitle",
+										index : "jobTitle",
+										sortable : false
+									},
+									{
+										name : "deptName",
+										index : "deptName",
+										sortable : false
+									},
+									{
+										name : "status",
+										index : "status",
+										formatter : formatterUseStatus,
+										sortable : false
+									}],
+							gridComplete : function() { //列表生成后,给某一列绑定操作 例如删除操作
+							}
+						});
+		$("#user_by_role_table_list").jqGrid("navGrid", "#user_by_role_pager_list", {
+			edit : false,
+			add : false,
+			del : false,
+			search : false,
+			refresh : true
+		});
+	}
+	function initSysUserList(){
+		$.jgrid.defaults.styleUI = "Bootstrap";
+		$("#sysUser_table_list").jqGrid({
+						    url : "#",
+							datatype : "json",
+							mtype : "POST",
+							caption : "系统用户列表",
+							height : 200,
+							autowidth : true,
+							shrinkToFit : true,
+							multiselect : true,
+							viewrecords : false,
+							postData : $
+									.serializeObject($("#sysUserSearchFrom")),
+							rowNum : 10,
+							rowList : [ 10, 20, 30 ],
+							pager : "sysUser_pager_list",
+							colNames : [ "id", "用户名", "姓名",
+									"手机", "工号", "职位", "部门",
+									"状态"],
+							colModel : [
+									{
+										name : "id",
+										index : "id",
+										hidden : true
+									},
+									{
+										name : "userName",
+										index : "userName",
+										width : 100,
+										sortable : false
+									},
+									{
+										name : "realName",
+										index : "realName",
+										width : 100,
+										sortable : false
+									},
+									{
+										name : "phone",
+										index : "phone",
+										width : 100,
+										sortable : false
+									},
+									{
+										name : "memberId",
+										index : "memberId",
+										width : 100,
+										sortable : false
+									},
+									{
+										name : "jobTitle",
+										index : "jobTitle",
+										width : 100,
+										sortable : false
+									},
+									{
+										name : "deptName",
+										index : "deptName",
+										width : 100,
+										sortable : false
+									},
+									{
+										name : "status",
+										index : "status",
+										width : 100,
+										formatter : formatterUseStatus,
+										sortable : false
+									}],
+							gridComplete : function() { //列表生成后,给某一列绑定操作 例如删除操作
+							}
+						});
+		$("#sysUser_table_list").jqGrid("navGrid", "#sysUser_pager_list", {
+			edit : false,
+			add : false,
+			del : false,
+			search : false,
+			refresh : true
+		});
+	}
+	function initRolePermissionList(){
+		$.jgrid.defaults.styleUI = "Bootstrap";
+		$("#permission_by_role_table_list1").jqGrid({
+						    url : "#",
+							datatype : "json",
+							mtype : "POST",
+							caption : "该角色已拥有权限列表",
+							height : 200,
+							autowidth : true,
+							shrinkToFit : true,
+							multiselect : true,
+							viewrecords : false,
+							postData : $
+									.serializeObject($("#sysUserSearchFrom")),
+							rowNum : 10,
+							rowList : [ 10, 20, 30 ],
+							pager : "permission_by_role_pager_list1",
+							colNames : [ "id", "权限名称", "权限代码", "权限类型", "状态", "权限描述"],
+							colModel : [ {
+								name : "id",
+								index : "id",
+								hidden : true
+							}, {
+								name : "permisName",
+								index : "permisName",
+								sortable : false
+							}, {
+								name : "permisCode",
+								index : "permisCode",
+								sortable : false
+							}, {
+								name : "permisType",
+								index : "permisType",
+								formatter : formatterPermisType,
+								unformat : unformatPermisType,
+								sortable : false
+							}, {
+								name : "status",
+								index : "status",
+								formatter : formatterUseStatus,
+								unformat : unformatUseStatus,
+								sortable : false
+							}, {
+								name : "permisDesc",
+								index : "permisDesc",
+								sortable : false
+							} ],
+							gridComplete : function() { //列表生成后,给某一列绑定操作 例如删除操作
+							}
+						});
+		$("#permission_by_role_table_list1").jqGrid("navGrid", "#permission_by_role_pager_list1", {
+			edit : false,
+			add : false,
+			del : false,
+			search : false,
+			refresh : true
+		});
+	}
+	function initNotGrantRolePermissionList(){
+		$.jgrid.defaults.styleUI = "Bootstrap";
+		$("#permission_by_role_table_list2").jqGrid({
+						    url : "#",
+							datatype : "json",
+							mtype : "POST",
+							caption : "该角色未拥有权限列表",
+							height : 200,
+							autowidth : true,
+							shrinkToFit : true,
+							multiselect : true,
+							viewrecords : false,
+							postData : $
+									.serializeObject($("#sysUserSearchFrom")),
+							rowNum : 10,
+							rowList : [ 10, 20, 30 ],
+							pager : "permission_by_role_pager_list2",
+							colNames : [ "id", "权限名称", "权限代码", "权限类型", "状态", "权限描述"],
+							colModel : [ {
+								name : "id",
+								index : "id",
+								hidden : true
+							}, {
+								name : "permisName",
+								index : "permisName",
+								sortable : false
+							}, {
+								name : "permisCode",
+								index : "permisCode",
+								sortable : false
+							}, {
+								name : "permisType",
+								index : "permisType",
+								formatter : formatterPermisType,
+								unformat : unformatPermisType,
+								sortable : false
+							}, {
+								name : "status",
+								index : "status",
+								formatter : formatterUseStatus,
+								unformat : unformatUseStatus,
+								sortable : false
+							}, {
+								name : "permisDesc",
+								index : "permisDesc",
+								sortable : false
+							} ],
+							gridComplete : function() { //列表生成后,给某一列绑定操作 例如删除操作
+							}
+						});
+		$("#permission_by_role_table_list2").jqGrid("navGrid", "#permission_by_role_pager_list2", {
+			edit : false,
+			add : false,
+			del : false,
+			search : false,
+			refresh : true
+		});
+	}
+	function openAddUserByRole(){
+		var jqGridIds = $("#role_table_list")
+		.jqGrid('getGridParam', 'selarrrow');
+		if (jqGridIds.length == 0) {
+			layer.alert('请选择数据', {
+				icon : 0
+			});
+			return;
+		} else if (jqGridIds.length > 1) {
+			layer.alert('只能选择一条数据，不能多选重置', {
+				icon : 0
+			});
+			return;
+		}
+		var selObj = $("#role_table_list").jqGrid('getRowData', jqGridIds[0]);
+		$("#sysUser_table_list").jqGrid('setGridParam', {
+			url : '${ctx}sysUserController/list.do',
+			datatype : 'json',
+			postData : {
+			}, //发送数据  
+			page : 1
+		}).trigger("reloadGrid"); //重新载入
+		$('#sysUserModal').modal('show');
+	}
+	function saveSysUserRole(){
+		var jqGridIds = $("#role_table_list").jqGrid('getGridParam', 'selarrrow');
+		var roleId = $("#role_table_list").jqGrid('getRowData', jqGridIds[0]).id;
+		jqGridIds=$("#sysUser_table_list").jqGrid('getGridParam', 'selarrrow');
+		if (jqGridIds.length == 0) {
+			layer.alert('请选择数据', {
+				icon : 0
+			});
+			return;
+		} 
+		var userIds="";
+		for (var i = 0; i < jqGridIds.length; i++) {
+			var userId = $("#sysUser_table_list").jqGrid('getRowData', jqGridIds[i]).id;
+			userIds=userIds+userId+",";
+		}
+		$.ajax({
+			url : "${ctx}sysUserRoleController/saveSysUserRole.do",
+			type : "POST",
+			data : {"userIdStrs":userIds,"roleId":roleId},
+			async : false,
+			success : function(result) { //表单提交后更新页面显示的数据
+				var ret = eval("(" + result + ")");
+				if (ret && ret.header["success"]) {
+					layer.alert(ret.header["msg"], {
+						icon : 6
+					});
+					searchList('#user_by_role_table_list');
+					$('#sysUserModal').modal('hide');
+				} else {
+					layer.alert(ret.header["msg"], {
+						icon : 5
+					});
+				}
+			}
+		});
+	}
+	function removeSysUserRole(){
+		var jqGridIds = $("#role_table_list").jqGrid('getGridParam', 'selarrrow');
+		jqGridIds=$("#role_table_list").jqGrid('getGridParam', 'selarrrow');
+		if (jqGridIds.length == 0) {
+			layer.alert('请选择角色', {
+				icon : 0
+			});
+			return;
+		} 
+		var roleId = $("#role_table_list").jqGrid('getRowData', jqGridIds[0]).id;
+		jqGridIds=$("#user_by_role_table_list").jqGrid('getGridParam', 'selarrrow');
+		if (jqGridIds.length == 0) {
+			layer.alert('请选择用户', {
+				icon : 0
+			});
+			return;
+		} 
+		var userIds="";
+		for (var i = 0; i < jqGridIds.length; i++) {
+			var userId = $("#user_by_role_table_list").jqGrid('getRowData', jqGridIds[i]).id;
+			userIds=userIds+userId+",";
+		}
+		$.ajax({
+			url : "${ctx}sysUserRoleController/removeSysUserRole.do",
+			type : "POST",
+			data : {"userIdStrs":userIds,"roleId":roleId},
+			async : false,
+			success : function(result) { //表单提交后更新页面显示的数据
+				var ret = eval("(" + result + ")");
+				if (ret && ret.header["success"]) {
+					layer.alert(ret.header["msg"], {
+						icon : 6
+					});
+					searchList('#user_by_role_table_list');
+					$('#sysUserModal').modal('hide');
+				} else {
+					layer.alert(ret.header["msg"], {
+						icon : 5
+					});
+				}
+			}
+		});
+	}
+	function addpermissionByRole(){
+		var jqGridIds = $("#role_table_list").jqGrid('getGridParam', 'selarrrow');
+		var roleId = $("#role_table_list").jqGrid('getRowData', jqGridIds[0]).id;
+		jqGridIds=$("#permission_by_role_table_list2").jqGrid('getGridParam', 'selarrrow');
+		if (jqGridIds.length == 0) {
+			layer.alert('请选择数据', {
+				icon : 0
+			});
+			return;
+		} 
+		var permisIds="";
+		for (var i = 0; i < jqGridIds.length; i++) {
+			var permisId = $("#permission_by_role_table_list2").jqGrid('getRowData', jqGridIds[i]).id;
+			permisIds=permisIds+permisId+",";
+		}
+		$.ajax({
+			url : "${ctx}sysRolePermissionController/addSysRolePermission.do",
+			type : "POST",
+			data : {"permisStrs":permisIds,"roleId":roleId},
+			async : false,
+			success : function(result) { //表单提交后更新页面显示的数据
+				var ret = eval("(" + result + ")");
+				if (ret && ret.header["success"]) {
+					layer.alert(ret.header["msg"], {
+						icon : 6
+					});
+					searchList('#permission_by_role_table_list1');
+					searchList('#permission_by_role_table_list2');
+				} else {
+					layer.alert(ret.header["msg"], {
+						icon : 5
+					});
+				}
+			}
+		});
+	}
+	function removePermissionByRole(){
+		var jqGridIds = $("#role_table_list").jqGrid('getGridParam', 'selarrrow');
+		var roleId = $("#role_table_list").jqGrid('getRowData', jqGridIds[0]).id;
+		jqGridIds=$("#permission_by_role_table_list1").jqGrid('getGridParam', 'selarrrow');
+		if (jqGridIds.length == 0) {
+			layer.alert('请选择数据', {
+				icon : 0
+			});
+			return;
+		} 
+		var permisIds="";
+		for (var i = 0; i < jqGridIds.length; i++) {
+			var permisId = $("#permission_by_role_table_list1").jqGrid('getRowData', jqGridIds[i]).id;
+			permisIds=permisIds+permisId+",";
+		}
+		$.ajax({
+			url : "${ctx}sysRolePermissionController/removeSysRolePermission.do",
+			type : "POST",
+			data : {"permisStrs":permisIds,"roleId":roleId},
+			async : false,
+			success : function(result) { //表单提交后更新页面显示的数据
+				var ret = eval("(" + result + ")");
+				if (ret && ret.header["success"]) {
+					layer.alert(ret.header["msg"], {
+						icon : 6
+					});
+					searchList('#permission_by_role_table_list1');
+					searchList('#permission_by_role_table_list2');
+				} else {
+					layer.alert(ret.header["msg"], {
+						icon : 5
+					});
+				}
+			}
 		});
 	}
 </script>
@@ -162,7 +642,7 @@
 									</a>
 								</div>
 							</div>
-							<div class="ibox-content">
+							<div class="ibox-content" style="display: none;">
 
 								<form action="#" method="post" id="searchFrom" name="searchFrom"
 									class="form-horizontal">
@@ -194,16 +674,12 @@
 										<div class="row">
 											<!-- 操作按钮 -->
 											<button class="btn btn-primary " type="button"
-												onclick="searchList('#table_list')">
+												onclick="searchList('#role_table_list')">
 												<i class="fa fa-check"></i> <span class="bold">查询</span>
 											</button>
 											<button class="btn btn-warning " type="reset">
 												<i class="fa fa-warning"></i> <span class="bold">重置</span>
 											</button>
-											<a class="btn btn-outline btn-primary"
-												onclick="openAddOrEditSysRole(1)">增加</a> <a
-												class="btn btn-outline btn-primary"
-												onclick="openAddOrEditSysRole(2)">编辑</a>
 										</div>
 									</div>
 								</form>
@@ -214,15 +690,48 @@
 
 				<div class="row">
 					<div class="col-sm-12">
-						<div class="ibox float-e-margins">
+					  <div class="col-sm-6">
 							<div class="ibox-content">
+							<a class="btn btn-outline btn-primary" onclick="openAddOrEditSysRole(1)">增加</a> 
+							<a class="btn btn-outline btn-warning" onclick="openAddOrEditSysRole(2)">编辑</a>
+							<a class="btn btn-outline btn-primary" onclick="openAddUserByRole()">添加用户</a>
 								<div class="jqGrid_wrapper">
-									<table id="table_list"></table>
+									<table id="role_table_list"></table>
 									<div id="pager_list"></div>
 								</div>
-
 							</div>
-						</div>
+					  </div>
+					  <div class="col-sm-6">
+					      <div class="ibox-content">
+					        <a class="btn btn-outline btn-danger" onclick="removePermissionByRole()">取消该权限</a>
+								<div class="jqGrid_wrapper">
+									<table id="permission_by_role_table_list1"></table>
+									<div id="permission_by_role_pager_list1"></div>
+								</div>
+							</div>
+					  </div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-sm-12">
+					  <div class="col-sm-6">
+							<div class="ibox-content">
+							<a class="btn btn-outline btn-danger" onclick="removeSysUserRole()">取消该用户</a>
+								<div class="jqGrid_wrapper">
+									<table id="user_by_role_table_list"></table>
+									<div id="user_by_role_pager_list"></div>
+								</div>
+							</div>
+					  </div>
+					  <div class="col-sm-6">
+					     <div class="ibox-content">
+							<a class="btn btn-outline btn-primary" onclick="addpermissionByRole()">附加该权限</a>
+								<div class="jqGrid_wrapper">
+									<table id="permission_by_role_table_list2"></table>
+									<div id="permission_by_role_pager_list2"></div>
+								</div>
+							</div>
+					  </div>
 					</div>
 				</div>
 
@@ -287,6 +796,26 @@
 						<button type="submit" class="btn btn-primary">提交</button>
 					</div>
 				</form>
+			</div>
+		</div>
+	</div>
+	<div class="modal fade" id="sysUserModal" tabindex="-1" role="dialog"
+		aria-labelledby="sysUserModalLabel" aria-hidden="true"
+		data-backdrop="static">
+		<div class="modal-dialog" style="width: 800px;">
+			<div class="modal-content animated flipInY">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-hidden="true">&times;</button>
+					<h4 class="modal-title" id="sysUserModalLabel">系统用户</h4>
+				</div>
+					<div class="modal-body">
+					  <a class="btn btn-outline btn-primary" onclick="saveSysUserRole()">保存</a>
+					  <div class="jqGrid_wrapper">
+									<table id="sysUser_table_list"></table>
+									<div id="sysUser_pager_list"></div>
+					  </div>
+					</div>
 			</div>
 		</div>
 	</div>

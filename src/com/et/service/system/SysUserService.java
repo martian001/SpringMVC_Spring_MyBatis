@@ -1,5 +1,7 @@
 package com.et.service.system;
 
+import java.util.List;
+
 import com.et.base.BaseService;
 import com.et.bean.system.SysUser;
 
@@ -36,5 +38,9 @@ public interface SysUserService extends BaseService<SysUser> {
    boolean checkUserNameIsExist(String userName);
 
    boolean checkPhoneIsExist(String phone);
+
+    List<SysUser> findRoleUserListPage(SysUser query);
+
+    int getRoleUserListTotal(SysUser query);
 
 }

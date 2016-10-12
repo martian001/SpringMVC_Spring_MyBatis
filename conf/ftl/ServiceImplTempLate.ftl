@@ -24,7 +24,7 @@ import com.et.service.${packageModule}.${beanName}Service;
 @Service
 public class ${beanName}ServiceImpl extends BaseServiceImpl<${beanName}> implements ${beanName}Service {
    @Resource
-   private ${beanName}Mapper ${beanName}Mapper;
+   private ${beanName}Mapper ${lowercaseBeanName}Mapper;
 
    @PostConstruct
    public void init() {

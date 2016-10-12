@@ -95,14 +95,6 @@
  <div class="wrapper wrapper-content animated fadeInRight">
  
   <div class="row">
-               <label class="font-noraml">范围选择</label>
-                            <div class="input-daterange input-group" id="datepicker">
-                                <input type="text" class="input-sm form-control" name="start" value="2014-11-11" />
-                                <span class="input-group-addon">到</span>
-                                <input type="text" class="input-sm form-control" name="end" value="2014-11-17" />
-                            </div>
-  </div>
-  <div class="row">
    <div class="col-sm-12">
     <div class="row">
      <div class="col-sm-12">

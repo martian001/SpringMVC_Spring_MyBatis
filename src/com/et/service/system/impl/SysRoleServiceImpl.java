@@ -24,11 +24,11 @@ import com.et.service.system.SysRoleService;
 @Service
 public class SysRoleServiceImpl extends BaseServiceImpl<SysRole> implements SysRoleService {
    @Resource
-   private SysRoleMapper SysRoleMapper;
+   private SysRoleMapper sysRoleMapper;
 
    @PostConstruct
    public void init() {
       System.out.println("初始化");
-      setBaseDao(SysRoleMapper);
+      setBaseDao(sysRoleMapper);
    }
 }

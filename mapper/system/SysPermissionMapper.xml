@@ -255,4 +255,162 @@
 		</where>
 		) T
 	</select>
+	<select id="findRolePermissionListPage" resultMap="sysPermissionMap" parameterType="sysPermission">
+	<if test="page != -1">
+	SELECT D.* FROM (SELECT T.*, ROWNUM RN FROM (
+	</if>
+    SELECT A.* FROM SYS_PERMISSION A
+     INNER JOIN SYS_ROLE_PERMISSION B
+         ON A.ID=B.PERMIS_ID
+		<where>
+			<trim>
+				<if test="1==1">
+					AND B.STATUS =1
+				</if>
+				<if test="permisName != null and permisName !=''">
+					AND A.PERMIS_NAME LIKE '%${permisName}%'
+				</if>
+				<if test="permisCode != null and permisCode !=''">
+					AND A.PERMIS_CODE LIKE '%${permisCode}%'
+				</if>
+				<if test="status !=null and status >0">
+					AND A.STATUS = #{status}
+				</if>
+				<if test="permisType !=null and permisType !=''">
+					AND A.PERMIS_TYPE = #{permisType}
+				</if>
+				<if test="roleList !=null and roleList.size() >0">
+				    AND B.ROLE_ID IN
+                    <foreach item="role" collection="roleList" open="("
+						separator="," close=")">
+						#{role.id}
+					</foreach>
+			    </if>
+				<if test="id !=null and id !=''">
+					AND A.ID = #{id}
+				</if>
+			</trim>
+		</where>
+		<if test="page != -1">
+		<![CDATA[ ) T WHERE ROWNUM <=#{page}*#{rows} ) D WHERE D.RN > ((#{page}-1)*#{rows}) ]]>
+		</if>
+	</select>
+	<!-- 根据条件查询数量 -->
+	<select id="getRolePermissionListTotal" resultType="Integer" parameterType="sysPermission">
+	<![CDATA[
+	SELECT COUNT(1) FROM
+			(SELECT A.* FROM SYS_PERMISSION A
+			     INNER JOIN SYS_ROLE_PERMISSION B
+			         ON A.ID=B.PERMIS_ID
+	]]>
+		<where>
+			<!-- 用来处理如果where后面是以and开头的条件,那么可以自动去掉and -->
+			<trim>
+				<if test="1==1">
+					AND B.STATUS =1
+				</if>
+				<if test="permisName != null and permisName !=''">
+					AND A.PERMIS_NAME LIKE '%${permisName}%'
+				</if>
+				<if test="permisCode != null and permisCode !=''">
+					AND A.PERMIS_CODE LIKE '%${permisCode}%'
+				</if>
+				<if test="status !=null and status >0">
+					AND A.STATUS = #{status}
+				</if>
+				<if test="permisType !=null and permisType !=''">
+					AND A.PERMIS_TYPE = #{permisType}
+				</if>
+				<if test="roleList !=null and roleList.size() >0">
+				    AND B.ROLE_ID IN
+                    <foreach item="role" collection="roleList" open="("
+						separator="," close=")">
+						#{role.id}
+					</foreach>
+			    </if>
+				<if test="id !=null and id !=''">
+					AND A.ID = #{id}
+				</if>
+			</trim>
+		</where>
+		) T
+	</select>
+	<select id="findNotGrantRolePermissionListPage" resultMap="sysPermissionMap" parameterType="sysPermission">
+	<if test="page != -1">
+	SELECT D.* FROM (SELECT T.*, ROWNUM RN FROM (
+	</if>
+    SELECT A.* FROM SYS_PERMISSION A
+		<where>
+			<trim>
+				<if test="permisName != null and permisName !=''">
+					AND A.PERMIS_NAME LIKE '%${permisName}%'
+				</if>
+				<if test="permisCode != null and permisCode !=''">
+					AND A.PERMIS_CODE LIKE '%${permisCode}%'
+				</if>
+				<if test="status !=null and status >0">
+					AND A.STATUS = #{status}
+				</if>
+				<if test="permisType !=null and permisType !=''">
+					AND A.PERMIS_TYPE = #{permisType}
+				</if>
+				<if test="roleList !=null and roleList.size() >0">
+				    AND A.ID NOT IN(SELECT RP.PERMIS_ID
+                      FROM SYS_ROLE_PERMISSION RP
+                     WHERE RP.ROLE_ID IN
+                     <foreach item="role" collection="roleList" open="("
+						separator="," close=")">
+						#{role.id}
+					</foreach>
+					 AND RP.STATUS = 1
+                     ) 
+			    </if>
+				<if test="id !=null and id !=''">
+					AND A.ID = #{id}
+				</if>
+			</trim>
+		</where>
+		<if test="page != -1">
+		<![CDATA[ ) T WHERE ROWNUM <=#{page}*#{rows} ) D WHERE D.RN > ((#{page}-1)*#{rows}) ]]>
+		</if>
+	</select>
+	<!-- 根据条件查询数量 -->
+	<select id="getNotGrantRolePermissionListTotal" resultType="Integer" parameterType="sysPermission">
+	<![CDATA[
+	SELECT COUNT(1) FROM
+			(SELECT A.* FROM SYS_PERMISSION A
+	]]>
+		<where>
+			<!-- 用来处理如果where后面是以and开头的条件,那么可以自动去掉and -->
+			<trim>
+				<if test="permisName != null and permisName !=''">
+					AND A.PERMIS_NAME LIKE '%${permisName}%'
+				</if>
+				<if test="permisCode != null and permisCode !=''">
+					AND A.PERMIS_CODE LIKE '%${permisCode}%'
+				</if>
+				<if test="status !=null and status >0">
+					AND A.STATUS = #{status}
+				</if>
+				<if test="permisType !=null and permisType !=''">
+					AND A.PERMIS_TYPE = #{permisType}
+				</if>
+				<if test="roleList !=null and roleList.size() >0">
+				    AND A.ID NOT IN(SELECT RP.PERMIS_ID
+                      FROM SYS_ROLE_PERMISSION RP
+                     WHERE RP.ROLE_ID IN
+                     <foreach item="role" collection="roleList" open="("
+						separator="," close=")">
+						#{role.id}
+					</foreach>
+					 AND RP.STATUS = 1
+                     ) 
+			    </if>
+				<if test="id !=null and id !=''">
+					AND A.ID = #{id}
+				</if>
+			</trim>
+		</where>
+		) T
+	</select>
 </mapper>

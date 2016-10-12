@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.et.base.BaseController;
 import com.et.bean.system.SysUser;
 import com.et.service.system.SysUserService;
+import com.et.util.Constants;
 import com.et.util.CryptographyUtil;
 import com.et.util.StringUtil;
 
@@ -47,6 +48,13 @@ public class SysUserController extends BaseController {
       int total = sysUserService.getTotal(query);
       // 输出
       outputPage(query.getRows(), response, list, total);
+   }
+   @RequestMapping("/roleUserList.do")
+   public void roleUserList(SysUser query, HttpServletResponse response) {
+       List<SysUser> list = sysUserService.findRoleUserListPage(query);
+       int total = sysUserService.getRoleUserListTotal(query);
+       // 输出
+       outputPage(query.getRows(), response, list, total);
    }
 
    @RequestMapping("/toAddOrUpdate.do")

@@ -125,7 +125,7 @@ public class CheckingInController extends BaseController {
             if (userId == null) {
                System.out.println();
             }
-            Date stringToDate = DateUtils.stringToDate(checkingInDate);
+            Date stringToDate = DateUtils.stringToDate(checkingInDate, "yyyy/MM/dd HH:mm:ss");//2016/9/1 9:09:24
             // 保存考勤记录
             CheckingInRecord checkingInRecord = new CheckingInRecord();
             checkingInRecord.setCheckingInDate(stringToDate);

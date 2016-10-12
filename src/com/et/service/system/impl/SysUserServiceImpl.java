@@ -1,5 +1,7 @@
 package com.et.service.system.impl;
 
+import java.util.List;
+
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 
@@ -60,5 +62,27 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUser> implements SysU
     public boolean checkPhoneIsExist(String phone) {
         SysUser sysUser = sysUserMapper.getSysUserByPhone(phone);
         return sysUser != null;
+    }
+
+
+    /**
+     *@author:liangyanjun
+     *@time:2016年10月12日上午11:32:19
+     *
+     */
+    @Override
+    public List<SysUser> findRoleUserListPage(SysUser query) {
+        return sysUserMapper.findRoleUserListPage(query);
+    }
+
+
+    /**
+     *@author:liangyanjun
+     *@time:2016年10月12日上午11:32:19
+     *
+     */
+    @Override
+    public int getRoleUserListTotal(SysUser query) {
+        return sysUserMapper.getRoleUserListTotal(query);
     }
 }

@@ -16,7 +16,7 @@ import com.et.base.BaseBean;
 public class ${beanName} extends BaseBean{
 <#list fieldMaps as map>
    <#if (map.javaName != "creatorId" && map.javaName != "creatorDate" && map.javaName != "updateId" && map.javaName != "updateDate")>
-   public ${map.javaSimpleType} ${map.javaName}; //
+   private ${map.javaSimpleType} ${map.javaName}; //
    </#if>
 </#list>
 }

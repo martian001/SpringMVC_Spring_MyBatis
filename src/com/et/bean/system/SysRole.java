@@ -12,12 +12,12 @@ import com.et.base.BaseBean;
  * ★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★<br>
  * ★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★<br> */
 public class SysRole extends BaseBean {
-    public String id; //
-    public String roleName; //角色名称
-    public String roleDesc; //角色描述
-    public String roleCode; //角色编码
-    public Integer status; //状态
-    public String parentId; //从属角色ID
+    private String id; //
+    private String roleName; //角色名称
+    private String roleDesc; //角色描述
+    private String roleCode; //角色编码
+    private Integer status; //状态
+    private String parentId; //从属角色ID
 
     public String getId() {
         return id;

@@ -14,7 +14,8 @@ package com.et.util;
 public class Constants {
    public static final String LOGIN_USER = "login_user";
    public static final String SEPARATOR = "/";
-   public static final int STATUS_ENABLED = 1;
+   public static final int STATUS_ENABLED = 1;//有效状态
+   public static final int STATUS_DISABLED = 2;//无效效状态
    
    public static final String USERNAME_IS_NULL = "用户名为空!";
    public static final String LOGIN_IS_EXIST = "该用户已登录!";

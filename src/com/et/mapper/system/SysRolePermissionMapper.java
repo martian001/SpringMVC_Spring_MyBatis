@@ -1,33 +1,26 @@
 package com.et.mapper.system;
 
-import java.util.List;
-
+import org.apache.ibatis.annotations.Param;
 import org.mybatis.spring.annotation.MapperScan;
 
 import com.achievo.framework.mybatis.mapper.BaseMapper;
 import com.et.base.BaseDao;
-import com.et.bean.system.SysPermission;
+import com.et.bean.system.SysRolePermission;
 
 /**
  * ★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★<br>
  * ★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★<br>
  * ★☆ @author： liangyanjun <br>
- * ★☆ @time：2016-10-10 11:15:18 <br>
+ * ★☆ @time：2016-10-12 15:19:50 <br>
  * ★☆ @version：  1.0<br>
  * ★☆ @lastMotifyTime： <br>
- * ★☆ @ClassAnnotation： 系统功能权限<br>
+ * ★☆ @ClassAnnotation： 角色-权限关系表<br>
  * ★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★<br>
  * ★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★<br>
  */
 @MapperScan
-public interface SysPermissionMapper<T, PK> extends BaseMapper<T, PK>,BaseDao<T>{
+public interface SysRolePermissionMapper<T, PK> extends BaseMapper<T, PK>,BaseDao<T>{
 
-    List<SysPermission> findRolePermissionListPage(SysPermission query);
-
-    int getRolePermissionListTotal(SysPermission query);
-
-    List<SysPermission> findNotGrantRolePermissionListPage(SysPermission query);
-
-    int getNotGrantRolePermissionListTotal(SysPermission query);
+    SysRolePermission getByPermiAndRoleId(@Param(value = "permisId") String permisId, @Param(value = "roleId") String roleId);
 
 }

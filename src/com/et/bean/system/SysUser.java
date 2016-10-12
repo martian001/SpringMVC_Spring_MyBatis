@@ -1,5 +1,7 @@
 package com.et.bean.system;
 
+import java.util.List;
+
 import com.et.base.BaseBean;
 
 /**
@@ -14,27 +16,28 @@ import com.et.base.BaseBean;
  * ★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★<br>
  */
 public class SysUser extends BaseBean {
-   public String id;
-   public String userName;
-   public String realName;
-   public String memberId;
-   public int status;
-   public String jobTitle;
-   public String mail;
-   public String pwd;
-   public String photoUrl;
-   public String token;
-   public String personalQQ;
-   public String enterpriseQQ;
-   public String phone;
-   public String workPhone;
-   public String extension;
-   public String superiorId;
-   public String superiorName;
-   public String deptName;
-   public String deviceToken;
-   public String remark;
-
+   private String id;
+   private String userName;
+   private String realName;
+   private String memberId;
+   private int status;
+   private String jobTitle;
+   private String mail;
+   private String pwd;
+   private String photoUrl;
+   private String token;
+   private String personalQQ;
+   private String enterpriseQQ;
+   private String phone;
+   private String workPhone;
+   private String extension;
+   private String superiorId;
+   private String superiorName;
+   private String deptName;
+   private String deviceToken;
+   private String remark;
+   private List<SysRole> roleList;
+   
    public String getId() {
       return id;
    }
@@ -329,6 +332,14 @@ public void setRemark(String remark) {
                 + ", personalQQ=" + personalQQ + ", enterpriseQQ=" + enterpriseQQ + ", phone=" + phone + ", workPhone=" + workPhone
                 + ", extension=" + extension + ", superiorId=" + superiorId + ", superiorName=" + superiorName + ", deptName=" + deptName
                 + ", deviceToken=" + deviceToken + ", remark=" + remark + "]";
+    }
+
+    public List<SysRole> getRoleList() {
+        return roleList;
+    }
+
+    public void setRoleList(List<SysRole> roleList) {
+        this.roleList = roleList;
     }
   
 

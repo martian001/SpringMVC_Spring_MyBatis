@@ -24,11 +24,11 @@ import com.et.service.system.SysMenuService;
 @Service
 public class SysMenuServiceImpl extends BaseServiceImpl<SysMenu> implements SysMenuService {
    @Resource
-   private SysMenuMapper SysMenuMapper;
+   private SysMenuMapper sysMenuMapper;
 
    @PostConstruct
    public void init() {
       System.out.println("初始化");
-      setBaseDao(SysMenuMapper);
+      setBaseDao(sysMenuMapper);
    }
 }
