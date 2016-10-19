@@ -24,21 +24,6 @@
 			</list>
 		</property>
 	</bean>
-	<!-- 配置SpringMvc的拦截器 -->
-	<mvc:interceptors>
-		<!-- 请求权限拦截器 -->
-		<mvc:interceptor>
-			<mvc:mapping path="/**"/> <!-- 模糊拦截 -->
-			<mvc:exclude-mapping path="/img/**"/> <!-- 不拦截的url -->
-			<mvc:exclude-mapping path="/css/**"/>
-			<mvc:exclude-mapping path="/js/**"/>
-			<mvc:exclude-mapping path="/plugins/**"/>
-			<mvc:exclude-mapping path="/fonts/**"/>
-			<mvc:exclude-mapping path="/*login.do"/>
-			<mvc:exclude-mapping path="/*logout.do"/>
-			<bean id="permissionInterceptor" class="com.et.web.interceptor.PermissionInterceptor" />
-		</mvc:interceptor>
-	</mvc:interceptors>
 	<!--对模型视图名称的解析，即在模型视图名称添加前后缀 -->
 	<bean
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver"  p:suffix= ".jsp" p:prefix="/WEB-INF/jsp/" >
