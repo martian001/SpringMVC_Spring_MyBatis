@@ -36,13 +36,6 @@ public class SysPermissionController extends BaseController {
     private SysPermissionService sysPermissionService;
     private Logger logger = LoggerFactory.getLogger(SysPermissionController.class);
 
-    @ExceptionHandler
-    public String exception(HttpServletRequest request, HttpServletResponse response, Exception e) {
-        logger.error(ExceptionUtil.getExceptionMessage(e), e);
-        fillReturnJson(response, false, "出现未知异常,请与系统管理员联系!");
-        return null;
-    }
-
     @RequestMapping("/toSysPermissionList.do")
     public String to_list() {
         return path + "/sysPermissionList";

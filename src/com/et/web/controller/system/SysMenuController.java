@@ -40,13 +40,6 @@ public class SysMenuController extends BaseController {
    private SysMenuService sysMenuService;
    private Logger logger = LoggerFactory.getLogger(SysRoleController.class);
    
-   @ExceptionHandler
-   public String exception(HttpServletRequest request, HttpServletResponse response, Exception e) {
-       logger.error(ExceptionUtil.getExceptionMessage(e), e);
-       fillReturnJson(response, false, "出现未知异常,请与系统管理员联系!");
-       return null;
-   }
-   
    @RequestMapping("/toSysMenuList.do")
    public String to_list() {
       return path+"/sysMenuList";

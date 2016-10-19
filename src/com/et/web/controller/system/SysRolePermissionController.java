@@ -41,13 +41,6 @@ public class SysRolePermissionController extends BaseController {
     private SysRolePermissionService sysUserRoleService;
     private Logger logger = LoggerFactory.getLogger(SysRolePermissionController.class);
 
-    @ExceptionHandler
-    public String exception(HttpServletRequest request, HttpServletResponse response, Exception e) {
-        logger.error(ExceptionUtil.getExceptionMessage(e), e);
-        fillReturnJson(response, false, "出现未知异常,请与系统管理员联系!");
-        return null;
-    }
-
     /** 
      * 角色关联权限
      * @author:liangyanjun

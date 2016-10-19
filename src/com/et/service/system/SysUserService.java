@@ -1,6 +1,7 @@
 package com.et.service.system;
 
 import java.util.List;
+import java.util.Set;
 
 import com.et.base.BaseService;
 import com.et.bean.system.SysUser;
@@ -42,5 +43,9 @@ public interface SysUserService extends BaseService<SysUser> {
     List<SysUser> findRoleUserListPage(SysUser query);
 
     int getRoleUserListTotal(SysUser query);
+
+    Set<String> getRoleCodes(String id);
+
+    Set<String> getPermissionCodes(String id);
 
 }

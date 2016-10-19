@@ -38,12 +38,6 @@ public class ${beanName}Controller extends BaseController {
    private ${beanName}Service ${lowercaseBeanName}Service;
    private Logger logger = LoggerFactory.getLogger(${beanName}Controller.class);
    
-   @ExceptionHandler
-   public String exception(HttpServletRequest request, HttpServletResponse response, Exception e) {
-       logger.error(ExceptionUtil.getExceptionMessage(e), e);
-       fillReturnJson(response, false, "出现未知异常,请与系统管理员联系!");
-       return null;
-   }
    @RequestMapping("/toList.do")
    public String to_list() {
       return path+"/list";

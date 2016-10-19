@@ -398,4 +398,25 @@
          </set> 
          where id=#{id}
 	</update>
+	<select id="getRoleCodes" resultType="java.lang.String">
+		SELECT C.ROLE_CODE
+		  FROM SYS_USER_ROLE A
+		  LEFT JOIN SYS_ROLE C
+		    ON A.ROLE_ID = C.ID
+		 WHERE A.STATUS = 1 AND A.USER_ID=#{id}
+	</select>
+	<select id="getPermissionCodes" resultType="java.lang.String">
+		SELECT B.PERMIS_CODE
+		  FROM SYS_ROLE_PERMISSION A
+		 INNER JOIN SYS_PERMISSION B
+		    ON A.PERMIS_ID = B.ID
+		 INNER JOIN SYS_ROLE C
+		    ON A.ROLE_ID = C.ID
+		 INNER JOIN SYS_USER_ROLE D
+		    ON D.ROLE_ID = A.ROLE_ID
+		 WHERE A.STATUS = 1
+		   AND D.STATUS = 1
+		   AND D.USER_ID=#{id}
+		 GROUP BY B.PERMIS_CODE 
+	</select>
 </mapper>

@@ -38,21 +38,6 @@ public class SysRoleController extends BaseController {
     private SysRoleService sysRoleService;
     private Logger logger = LoggerFactory.getLogger(SysRoleController.class);
 
-    /** 全局异常处理
-     *
-     * @author:liangyanjun
-     * @time:2016年10月8日下午6:11:54
-     * @param request
-     * @param response
-     * @param e
-     * @return */
-    @ExceptionHandler
-    public String exception(HttpServletRequest request, HttpServletResponse response, Exception e) {
-        logger.error(ExceptionUtil.getExceptionMessage(e), e);
-        fillReturnJson(response, false, "出现未知异常,请与系统管理员联系!");
-        return null;
-    }
-
     @RequestMapping("/toList.do")
     public String to_list() {
         return path + "/sysRoleList";

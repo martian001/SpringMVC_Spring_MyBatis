@@ -38,13 +38,6 @@ public class SysUserRoleController extends BaseController {
     private SysUserRoleService sysUserRoleService;
     private Logger logger = LoggerFactory.getLogger(SysUserRoleController.class);
 
-    @ExceptionHandler
-    public String exception(HttpServletRequest request, HttpServletResponse response, Exception e) {
-        logger.error(ExceptionUtil.getExceptionMessage(e), e);
-        fillReturnJson(response, false, "出现未知异常,请与系统管理员联系!");
-        return null;
-    }
-
     @RequestMapping("/list.do")
     public void list(SysUserRole query, HttpServletResponse response) {
         List<SysUserRole> list = sysUserRoleService.findPage(query);

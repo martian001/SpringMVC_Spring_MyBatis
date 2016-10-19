@@ -1,13 +1,14 @@
 package com.et.web.controller.system;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.et.base.BaseController;
 import com.et.bean.system.SysUser;
 import com.et.service.system.SysUserService;
-import com.et.util.Constants;
 import com.et.util.CryptographyUtil;
 import com.et.util.StringUtil;
 
@@ -36,7 +36,9 @@ import com.et.util.StringUtil;
 public class SysUserController extends BaseController {
    @Resource
    private SysUserService sysUserService;
-
+   private Logger logger = LoggerFactory.getLogger(SysUserController.class);
+   
+   @RequiresPermissions("sysUserController/toList")
    @RequestMapping("/toList.do")
    public String toList() {
       return "system/sysUserList";
@@ -56,7 +58,6 @@ public class SysUserController extends BaseController {
        // 输出
        outputPage(query.getRows(), response, list, total);
    }
-
    @RequestMapping("/toAddOrUpdate.do")
    public String toAddOrUpdate(ModelMap map, String id) {
       if (!StringUtil.isBlank(id)) {
@@ -65,7 +66,7 @@ public class SysUserController extends BaseController {
        }
       return "system/sysUserAddOrUpdate";
    }
-
+   
    @RequestMapping("/addOrUpdate.do")
    public void addOrUpdate(SysUser sysUser,HttpServletRequest req, HttpServletResponse resp) {
        String id = sysUser.getId();

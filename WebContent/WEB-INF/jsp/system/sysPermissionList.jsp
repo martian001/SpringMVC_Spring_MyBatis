@@ -81,7 +81,7 @@
 				},
 				permisCode : {
 					required : true,
-					maxlength : 20
+					maxlength : 50
 				},
 				permisDesc : {
 					maxlength : 200
@@ -261,7 +261,7 @@
 							<label for="permisCode" class="col-sm-2 control-label"><span
 								class="requiredSty">*</span>权限代码:</label>
 							<div class="col-sm-4">
-								<input type="text" class="form-control" maxlength="20"
+								<input type="text" class="form-control" maxlength="50"
 									id="permisCode" name="permisCode" placeholder="权限代码">
 							</div>
 						</div>

@@ -1,6 +1,7 @@
 package com.et.mapper.system;
 
 import java.util.List;
+import java.util.Set;
 
 import org.mybatis.spring.annotation.MapperScan;
 
@@ -41,5 +42,9 @@ public interface SysUserMapper<T, PK> extends BaseMapper<T, PK>,BaseDao<T>{
     List<SysUser> findRoleUserListPage(SysUser query);
 
     int getRoleUserListTotal(SysUser query);
+
+    Set<String> getRoleCodes(String id);
+
+    Set<String> getPermissionCodes(String id);
 
 }

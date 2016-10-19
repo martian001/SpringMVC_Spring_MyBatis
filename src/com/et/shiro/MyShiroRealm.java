@@ -1,12 +1,13 @@
 package com.et.shiro;
 
+import java.util.Set;
+
 import javax.annotation.Resource;
 
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
-import org.apache.shiro.authc.DisabledAccountException;
 import org.apache.shiro.authc.SimpleAuthenticationInfo;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
@@ -33,27 +34,21 @@ import com.et.util.StringUtil;
 public class MyShiroRealm extends AuthorizingRealm {
     @Resource
     private SysUserService sysUserService;
-
+    /**
+     * 为当限前登录的用户授予角色和权
+     */
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
-        SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
-        try {
-            ShiroUser shiroUser = (ShiroUser) principals.fromRealm(getName()).iterator().next();
-            String userName = shiroUser.getUserName();
-            if (userName != null) {
-                // 查询用户授权信息
-                // List<SysPermission> permissionList = client.getSysUserPermissionByUserName(userName);
-                //
-                // if (permissionList != null && permissionList.size() > 0) {
-                // for (SysPermission sysPermission : permissionList) {
-                // info.addRole(sysPermission.getPermisCode());
-                // }
-                // }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return info;
+        ShiroUser shiroUser = (ShiroUser) principals.fromRealm(getName()).iterator().next();
+        String id = shiroUser.getId();
+        SimpleAuthorizationInfo authorizationInfo=new SimpleAuthorizationInfo();
+        Set<String> roleCodes = sysUserService.getRoleCodes(id);
+        System.out.println("roleCodes:"+roleCodes);
+        authorizationInfo.setRoles(roleCodes);
+        Set<String> permissionCodes = sysUserService.getPermissionCodes(id);
+        System.out.println("permissionCodes:"+permissionCodes);
+        authorizationInfo.setStringPermissions(permissionCodes);
+        return authorizationInfo;
     }
 
     // 获取认证信息

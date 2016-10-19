@@ -61,4 +61,6 @@
 			<value>4096</value>
 		</property>
 	</bean>  -->
+	<!-- 全局异常处理类 -->
+	<bean id="exceptionResolver" class="com.et.web.ExceptionResolver"/>
 </beans>

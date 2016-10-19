@@ -36,14 +36,18 @@
 
 	<!-- 过滤器 -->
 	<bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+	    <!-- Shiro的核心安全接口,这个属性是必须的 -->  
 		<property name="securityManager" ref="securityManager" />
+		<!-- 身份认证失败，则跳转到登录页面的配置 -->  
 		<property name="loginUrl" value="/to_login.do" />
-		<property name="unauthorizedUrl" value="/to_login.do" />
+	    <!-- 权限认证失败，则跳转到指定页面 -->  
+	    <property name="unauthorizedUrl" value="/toUnauthor.do"/>  
 		<property name="filters">
 			<util:map>
 				<entry key="authc" value-ref="formAuthenticationFilter" />
 			</util:map>
 		</property>
+		<!-- Shiro连接约束配置,即过滤链的定义 -->  
 		<property name="filterChainDefinitions">
 			<value>
 			    /Kaptcha.jpg = anon
@@ -58,4 +62,8 @@
 			</value>
 		</property>
 	</bean>
+	 <aop:config proxy-target-class="true"></aop:config>
+    <bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
+        <property name="securityManager" ref="securityManager"/>
+    </bean>
 </beans>

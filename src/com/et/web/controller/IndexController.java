@@ -88,6 +88,14 @@ public class IndexController extends BaseController {
    public String toLogin(ModelMap model) {
       return "/login";
    }
+   @RequestMapping("/toUnauthor.do")
+   public String toUnauthor(ModelMap model) {
+       return "/comm/unauthor";
+   }
+   @RequestMapping("/toError.do")
+   public String toError(ModelMap model) {
+       return "/errorpage/500";
+   }
 
    /**
     * 用户登录

@@ -1,6 +1,7 @@
 package com.et.service.system.impl;
 
 import java.util.List;
+import java.util.Set;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
@@ -84,5 +85,27 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUser> implements SysU
     @Override
     public int getRoleUserListTotal(SysUser query) {
         return sysUserMapper.getRoleUserListTotal(query);
+    }
+
+
+    /**
+     *@author:liangyanjun
+     *@time:2016年10月19日下午4:18:30
+     *
+     */
+    @Override
+    public Set<String> getRoleCodes(String id) {
+        return sysUserMapper.getRoleCodes(id);
+    }
+
+
+    /**
+     *@author:liangyanjun
+     *@time:2016年10月19日下午4:18:30
+     *
+     */
+    @Override
+    public Set<String> getPermissionCodes(String id) {
+        return sysUserMapper.getPermissionCodes(id);
     }
 }

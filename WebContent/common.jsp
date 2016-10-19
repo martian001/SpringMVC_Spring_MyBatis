@@ -14,6 +14,9 @@
 <link href="${ctx }css/style.min862f.css?v=4.1.0" rel="stylesheet">
 
 <script type="text/javascript" src="${ctx }js/jquery.min.js?v=2.1.4"></script>
+<!--[if lt IE 9]>
+    <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <![endif]-->
 <!-- jquery-form.js -->
 <script type="text/javascript" src="${ctx }js/jquery-form.js"></script>
 <script type="text/javascript" src="${ctx }js/accounting.js" ></script>
