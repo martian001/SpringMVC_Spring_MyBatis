@@ -23,12 +23,16 @@ public class ExceptionResolver implements HandlerExceptionResolver {
     @Override
     public ModelAndView resolveException(HttpServletRequest request, HttpServletResponse response, Object handler, Exception e) {
         logger.error(ExceptionUtil.getExceptionMessage(e), e);
+        String requestType = request.getHeader("X-Requested-With");
         //1.没有权限异常
         if (e instanceof UnauthorizedException) {
+            if ("XMLHttpRequest".equalsIgnoreCase(requestType)) {
+                fillReturnJson(response, false, "对不起,您无该权限!");
+                return new ModelAndView();
+            }
             return new ModelAndView("redirect:/toUnauthor.do");
         }
         //ajax请求异常
-        String requestType = request.getHeader("X-Requested-With");
         if ("XMLHttpRequest".equalsIgnoreCase(requestType)) {
             fillReturnJson(response, false, "出现未知异常,请与系统管理员联系!");
             return new ModelAndView();

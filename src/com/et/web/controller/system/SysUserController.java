@@ -43,7 +43,8 @@ public class SysUserController extends BaseController {
    public String toList() {
       return "system/sysUserList";
    }
-
+   
+   @RequiresPermissions("sysUserController/list")
    @RequestMapping("/list.do")
    public void list(SysUser query, HttpServletResponse response) {
       List<SysUser> list = sysUserService.findPage(query);
@@ -67,6 +68,7 @@ public class SysUserController extends BaseController {
       return "system/sysUserAddOrUpdate";
    }
    
+   @RequiresPermissions("sysUserController/addOrUpdate")
    @RequestMapping("/addOrUpdate.do")
    public void addOrUpdate(SysUser sysUser,HttpServletRequest req, HttpServletResponse resp) {
        String id = sysUser.getId();
