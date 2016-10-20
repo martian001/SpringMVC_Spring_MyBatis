@@ -21,6 +21,12 @@
 		SELECT
 		<include refid="column_list" />
 		FROM SYS_ROLE
+	</select>
+	<!-- 根据条件查询 -->
+	<select id="query" resultMap="sysRoleMap" parameterType="sysRole">
+		SELECT
+		<include refid="column_list" />
+		FROM SYS_ROLE
 		<where>
 			<trim>
 		      <if test="id != null and id !=''">

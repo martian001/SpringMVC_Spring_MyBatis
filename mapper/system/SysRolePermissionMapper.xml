@@ -19,6 +19,13 @@
 		SELECT
 		<include refid="column_list" />
 		FROM SYS_ROLE_PERMISSION
+		
+	</select>
+	<!-- 根据条件查询 -->
+	<select id="query" resultMap="sysRolePermissionMap" parameterType="sysRolePermission">
+		SELECT
+		<include refid="column_list" />
+		FROM SYS_ROLE_PERMISSION
 		<where>
 			<trim>
 		      <if test="id != null and id !=''">

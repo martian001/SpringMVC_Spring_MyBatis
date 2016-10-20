@@ -14,6 +14,12 @@
 		SELECT
 		<include refid="column_list" />
 		FROM ${tableName}
+	</select>
+	<!-- 根据条件查询 -->
+	<select id="query" resultMap="${lowercaseBeanName}Map" parameterType="${lowercaseBeanName}">
+		SELECT
+		<include refid="column_list" />
+		FROM ${tableName}
 		<where>
 			<trim>
 		<#-- 遍历字段集合--> 

@@ -52,7 +52,7 @@ public abstract class BaseDaoImpl<T> extends SqlSessionDaoSupport implements Bas
     }
 
     @Override
-    public void deleteByIds(List ids) {
+    public void deleteByIds(List<String> ids) {
        getSqlSession().delete(className + ".deleteByIds", ids);
     }
 
@@ -67,7 +67,7 @@ public abstract class BaseDaoImpl<T> extends SqlSessionDaoSupport implements Bas
     }
 
     @Override
-    public List<T> getByIds(List ids) {
+    public List<T> getByIds(List<String> ids) {
         //  return getSqlSession().selectList(className+".getByIds", ids);
         return null;
     }
@@ -75,6 +75,10 @@ public abstract class BaseDaoImpl<T> extends SqlSessionDaoSupport implements Bas
     @Override
     public List<T> getAll() {
         return getSqlSession().selectList(className + ".getAll");
+    }
+    @Override
+    public List<T> query(T parameter) {
+        return getSqlSession().selectList(className + ".query");
     }
 
     @Override

@@ -18,15 +18,17 @@ public interface BaseDao<T> {
 
    void deleteById(String id);
 
-   void deleteByIds(List ids);
+   void deleteByIds(List<String> ids);
 
    void update(T parameter);
 
    T getById(String id);
 
-   List<T> getByIds(List ids);
+   List<T> getByIds(List<String> ids);
 
    List<T> getAll();
+   
+   List<T> query(T parameter);
 
    T selectOne(Object parameter);
 

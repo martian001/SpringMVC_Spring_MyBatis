@@ -22,6 +22,12 @@
 		SELECT
 		<include refid="column_list" />
 		FROM SYS_PERMISSION
+	</select>
+	<!-- 根据条件查询 -->
+	<select id="query" resultMap="sysPermissionMap" parameterType="sysPermission">
+		SELECT
+		<include refid="column_list" />
+		FROM SYS_PERMISSION
 		<where>
 			<trim>
 				<if test="id != null and id !=''">
@@ -413,4 +419,13 @@
 		</where>
 		) T
 	</select>
+	<!-- 修改权限信息 -->
+	<update id="updateByMenuId"  parameterType="sysPermission">
+		UPDATE SYS_PERMISSION P SET 
+		  PERMIS_TYPE = #{permisType},
+		  P.PERMIS_NAME=#{permisName},
+		  P.PERMIS_DESC=#{permisDesc},
+		  P.PERMIS_CODE = #{permisCode}
+		WHERE  P.MENU_ID=#{menuId}
+	</update>
 </mapper>

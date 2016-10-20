@@ -62,8 +62,24 @@
 	<tx:advice id="txAdvice" transaction-manager="transactionManager">
 		<!-- 定义对每个方法的事务控制属性 -->
 		<tx:attributes>
-			<tx:method name="get*" read-only="true" />
-			<tx:method name="lastNameIsValid" read-only="true" />
+			<tx:method name="insert*" propagation="REQUIRED" read-only="false" rollback-for="java.lang.Exception"/>
+			<tx:method name="add*" propagation="REQUIRED"  read-only="false" rollback-for="java.lang.Exception"/>
+			<tx:method name="save*" propagation="REQUIRED" read-only="false" rollback-for="java.lang.Exception"/>
+			<tx:method name="update*" propagation="REQUIRED" read-only="false" rollback-for="java.lang.Exception"/>
+			<tx:method name="modify*" propagation="REQUIRED" read-only="false" rollback-for="java.lang.Exception"/>
+			<tx:method name="merge*" propagation="REQUIRED" read-only="false" rollback-for="java.lang.Exception"/>
+			<tx:method name="edit*" propagation="REQUIRED" read-only="false" rollback-for="java.lang.Exception"/>
+			<tx:method name="make*" propagation="REQUIRED" read-only="false" rollback-for="java.lang.Exception"/>
+			<tx:method name="del*" propagation="REQUIRED" read-only="false" rollback-for="java.lang.Exception"/>
+			
+			<tx:method name="remove*" propagation="REQUIRED" read-only="false" rollback-for="java.lang.Exception"/>
+			<tx:method name="execute*" propagation="REQUIRED" read-only="false" rollback-for="java.lang.Exception"/>
+			<tx:method name="service*" propagation="REQUIRED" read-only="false" rollback-for="java.lang.Exception"/>
+			<tx:method name="find*" propagation="SUPPORTS" read-only="true" />
+			<tx:method name="get*" propagation="SUPPORTS" read-only="true" />
+			<tx:method name="select*" propagation="SUPPORTS" read-only="true" />
+			<tx:method name="query*" propagation="SUPPORTS" read-only="true" />
+			<tx:method name="*" propagation="SUPPORTS" read-only="true" />
 			<!-- propagation配置事务的传播属性,有7大传播属性,默认值是REQUIRED 1. REQUIRED 表示如果一个事务调用多个小事务,就把所有小事务自己接管,类似于合并小事务 
 				2. REQUIRES_NEW 表示一个碰到另外事务的时候,先执行另外的事务,类似于小事务各干各的 -->
 
@@ -73,7 +89,6 @@
 
 			<!-- timeout 用来设定事务的超时,超过这个时间,事务就不能提交, -->
 			<!-- rollback-for 用来设定碰到那个异常,必须要回滚 -->
-			<tx:method name="*" />
 		</tx:attributes>
 	</tx:advice>
 

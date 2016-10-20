@@ -17,6 +17,9 @@ public class Constants {
    public static final int STATUS_ENABLED = 1;//有效状态
    public static final int STATUS_DISABLED = 2;//无效效状态
    
+   public static final String PERMIS_TYPE_1 = "1";//权限类型（功能权限=1/菜单权限=2）
+   public static final String PERMIS_TYPE_2 = "2";//权限类型（功能权限=1/菜单权限=2）
+   
    public static final String USERNAME_IS_NULL = "用户名为空!";
    public static final String LOGIN_IS_EXIST = "该用户已登录!";
    public static final String UNKNOWN_SESSION_EXCEPTION = "异常会话!";

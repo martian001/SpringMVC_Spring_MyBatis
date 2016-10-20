@@ -30,4 +30,6 @@ public interface SysPermissionMapper<T, PK> extends BaseMapper<T, PK>,BaseDao<T>
 
     int getNotGrantRolePermissionListTotal(SysPermission query);
 
+    void updateByMenuId(SysPermission sysPermission);
+
 }
