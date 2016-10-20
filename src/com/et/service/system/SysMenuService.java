@@ -1,5 +1,7 @@
 package com.et.service.system;
 
+import java.util.List;
+
 import com.et.base.BaseService;
 import com.et.bean.system.SysMenu;
 
@@ -16,5 +18,7 @@ import com.et.bean.system.SysMenu;
  */
 
 public interface SysMenuService extends BaseService<SysMenu> {
+
+    List<SysMenu> getGrantMenus(String userId);
 
 }

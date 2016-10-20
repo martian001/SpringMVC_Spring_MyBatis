@@ -419,28 +419,4 @@
 		   AND D.USER_ID=#{id}
 		 GROUP BY B.PERMIS_CODE 
 	</select>
-	<select id="getGrantMenus" resultType="java.lang.String">
-		SELECT DISTINCT u."USER_NAME",
-                m."ID",
-                m."PARENT_ID",
-                m."MENU_NAME",
-                m."ICON_CLS",
-                m."MENU_URL",
-                m."STATUS",
-                m."MENU_INDEX"
-  FROM SYS_USER            U,
-       SYS_PERMISSION      P,
-       SYS_ROLE            R,
-       SYS_USER_ROLE       UR,
-       SYS_ROLE_PERMISSION RP,
-       SYS_MENU            M
- WHERE R.ID = UR.ROLE_ID
-   AND U.ID = UR.USER_ID
-   AND R.ID = RP.ROLE_ID
-   AND P.ID = RP.PERMIS_ID
-   AND P.PERMIS_TYPE = 2
-   AND M.ID = P.MENU_ID
-   AND M.STATUS = 1
-   AND U.ID=#{id}
-	</select>
 </mapper>

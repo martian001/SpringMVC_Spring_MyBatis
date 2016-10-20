@@ -81,8 +81,16 @@ public class SysMenuServiceImpl extends BaseServiceImpl<SysMenu> implements SysM
 
     @Override
     public void update(SysMenu sysMenu) {
-        // 修改权限信息 （根据菜单ID）
-        sysPermissionMapper.updateByMenuId(convert(sysMenu));
+        String id = sysMenu.getId();
+        SysPermission sysPermissionQuery = new SysPermission();
+        sysPermissionQuery.setMenuId(id);
+        List<SysPermission> list = sysPermissionMapper.query(sysPermissionQuery);
+        if (list==null||list.isEmpty()) {
+            sysPermissionMapper.insert(convert(sysMenu));
+        }else{
+            // 修改权限信息 （根据菜单ID）
+            sysPermissionMapper.updateByMenuId(convert(sysMenu));
+        }
         super.update(sysMenu);
     }
 
@@ -95,5 +103,16 @@ public class SysMenuServiceImpl extends BaseServiceImpl<SysMenu> implements SysM
         sysPermission.setPermisName(sysMenu.getMenuName());
         sysPermission.setMenuId(sysMenu.getId());
         return sysPermission;
+    }
+
+    /**
+     * 根据用户id获取菜单
+     *@author:liangyanjun
+     *@time:2016年10月20日上午11:16:05
+     *
+     */
+    @Override
+    public List<SysMenu> getGrantMenus(String userId) {
+        return sysMenuMapper.getGrantMenus(userId);
     }
 }

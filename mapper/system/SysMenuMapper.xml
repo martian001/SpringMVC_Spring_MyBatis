@@ -41,6 +41,44 @@
   FROM SYS_MENU A, SYS_MENU B
  WHERE A.ID = B.PARENT_ID ]]>
 	</select>
+	<select id="getGrantMenus" resultMap="sysMenuMap" resultType="java.lang.String">
+		SELECT DISTINCT u."USER_NAME",
+                CM.ID,
+                CM.PARENT_ID,
+                CM.MENU_NAME,
+                CM.ICON_CLS,
+                CM.MENU_URL,
+                CM.MENU_INDEX,
+                CM.STATUS,
+                M.ID         AS C_ID,
+                M.PARENT_ID  AS C_PARENT_ID,
+                M.MENU_NAME  AS C_MENU_NAME,
+                M.ICON_CLS   AS C_ICON_CLS,
+                M.MENU_URL   AS C_MENU_URL,
+                M.MENU_INDEX AS C_MENU_INDEX,
+                M.STATUS     AS C_STATUS
+  FROM SYS_USER            U,
+       SYS_PERMISSION      P,
+       SYS_ROLE            R,
+       SYS_USER_ROLE       UR,
+       SYS_ROLE_PERMISSION RP,
+       SYS_MENU            M,
+       SYS_MENU            CM
+ WHERE R.ID = UR.ROLE_ID
+   AND U.ID = UR.USER_ID
+   AND R.ID = RP.ROLE_ID
+   AND P.ID = RP.PERMIS_ID
+   AND M.PARENT_ID = CM.ID
+   AND P.PERMIS_TYPE = 2
+   AND M.ID = P.MENU_ID
+   AND M.STATUS = 1
+   AND M.STATUS = 1
+   AND UR.STATUS=1
+   AND R.STATUS=1
+   AND UR.STATUS=1
+   AND RP.STATUS=1
+   AND U.ID = #{userId}
+	</select>
 	<!-- 根据条件分页查询 mysql -->
 	<select id="findPage" resultMap="sysMenuMap" parameterType="sysMenu">
 		<if test="page != -1">

@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.et.base.BaseController;
 import com.et.bean.system.SysMenu;
+import com.et.bean.system.SysUser;
 import com.et.service.system.SysMenuService;
 import com.et.service.system.SysUserService;
 import com.et.shiro.CaptchaUsernamePasswordToken;
@@ -51,14 +52,16 @@ public class IndexController extends BaseController {
    private Logger logger = LoggerFactory.getLogger(IndexController.class);
 
    @RequestMapping("/index.do")
-   public String toIndex(ModelMap model) {
-      fillMenus(model);
+   public String toIndex(ModelMap model,HttpServletRequest req) {
+      SysUser loginUser = getLoginUser(req);
+      String userId = loginUser.getId();
+      fillMenus(model,userId);
       return "/index";
    }
 
    // 填充菜单
-   private void fillMenus(ModelMap model) {
-      List<SysMenu> sysMenus = sysMenuService.getAll();
+   private void fillMenus(ModelMap model,String userId) {
+      List<SysMenu> sysMenus = sysMenuService.getGrantMenus(userId);
       for (SysMenu sysMenu : sysMenus) {
          System.out.println(sysMenu.getMenuName());
          for (SysMenu sysMenu2 : sysMenu.getChildrenList()) {

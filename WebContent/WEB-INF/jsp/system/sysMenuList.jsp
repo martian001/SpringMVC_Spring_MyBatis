@@ -334,7 +334,7 @@
 							<label for="parentId" class="col-sm-2 control-label">父级菜单ID:</label>
 							<div class="col-sm-4">
 								<input type="text" class="form-control" id="parentId"
-									name="parentId" maxlength="20" placeholder="父级菜单ID">
+									name="parentId" maxlength="50" placeholder="父级菜单ID">
 							</div>
 							<label for="iconCls" class="col-sm-2 control-label">菜单图标:</label>
 							<div class="col-sm-4">
