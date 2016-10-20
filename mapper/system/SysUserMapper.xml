@@ -60,6 +60,7 @@
 				</if>
 			</trim>
 		</where>
+		 ORDER BY  A.CREATOR_DATE DESC
 		<if test="page != -1">
 		<![CDATA[ ) T WHERE ROWNUM <=#{page}*#{rows} ) D WHERE D.RN > ((#{page}-1)*#{rows}) ]]>
 		</if>
@@ -135,6 +136,7 @@
 				</if>
 			</trim>
 		</where>
+		 ORDER BY  A.CREATOR_DATE DESC
 		<if test="page != -1">
 		<![CDATA[ ) T WHERE ROWNUM <=#{page}*#{rows} ) D WHERE D.RN > ((#{page}-1)*#{rows}) ]]>
 		</if>
@@ -387,10 +389,6 @@
 	          <if test="deviceToken !=null and deviceToken !=''">
 	                DEVICE_TOKEN=#{deviceToken},
 	          </if>
-	          <if test="creatorId !=null and creatorId !=''">
-	                CREATOR_ID=#{creatorId},
-	          </if>
-	                CREATOR_DATE=SYSDATE,
 	          <if test="updateId !=null and updateId !=''">
 	                UPDATE_ID=#{updateId},
 	          </if>

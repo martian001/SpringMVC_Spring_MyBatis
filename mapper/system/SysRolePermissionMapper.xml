@@ -81,18 +81,14 @@
 		    <if test="status != null and status >0">
 				STATUS,
 			</if>
-		    <if test="creatorDate != null and creatorDate !=''">
 				CREATOR_DATE,
-			</if>
 		    <if test="creatorId != null and creatorId !=''">
 				CREATOR_ID,
 			</if>
 		    <if test="updateId != null and updateId !=''">
 				UPDATE_ID,
 			</if>
-		    <if test="updateDate != null and updateDate !=''">
 				UPDATE_DATE,
-			</if>
 		</trim>
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
 		    <if test="id != null and id !=''">
@@ -107,18 +103,14 @@
 		    <if test="status != null and status >0">
 		    #{status},
 			</if>
-		    <if test="creatorDate != null and creatorDate !=''">
-		    #{creatorDate,jdbcType= DATE,javaType= java.util.Date},
-			</if>
+		    SYSDATE,
 		    <if test="creatorId != null and creatorId !=''">
 		    #{creatorId},
 			</if>
 		    <if test="updateId != null and updateId !=''">
 		    #{updateId},
 			</if>
-		    <if test="updateDate != null and updateDate !=''">
-		    #{updateDate,jdbcType= DATE,javaType= java.util.Date},
-			</if>
+		    SYSDATE
 		</trim>
 	</insert>
 	<!-- 根据id删除数据 -->
@@ -141,18 +133,10 @@
 		    <if test="status != null and status >0">
 		     STATUS=#{status},
 			</if>
-		    <if test="creatorDate != null and creatorDate !=''">
-		     CREATOR_DATE=#{creatorDate,jdbcType= DATE,javaType= java.util.Date},
-			</if>
-		    <if test="creatorId != null and creatorId !=''">
-		     CREATOR_ID=#{creatorId},
-			</if>
 		    <if test="updateId != null and updateId !=''">
 		     UPDATE_ID=#{updateId},
 			</if>
-		    <if test="updateDate != null and updateDate !=''">
-		     UPDATE_DATE=#{updateDate,jdbcType= DATE,javaType= java.util.Date},
-			</if>
+		     UPDATE_DATE=SYSDATE,
 		</set>
 		WHERE ID = #{id}
 	</update>

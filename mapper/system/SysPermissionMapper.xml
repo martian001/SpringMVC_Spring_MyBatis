@@ -100,18 +100,14 @@
 			<if test="status != null and status >0">
 				STATUS,
 			</if>
-			<if test="creatorDate != null and creatorDate !=''">
 				CREATOR_DATE,
-			</if>
 			<if test="creatorId != null and creatorId !=''">
 				CREATOR_ID,
 			</if>
 			<if test="updateId != null and updateId !=''">
 				UPDATE_ID,
 			</if>
-			<if test="updateDate != null and updateDate !=''">
 				UPDATE_DATE,
-			</if>
 		</trim>
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
 			<if test="id != null and id !=''">
@@ -135,18 +131,14 @@
 			<if test="status != null and status >0">
 				#{status},
 			</if>
-			<if test="creatorDate != null and creatorDate !=''">
-				#{creatorDate,jdbcType= DATE,javaType= java.util.Date},
-			</if>
+			SYSDATE,
 			<if test="creatorId != null and creatorId !=''">
 				#{creatorId},
 			</if>
 			<if test="updateId != null and updateId !=''">
 				#{updateId},
 			</if>
-			<if test="updateDate != null and updateDate !=''">
-				#{updateDate,jdbcType= DATE,javaType= java.util.Date},
-			</if>
+			SYSDATE
 		</trim>
 	</insert>
 	<!-- 根据id删除数据 -->
@@ -178,20 +170,10 @@
 			<if test="status != null and status >0">
 				STATUS=#{status},
 			</if>
-			<if test="creatorDate != null and creatorDate !=''">
-				CREATOR_DATE=#{creatorDate,jdbcType= DATE,javaType=
-				java.util.Date},
-			</if>
-			<if test="creatorId != null and creatorId !=''">
-				CREATOR_ID=#{creatorId},
-			</if>
 			<if test="updateId != null and updateId !=''">
 				UPDATE_ID=#{updateId},
 			</if>
-			<if test="updateDate != null and updateDate !=''">
-				UPDATE_DATE=#{updateDate,jdbcType= DATE,javaType=
-				java.util.Date},
-			</if>
+				UPDATE_DATE=SYSDATE,
 		</set>
 		WHERE ID = #{id}
 	</update>
@@ -230,6 +212,7 @@
 				</if>
 			</trim>
 		</where>
+		ORDER BY A.PERMIS_TYPE, A.CREATOR_DATE DESC
 		<if test="page != -1">
 		<![CDATA[ ) T WHERE ROWNUM <=#{page}*#{rows} ) D WHERE D.RN > ((#{page}-1)*#{rows}) ]]>
 		</if>
@@ -297,6 +280,7 @@
 				</if>
 			</trim>
 		</where>
+		 ORDER BY A.PERMIS_TYPE, A.CREATOR_DATE
 		<if test="page != -1">
 		<![CDATA[ ) T WHERE ROWNUM <=#{page}*#{rows} ) D WHERE D.RN > ((#{page}-1)*#{rows}) ]]>
 		</if>
@@ -376,6 +360,7 @@
 				</if>
 			</trim>
 		</where>
+		 ORDER BY A.PERMIS_TYPE, A.CREATOR_DATE
 		<if test="page != -1">
 		<![CDATA[ ) T WHERE ROWNUM <=#{page}*#{rows} ) D WHERE D.RN > ((#{page}-1)*#{rows}) ]]>
 		</if>

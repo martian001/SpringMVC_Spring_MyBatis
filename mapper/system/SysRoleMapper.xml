@@ -91,18 +91,14 @@
 		    <if test="parentId != null and parentId !=''">
 				PARENT_ID,
 			</if>
-		    <if test="creatorDate != null and creatorDate !=''">
 				CREATOR_DATE,
-			</if>
 		    <if test="creatorId != null and creatorId !=''">
 				CREATOR_ID,
 			</if>
 		    <if test="updateId != null and updateId !=''">
 				UPDATE_ID,
 			</if>
-		    <if test="updateDate != null and updateDate !=''">
-				UPDATE_DATE,
-			</if>
+				UPDATE_DATE
 		</trim>
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
 		    <if test="id != null and id !=''">
@@ -123,17 +119,12 @@
 		    <if test="parentId != null and parentId !=''">
 		    #{parentId},
 			</if>
-		    <if test="creatorDate != null and creatorDate !=''">
-		    #{creatorDate,jdbcType= DATE,javaType= java.util.Date},
-			</if>
+		    SYSDATE,
 		    <if test="creatorId != null and creatorId !=''">
 		    #{creatorId},
 			</if>
 		    <if test="updateId != null and updateId !=''">
-		    #{updateId},
-			</if>
-		    <if test="updateDate != null and updateDate !=''">
-		    #{updateDate,jdbcType= DATE,javaType= java.util.Date},
+		    SYSDATE
 			</if>
 		</trim>
 	</insert>
@@ -163,18 +154,10 @@
 		    <if test="parentId != null and parentId !=''">
 		     PARENT_ID=#{parentId},
 			</if>
-		    <if test="creatorDate != null and creatorDate !=''">
-		     CREATOR_DATE=#{creatorDate,jdbcType= DATE,javaType= java.util.Date},
-			</if>
-		    <if test="creatorId != null and creatorId !=''">
-		     CREATOR_ID=#{creatorId},
-			</if>
 		    <if test="updateId != null and updateId !=''">
 		     UPDATE_ID=#{updateId},
 			</if>
-		    <if test="updateDate != null and updateDate !=''">
-		     UPDATE_DATE=#{updateDate,jdbcType= DATE,javaType= java.util.Date},
-			</if>
+		     UPDATE_DATE=SYSDATE
 		</set>
 		WHERE ID = #{id}
 	</update>
