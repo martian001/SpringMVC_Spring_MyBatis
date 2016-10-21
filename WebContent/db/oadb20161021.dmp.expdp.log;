@@ -1,0 +1,11 @@
+;;; 
+Export: Release 11.2.0.1.0 - Production on 星期五 10月 21 11:42:55 2016
+
+Copyright (c) 1982, 2009, Oracle and/or its affiliates.  All rights reserved.
+;;; 
+连接到: Oracle Database 11g Enterprise Edition Release 11.2.0.1.0 - 64bit Production
+With the Partitioning, OLAP, Data Mining and Real Application Testing options
+ORA-39000: 转储文件说明错误
+ORA-31641: 无法创建转储文件 "F:\app\Administrator/admin/orcl/dpdump/oadb20161021.dmp"
+ORA-27038: 所创建的文件已存在
+OSD-04010: ָ���� <create> ѡ��, ���ļ��Ѿ���� 
