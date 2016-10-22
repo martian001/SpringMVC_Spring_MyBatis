@@ -19,7 +19,7 @@ public class TestBase {
 
    @BeforeClass
    public static void init() {
-      ctx = new ClassPathXmlApplicationContext("applicationContext*.xml");
+      ctx = new ClassPathXmlApplicationContext("test-applicationContext-spring.xml");
       System.out.println(ctx);
    }
 }

@@ -11,6 +11,7 @@ import org.springframework.test.context.junit4.AbstractTransactionalJUnit4Spring
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.transaction.TransactionConfiguration;
 
+import com.et.base.TestBase;
 import com.et.bean.system.SysUser;
 import com.et.service.system.SysUserService;
 
@@ -23,23 +24,18 @@ import com.et.service.system.SysUserService;
  * ★☆ @ClassAnnotation： <br>
  * ★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★<br>
  * ★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★<br> */
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = { "classpath:applicationContext-spring.xml" })
-@TransactionConfiguration(defaultRollback = false)
-public class SysUserServiceTest extends AbstractTransactionalJUnit4SpringContextTests {
-    @Autowired
-    private SysUserService service;
+public class SysUserServiceTest extends TestBase {
 
-    @Test
-    public void test_getAll() {
-        try {
-            
-            List<SysUser> all = service.getAll();
-            for (SysUser sysUser : all) {
-                System.out.println(sysUser);
-            }
-        } catch (BeansException e) {
-            e.printStackTrace();
-        }
-    }
+   @Test
+   public void test_getAll() {
+      try {
+         SysUserService service = (SysUserService) ctx.getBean("sysUserServiceImpl");
+         List<SysUser> all = service.getAll();
+         for (SysUser sysUser : all) {
+            System.out.println(sysUser);
+         }
+      } catch (BeansException e) {
+         e.printStackTrace();
+      }
+   }
 }
