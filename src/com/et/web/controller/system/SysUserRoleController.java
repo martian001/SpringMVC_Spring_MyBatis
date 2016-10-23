@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.et.base.BaseController;
 import com.et.bean.system.SysUser;
 import com.et.bean.system.SysUserRole;
+import com.et.constant.Constants;
 import com.et.service.system.SysUserRoleService;
-import com.et.util.Constants;
 import com.et.util.ExceptionUtil;
 import com.et.util.StringUtil;
 

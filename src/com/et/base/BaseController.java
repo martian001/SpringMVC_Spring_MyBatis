@@ -14,6 +14,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.fileupload.FileItem;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,10 +25,13 @@ import com.alibaba.fastjson.JSON;
 import com.et.bean.Json;
 import com.et.bean.WebSysConfig;
 import com.et.bean.system.BizFile;
+import com.et.bean.system.SysLogInfo;
 import com.et.bean.system.SysUser;
-import com.et.util.Constants;
+import com.et.constant.Constants;
+import com.et.service.system.SysLogInfoService;
 import com.et.util.FileUploadStatus;
 import com.et.util.FileUtil;
+import com.et.util.IpAddressUtil;
 import com.et.util.ParseDocAndDocxUtil;
 
 
@@ -45,6 +50,8 @@ public class BaseController {
    private Logger logger = LoggerFactory.getLogger(BaseController.class);
    private Vector<FileUploadStatus> vector = new Vector<FileUploadStatus>();
    private static BaseController baseAction = new BaseController();
+   @Resource
+   private SysLogInfoService sysLogInfoService;
    @Resource(name = "webSysConfig")
    private WebSysConfig webSysConfig;
    /**
@@ -178,7 +185,10 @@ public class BaseController {
    protected SysUser getLoginUser(HttpServletRequest req) {
       return (SysUser) req.getSession().getAttribute(Constants.LOGIN_USER);
    }
-
+   public SysUser getLoginUser() {
+      Subject subject = SecurityUtils.getSubject();
+      return (SysUser) subject.getSession().getAttribute(Constants.LOGIN_USER);
+   }
    /**
     * 获取文件上传的根目录
     * 
@@ -262,4 +272,34 @@ public class BaseController {
        resultMap.put("records", total);
        outputJson(resultMap, response);
     }
+
+   /**
+    * 记录系统操作日志
+    *@author:liangyanjun
+    *@time:2016年10月23日上午11:16:13
+    *@param moduel
+    *@param logType
+    *@param content
+    *@param req
+    */
+   protected void recordLog(int moduel, int logType, String content, HttpServletRequest req) {
+      SysUser loginUser = null;
+      String userId = null;
+      try {
+         loginUser = getLoginUser();
+      } catch (Exception e) {
+      }
+      if (loginUser != null) {
+         userId = loginUser.getId();
+      }
+      SysLogInfo log = new SysLogInfo();
+      log.setModuel(moduel);
+      log.setContent(content);
+      log.setType(logType);
+      log.setOperatorId(userId);
+      if (req != null) {
+         log.setIpAddress(IpAddressUtil.getIpAddress(req));
+      }
+      sysLogInfoService.insert(log);
+   }
 }

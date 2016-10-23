@@ -86,7 +86,7 @@
 				},
 				menuUrl : {
 					required : true,
-					maxlength : 50
+					maxlength : 100
 				},
 				menuIndex : {
 					maxlength : 2,
@@ -326,7 +326,7 @@
 							<label for="menuUrl" class="col-sm-2 control-label"><span
 								class="requiredSty">*</span>菜单URL:</label>
 							<div class="col-sm-4">
-								<input type="text" class="form-control" maxlength="20"
+								<input type="text" class="form-control" maxlength="100"
 									id="menuUrl" name="menuUrl" placeholder="菜单URL">
 							</div>
 						</div>

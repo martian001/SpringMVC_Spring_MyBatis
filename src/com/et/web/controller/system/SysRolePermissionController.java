@@ -19,8 +19,8 @@ import com.et.base.BaseController;
 import com.et.bean.system.SysRolePermission;
 import com.et.bean.system.SysUser;
 import com.et.bean.system.SysRolePermission;
+import com.et.constant.Constants;
 import com.et.service.system.SysRolePermissionService;
-import com.et.util.Constants;
 import com.et.util.ExceptionUtil;
 import com.et.util.StringUtil;
 

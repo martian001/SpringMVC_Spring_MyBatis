@@ -18,8 +18,8 @@ import org.apache.shiro.subject.SimplePrincipalCollection;
 import org.apache.shiro.subject.Subject;
 
 import com.et.bean.system.SysUser;
+import com.et.constant.Constants;
 import com.et.service.system.SysUserService;
-import com.et.util.Constants;
 import com.et.util.StringUtil;
 
 /** ★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★<br>

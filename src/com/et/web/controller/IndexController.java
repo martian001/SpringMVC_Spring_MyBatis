@@ -23,11 +23,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.et.base.BaseController;
 import com.et.bean.system.SysMenu;
 import com.et.bean.system.SysUser;
+import com.et.constant.Constants;
+import com.et.constant.ModuelConstant;
+import com.et.constant.SysLogTypeConstant;
 import com.et.service.system.SysMenuService;
 import com.et.service.system.SysUserService;
 import com.et.shiro.CaptchaUsernamePasswordToken;
 import com.et.shiro.IncorrectCaptchaException;
-import com.et.util.Constants;
 import com.et.util.CryptographyUtil;
 import com.et.util.ExceptionUtil;
 
@@ -143,6 +145,7 @@ public class IndexController extends BaseController {
        if (result.get("msg") != null) {
            result.put("success", false);
        } else {
+           recordLog(ModuelConstant.MODUEL_SYSTEM, SysLogTypeConstant.LOG_TYPE_LOGIN, "用户登录", req);
            result.put("success", true);
        }
        outputJson(result, resp);
@@ -158,6 +161,7 @@ public class IndexController extends BaseController {
    public String logout(HttpServletRequest req) {
        Subject subject = SecurityUtils.getSubject();
        if (subject.isAuthenticated()) {
+          recordLog(ModuelConstant.MODUEL_SYSTEM, SysLogTypeConstant.LOG_TYPE_LOGOUT, "用户登出", req);
           subject.logout(); // session 会销毁，在SessionListener监听session销毁，清理权限缓存
        }
       return "redirect:/to_login.do";

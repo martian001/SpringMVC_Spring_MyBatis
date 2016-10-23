@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.et.mapper.system.SysLogInfoMapper">
+	<resultMap id="sysLogInfoMap" type="sysLogInfo">
+		<id property="id" column="ID" />
+		<id property="type" column="TYPE" />
+		<id property="moduel" column="MODUEL" />
+		<id property="content" column="CONTENT" />
+		<id property="ipAddress" column="IP_ADDRESS" />
+		<id property="operatorId" column="OPERATOR_ID" />
+		<id property="operatorName" column="OPERATOR_NAME" />
+		<id property="creatorDate" column="CREATOR_DATE" />
+	</resultMap>
+	<sql id="column_list">
+		ID,TYPE,MODUEL,CONTENT,IP_ADDRESS,OPERATOR_ID,CREATOR_DATE
+	</sql>
+	<!-- 查询所有 -->
+	<select id="getAll" resultMap="sysLogInfoMap">
+		SELECT
+		<include refid="column_list" />
+		FROM SYS_LOG_INFO
+	</select>
+	<!-- 根据条件查询 -->
+	<select id="query" resultMap="sysLogInfoMap" parameterType="sysLogInfo">
+		SELECT
+		<include refid="column_list" />
+		FROM SYS_LOG_INFO
+		<where>
+			<trim>
+				<if test="id != null and id !=''">
+					ID=#{id}
+				</if>
+				<if test="type != null and type >0">
+					AND TYPE=#{type}
+				</if>
+				<if test="moduel != null and moduel >0">
+					AND MODUEL=#{moduel}
+				</if>
+				<if test="content != null and content !=''">
+					AND CONTENT=#{content}
+				</if>
+				<if test="ipAddress != null and ipAddress !=''">
+					AND IP_ADDRESS=#{ipAddress}
+				</if>
+				<if test="operatorId != null and operatorId !=''">
+					AND OPERATOR_ID=#{operatorId}
+				</if>
+				<if test="creatorDate != null and creatorDate !=''">
+					AND CREATOR_DATE=#{creatorDate}
+				</if>
+			</trim>
+		</where>
+	</select>
+	<!-- 根据id获取 -->
+	<select id="getById" resultMap="sysLogInfoMap">
+		SELECT
+		<include refid="column_list" />
+		FROM SYS_LOG_INFO WHERE ID=#{id}
+	</select>
+	<!-- 插入一条数据 -->
+	<insert id="insert" parameterType="sysLogInfo">
+		<selectKey keyProperty="id" resultType="String" order="BEFORE">
+			SELECT SYS_GUID() FROM DUAL
+		</selectKey>
+		INSERT INTO SYS_LOG_INFO
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null and id !=''">
+				ID,
+			</if>
+			<if test="type != null and type >0">
+				TYPE,
+			</if>
+			<if test="moduel != null and moduel >0">
+				MODUEL,
+			</if>
+			<if test="content != null and content !=''">
+				CONTENT,
+			</if>
+			<if test="ipAddress != null and ipAddress !=''">
+				IP_ADDRESS,
+			</if>
+			<if test="operatorId != null and operatorId !=''">
+				OPERATOR_ID,
+			</if>
+			CREATOR_DATE
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null and id !=''">
+				#{id},
+			</if>
+			<if test="type != null and type >0">
+				#{type},
+			</if>
+			<if test="moduel != null and moduel >0">
+				#{moduel},
+			</if>
+			<if test="content != null and content !=''">
+				#{content},
+			</if>
+			<if test="ipAddress != null and ipAddress !=''">
+				#{ipAddress},
+			</if>
+			<if test="operatorId != null and operatorId !=''">
+				#{operatorId},
+			</if>
+			SYSDATE
+		</trim>
+	</insert>
+	<!-- 根据id删除数据 -->
+	<delete id="deleteById" parameterType="sysLogInfo">
+		<![CDATA[DELETE FROM SYS_LOG_INFO WHERE ID=#{id}]]>
+	</delete>
+	<!-- 根据id更新数据 -->
+	<update id="update" parameterType="sysLogInfo">
+		UPDATE SYS_LOG_INFO
+		<set>
+			<if test="id != null and id !=''">
+				ID=#{id},
+			</if>
+			<if test="type != null and type >0">
+				TYPE=#{type},
+			</if>
+			<if test="moduel != null and moduel >0">
+				MODUEL=#{moduel},
+			</if>
+			<if test="content != null and content !=''">
+				CONTENT=#{content},
+			</if>
+			<if test="ipAddress != null and ipAddress !=''">
+				IP_ADDRESS=#{ipAddress},
+			</if>
+		</set>
+		WHERE ID = #{id}
+	</update>
+	<!-- 根据传入多个id删除数据 -->
+	<delete id="deleteByIds" parameterType="java.util.List">
+		DELETE FROM SYS_LOG_INFO WHERE ID in
+		<foreach collection="list" item="item" index="index" open="("
+			separator="," close=")">
+			#{item}
+		</foreach>
+	</delete>
+	<!-- 根据条件分页查询 -->
+	<select id="findPage" resultMap="sysLogInfoMap" parameterType="sysLogInfo">
+		<if test="page != -1">
+			SELECT D.* FROM (SELECT T.*, ROWNUM RN FROM (
+		</if>
+		SELECT A.TYPE,
+		A.MODUEL,
+		A.CONTENT,
+		A.IP_ADDRESS,
+		A.CREATOR_DATE,
+		B.REAL_NAME AS OPERATOR_NAME
+		FROM SYS_LOG_INFO A
+		LEFT JOIN SYS_USER B
+		ON
+		A.OPERATOR_ID = B.ID
+		<where>
+			<trim>
+				<if test="type != null and type >0">
+					AND A.TYPE=#{type}
+				</if>
+				<if test="moduel != null and moduel >0">
+					AND A.MODUEL=#{moduel}
+				</if>
+				<if test="content != null and content !=''">
+					AND A.CONTENT LIKE '%${content}%'
+				</if>
+				<if test="ipAddress != null and ipAddress !=''">
+					AND A.IP_ADDRESS LIKE '%${ipAddress}%'
+				</if>
+				<if test="creatorDate != null and creatorDate !=''">
+					AND A.CREATOR_DATE>=TO_DATE(#{creatorDate},'yyyy-MM-dd')
+				</if>
+				<if test="creatorDateEnd != null and creatorDateEnd !=''">
+					AND A.CREATOR_DATE<![CDATA[<=]]>
+					TO_DATE(CONCAT(#{creatorDateEnd},' 23:59:59'),'yyyy-mm-dd
+					hh24:mi:ss')
+				</if>
+				<if test="operatorName != null and operatorName !=''">
+					AND B.REAL_NAME LIKE '%${operatorName}%'
+				</if>
+			</trim>
+		</where>
+		<if test="page != -1">
+		<![CDATA[ ) T WHERE ROWNUM <=#{page}*#{rows} ) D WHERE D.RN > ((#{page}-1)*#{rows}) ]]>
+		</if>
+	</select>
+	<!-- 根据条件查询数量 -->
+	<select id="getTotal" resultType="Integer" parameterType="sysLogInfo">
+	<![CDATA[
+	SELECT COUNT(1) FROM
+			(SELECT A.TYPE,
+       A.MODUEL,
+       A.CONTENT,
+       A.IP_ADDRESS,
+       A.CREATOR_DATE,
+       B.REAL_NAME AS OPERATOR_NAME
+  FROM SYS_LOG_INFO A
+  LEFT JOIN SYS_USER B
+    ON A.OPERATOR_ID = B.ID
+	]]>
+		<where>
+			<trim>
+				<if test="type != null and type >0">
+					AND A.TYPE=#{type}
+				</if>
+				<if test="moduel != null and moduel >0">
+					AND A.MODUEL=#{moduel}
+				</if>
+				<if test="content != null and content !=''">
+					AND A.CONTENT LIKE '%${content}%'
+				</if>
+				<if test="ipAddress != null and ipAddress !=''">
+					AND A.IP_ADDRESS LIKE '%${ipAddress}%'
+				</if>
+				<if test="creatorDate != null and creatorDate !=''">
+					AND A.CREATOR_DATE>=TO_DATE(#{creatorDate},'yyyy-MM-dd')
+				</if>
+				<if test="creatorDateEnd != null and creatorDateEnd !=''">
+					AND A.CREATOR_DATE<![CDATA[<=]]>
+					TO_DATE(CONCAT(#{creatorDateEnd},' 23:59:59'),'yyyy-mm-dd
+					hh24:mi:ss')
+				</if>
+				<if test="operatorName != null and operatorName !=''">
+					AND B.REAL_NAME LIKE '%${operatorName}%'
+				</if>
+			</trim>
+		</where>
+		) T
+	</select>
+</mapper>

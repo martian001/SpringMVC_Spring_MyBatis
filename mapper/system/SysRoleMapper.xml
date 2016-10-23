@@ -169,7 +169,7 @@
 			#{item}
 		</foreach>
 	</delete>
-	<!-- 根据条件分页查询 mysql -->
+	<!-- 根据条件分页查询  -->
 	<select id="findPage" resultMap="sysRoleMap" parameterType="sysRole">
 	<if test="page != -1">
 	SELECT D.* FROM (SELECT T.*, ROWNUM RN FROM (

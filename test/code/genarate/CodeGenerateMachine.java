@@ -31,8 +31,8 @@ public class CodeGenerateMachine {
    @Test
    public void codeGenerate() throws SQLException {
       try {
-         String srcPath = "D:/eclipse-jee-luna-R-win32-x86_64/eclipse_workspace/SpringMVC_Spring_MyBatis/src/";
-         String mapperPath = "D:/eclipse-jee-luna-R-win32-x86_64/eclipse_workspace/SpringMVC_Spring_MyBatis/mapper/";
+         String srcPath = "C:/Users/martian/git/SpringMVC_Spring_MyBatis/src/";
+         String mapperPath = "C:/Users/martian/git/SpringMVC_Spring_MyBatis/mapper/";
          List<String> tempLates = new ArrayList<>();
          tempLates.add("MapperTempLate.ftl-Mapper");
          tempLates.add("ServiceTempLate.ftl-Service");
@@ -42,12 +42,12 @@ public class CodeGenerateMachine {
          tempLates.add("MapperXmlTempLate.ftl-Mapper");
 
          List<Map<String, Object>> list = new ArrayList<>();
-         String tableName = "SYS_ROLE_PERMISSION";// 数据库表名
+         String tableName = "SYS_LOG_INFO";// 数据库表名
          String name = MapperXmlTempLateUtil.jdbcToJavaName2(tableName);// 类名
          String lowercaseBeanName = MapperXmlTempLateUtil.startLowerCase(name);// 类名小写
          String dateTime = DateUtils.getCurrentDateTime();// 当前时间
          String version = "1.0";// 版本号
-         String classAnnotation = "角色-权限关系表";// 类注释
+         String classAnnotation = "系统操作日志";// 类注释
          String packageModule = "system";// 模块
          String packageRoot = "com/et/";// 包根路径
 
