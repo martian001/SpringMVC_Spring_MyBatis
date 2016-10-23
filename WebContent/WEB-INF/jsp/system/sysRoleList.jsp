@@ -555,6 +555,12 @@
 	}
 	function addpermissionByRole(){
 		var jqGridIds = $("#role_table_list").jqGrid('getGridParam', 'selarrrow');
+		if (jqGridIds.length == 0) {
+			layer.alert('请选择角色', {
+				icon : 0
+			});
+			return;
+		} 
 		var roleId = $("#role_table_list").jqGrid('getRowData', jqGridIds[0]).id;
 		jqGridIds=$("#permission_by_role_table_list2").jqGrid('getGridParam', 'selarrrow');
 		if (jqGridIds.length == 0) {
@@ -591,6 +597,12 @@
 	}
 	function removePermissionByRole(){
 		var jqGridIds = $("#role_table_list").jqGrid('getGridParam', 'selarrrow');
+		if (jqGridIds.length == 0) {
+			layer.alert('请选择角色', {
+				icon : 0
+			});
+			return;
+		} 
 		var roleId = $("#role_table_list").jqGrid('getRowData', jqGridIds[0]).id;
 		jqGridIds=$("#permission_by_role_table_list1").jqGrid('getGridParam', 'selarrrow');
 		if (jqGridIds.length == 0) {
@@ -624,6 +636,52 @@
 				}
 			}
 		});
+	}
+	//该角色已拥有(未拥有)权限列表搜索
+	function searchPermissionByRoleTableList(obj,gridId,isGrant){
+		var permisName=obj.value;
+		var jqGridIds = $("#role_table_list").jqGrid('getGridParam', 'selarrrow');
+		if (jqGridIds.length==0) {
+			return;
+		}
+		var roleId = $("#role_table_list").jqGrid('getRowData', jqGridIds[0]).id;
+		$("#"+gridId).jqGrid('setGridParam', {
+			url : '${ctx}sysPermissionController/rolePermissionList.do',
+			datatype : 'json',
+			postData : {
+				"roleList[0].id" : roleId,"isGrant":isGrant,"permisName":permisName
+			}, //发送数据  
+			page : 1
+		}).trigger("reloadGrid"); //重新载入
+	}
+	//该角色下用户列表搜索
+	function searChuserByRoleTableList(obj){
+		var realName=obj.value;
+		var jqGridIds = $("#role_table_list").jqGrid('getGridParam', 'selarrrow');
+		if (jqGridIds.length==0) {
+			return;
+		}
+		var roleId = $("#role_table_list").jqGrid('getRowData', jqGridIds[0]).id;
+		$("#user_by_role_table_list").jqGrid('setGridParam', {
+			url : '${ctx}sysUserController/roleUserList.do',
+			datatype : 'json',
+			postData : {
+				"roleList[0].id" : roleId,"realName":realName
+			}, //发送数据  
+			page : 1
+		}).trigger("reloadGrid"); //重新载入
+	}
+	//用户列表搜索
+	function searChSysUserTableList(obj){
+		var realName=obj.value;
+		$("#sysUser_table_list").jqGrid('setGridParam', {
+			url : '${ctx}sysUserController/list.do',
+			datatype : 'json',
+			postData : {
+				"realName":realName
+			}, //发送数据  
+			page : 1
+		}).trigger("reloadGrid"); //重新载入
 	}
 </script>
 </head>
@@ -704,6 +762,7 @@
 					  <div class="col-sm-6">
 					      <div class="ibox-content">
 					        <a class="btn btn-outline btn-danger" onclick="removePermissionByRole()">取消该权限</a>
+                            <div style="float: right;">搜索：<input type="text" name="permisName" placeholder="权限名称" onchange="searchPermissionByRoleTableList(this,'permission_by_role_table_list1',true)"></div>
 								<div class="jqGrid_wrapper">
 									<table id="permission_by_role_table_list1"></table>
 									<div id="permission_by_role_pager_list1"></div>
@@ -717,6 +776,7 @@
 					  <div class="col-sm-6">
 							<div class="ibox-content">
 							<a class="btn btn-outline btn-danger" onclick="removeSysUserRole()">取消该用户</a>
+                            <div style="float: right;">搜索：<input type="text" name="realName" placeholder="姓名" onchange="searChuserByRoleTableList(this)"></div>
 								<div class="jqGrid_wrapper">
 									<table id="user_by_role_table_list"></table>
 									<div id="user_by_role_pager_list"></div>
@@ -726,6 +786,7 @@
 					  <div class="col-sm-6">
 					     <div class="ibox-content">
 							<a class="btn btn-outline btn-primary" onclick="addpermissionByRole()">附加该权限</a>
+                             <div style="float: right;">搜索：<input type="text" name="permisName" placeholder="权限名称" onchange="searchPermissionByRoleTableList(this,'permission_by_role_table_list2',false)"></div>
 								<div class="jqGrid_wrapper">
 									<table id="permission_by_role_table_list2"></table>
 									<div id="permission_by_role_pager_list2"></div>
@@ -811,6 +872,7 @@
 				</div>
 					<div class="modal-body">
 					  <a class="btn btn-outline btn-primary" onclick="saveSysUserRole()">保存</a>
+                    <div style="float: right;">搜索：<input type="text" name="realName" placeholder="姓名" onchange="searChSysUserTableList(this)"></div>
 					  <div class="jqGrid_wrapper">
 									<table id="sysUser_table_list"></table>
 									<div id="sysUser_pager_list"></div>
