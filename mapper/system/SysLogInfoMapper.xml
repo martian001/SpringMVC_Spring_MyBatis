@@ -182,6 +182,7 @@
 				</if>
 			</trim>
 		</where>
+		ORDER BY  A.CREATOR_DATE DESC
 		<if test="page != -1">
 		<![CDATA[ ) T WHERE ROWNUM <=#{page}*#{rows} ) D WHERE D.RN > ((#{page}-1)*#{rows}) ]]>
 		</if>

@@ -17,6 +17,8 @@ import com.et.base.BaseController;
 import com.et.bean.system.SysUser;
 import com.et.bean.system.SysUserRole;
 import com.et.constant.Constants;
+import com.et.constant.ModuelConstant;
+import com.et.constant.SysLogTypeConstant;
 import com.et.service.system.SysUserRoleService;
 import com.et.util.ExceptionUtil;
 import com.et.util.StringUtil;
@@ -81,6 +83,7 @@ public class SysUserRoleController extends BaseController {
                 sysUserRoleService.update(updateUserRole);
             }
         }
+        recordLog(ModuelConstant.MODUEL_SYSTEM, SysLogTypeConstant.LOG_TYPE_ADD, "添加系统用户和角色关联,参数：roleId="+roleId+",userIdStrs="+userIdStrs, req);
         fillReturnJson(resp, true, "操作成功");
     }
 
@@ -110,5 +113,6 @@ public class SysUserRoleController extends BaseController {
             }
         }
         fillReturnJson(resp, true, "操作成功");
+        recordLog(ModuelConstant.MODUEL_SYSTEM, SysLogTypeConstant.LOG_TYPE_DELETE, "移除系统用户和角色关联,参数：roleId="+roleId+",userIdStrs="+userIdStrs, req);
     }
 }

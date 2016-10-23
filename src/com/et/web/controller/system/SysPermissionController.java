@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.et.base.BaseController;
 import com.et.bean.system.SysPermission;
 import com.et.bean.system.SysUser;
+import com.et.constant.ModuelConstant;
+import com.et.constant.SysLogTypeConstant;
 import com.et.service.system.SysPermissionService;
 import com.et.util.ExceptionUtil;
 import com.et.util.StringUtil;
@@ -69,7 +71,7 @@ public class SysPermissionController extends BaseController {
         // 输出
         outputPage(query.getRows(), response, list, total);
     }
-    /** 新增或修改角色
+    /** 新增或修改权限
      * 
      * @author:liangyanjun
      * @time:2016年10月8日下午6:09:37
@@ -95,6 +97,7 @@ public class SysPermissionController extends BaseController {
         if (StringUtil.isBlank(id)) {//新增
             sysPermission.setCreatorId(loginUserId);
             sysPermissionService.insert(sysPermission);
+            recordLog(ModuelConstant.MODUEL_SYSTEM, SysLogTypeConstant.LOG_TYPE_ADD, "增加系统权限,参数：sysPermission="+sysPermission, req);
         } else {//修改
             SysPermission updatesysPermission = sysPermissionService.getById(id);
             updatesysPermission.setPermisName(permisName);
@@ -103,6 +106,7 @@ public class SysPermissionController extends BaseController {
             updatesysPermission.setStatus(status);
             updatesysPermission.setPermisType(permisType);
             sysPermissionService.update(updatesysPermission);
+            recordLog(ModuelConstant.MODUEL_SYSTEM, SysLogTypeConstant.LOG_TYPE_UPDATE, "修改系统权限,参数：sysPermission="+sysPermission+",updatesysPermission="+updatesysPermission, req);
         }
         fillReturnJson(resp, true, "提交成功");
     }

@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.et.base.BaseController;
 import com.et.bean.system.SysUser;
+import com.et.constant.ModuelConstant;
+import com.et.constant.SysLogTypeConstant;
 import com.et.service.system.SysUserService;
 import com.et.util.CryptographyUtil;
 import com.et.util.StringUtil;
@@ -114,12 +116,14 @@ public class SysUserController extends BaseController {
           updatesysUser.setMail(mail);
           updatesysUser.setUpdateId(loginUser.getId());
           sysUserService.update(updatesysUser);
+          recordLog(ModuelConstant.MODUEL_SYSTEM, SysLogTypeConstant.LOG_TYPE_UPDATE, "修改系统用户,参数：sysUser="+sysUser+",updatesysUser="+updatesysUser, req);
        } else {
           // 添加
           sysUser.setPwd(CryptographyUtil.encBase64(pwd));
           sysUser.setUpdateId(loginUser.getId());
           sysUser.setCreatorId(loginUser.getId());
           sysUserService.insert(sysUser);
+          recordLog(ModuelConstant.MODUEL_SYSTEM, SysLogTypeConstant.LOG_TYPE_ADD, "添加系统用户,参数：sysUser="+sysUser, req);
        }
        fillReturnJson(resp, true, "提交成功");
    }

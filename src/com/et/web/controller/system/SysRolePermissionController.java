@@ -20,6 +20,8 @@ import com.et.bean.system.SysRolePermission;
 import com.et.bean.system.SysUser;
 import com.et.bean.system.SysRolePermission;
 import com.et.constant.Constants;
+import com.et.constant.ModuelConstant;
+import com.et.constant.SysLogTypeConstant;
 import com.et.service.system.SysRolePermissionService;
 import com.et.util.ExceptionUtil;
 import com.et.util.StringUtil;
@@ -75,6 +77,7 @@ public class SysRolePermissionController extends BaseController {
             }
         }
         fillReturnJson(resp, true, "操作成功");
+        recordLog(ModuelConstant.MODUEL_SYSTEM, SysLogTypeConstant.LOG_TYPE_ADD, "系统角色附加权限,参数：roleId="+roleId+",permisStrs="+permisStrs, req);
     }
 
     /** 角色移除权限
@@ -103,6 +106,7 @@ public class SysRolePermissionController extends BaseController {
             }
         }
         fillReturnJson(resp, true, "操作成功");
+        recordLog(ModuelConstant.MODUEL_SYSTEM, SysLogTypeConstant.LOG_TYPE_ADD, "取消系统角色和权限关联,参数：roleId="+roleId+",permisStrs="+permisStrs, req);
     }
 
 }

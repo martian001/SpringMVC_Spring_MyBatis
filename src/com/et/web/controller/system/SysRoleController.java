@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.et.base.BaseController;
 import com.et.bean.system.SysRole;
 import com.et.bean.system.SysUser;
+import com.et.constant.ModuelConstant;
+import com.et.constant.SysLogTypeConstant;
 import com.et.service.system.SysRoleService;
 import com.et.util.ExceptionUtil;
 import com.et.util.StringUtil;
@@ -82,6 +84,7 @@ public class SysRoleController extends BaseController {
         if (StringUtil.isBlank(id)) {//新增
             sysRole.setCreatorId(loginUserId);
             sysRoleService.insert(sysRole);
+            recordLog(ModuelConstant.MODUEL_SYSTEM, SysLogTypeConstant.LOG_TYPE_ADD, "增加系统角色,参数：sysRole="+sysRole, req);
         } else {//修改
             SysRole updateSysRole = sysRoleService.getById(id);
             updateSysRole.setRoleName(roleName);
@@ -89,6 +92,7 @@ public class SysRoleController extends BaseController {
             updateSysRole.setRoleDesc(roleDesc);
             updateSysRole.setStatus(status);
             sysRoleService.update(updateSysRole);
+            recordLog(ModuelConstant.MODUEL_SYSTEM, SysLogTypeConstant.LOG_TYPE_UPDATE, "修改系统角色,参数：sysRole="+sysRole+",updateSysRole="+updateSysRole, req);
         }
         fillReturnJson(resp, true, "提交成功");
     }

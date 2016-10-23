@@ -24,39 +24,45 @@
 			rowNum : 10,
 			rowList : [ 10, 20, 30 ],
 			pager : "#pager_list",
-			colNames : [ "操作人", "操作类型", "操作模块", "操作内容", "IP地址", "操作时间" ],
+			colNames : [ "操作人", "操作类型", "操作模块", "IP地址", "操作时间", "操作内容" ],
 			colModel : [ {
 				name : "operatorName",
 				index : "operatorName",
+				width : 35,
 				sortable : false
 			}, {
 				name : "type",
 				index : "type",
 				formatter : formatterType,
+				width : 35,
 				sortable : false
 			}, {
 				name : "moduel",
 				index : "moduel",
+				width : 35,
 				formatter : formatterModuel,
-				sortable : false
-			}, {
-				name : "content",
-				index : "content",
 				sortable : false
 			}, {
 				name : "ipAddress",
 				index : "ipAddress",
+				width : 35,
 				sortable : false
 			}, {
 				name : "creatorDate",
 				index : "creatorDate",
+				width : 40,
 				formatter : 'date',
 				formatoptions : {
 					srcformat : 'Y-m-d H:i:s',
 					newformat : 'Y-m-d H:i:s'
 				},
 				sortable : false
-			} ],
+			} , {
+				name : "content",
+				index : "content",
+				width : 300,
+				sortable : false
+			}],
 			gridComplete : function() { //列表生成后,给某一列绑定操作 例如删除操作
 			}
 		});
